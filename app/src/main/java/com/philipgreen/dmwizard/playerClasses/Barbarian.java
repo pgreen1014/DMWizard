@@ -78,4 +78,16 @@ public class Barbarian extends BasePlayerClass{
     }
 
     //TODO add feature implementation
+
+    /////////////////////////////////
+    //         PRIMAL PATHS        //
+    /////////////////////////////////
+    // Private class representing Path of the Berserker
+    private class Berserker {
+
+    }
+    // Private class representing Path of the Totem Warrior
+    private class TotemWarrior {
+
+    }
 }
