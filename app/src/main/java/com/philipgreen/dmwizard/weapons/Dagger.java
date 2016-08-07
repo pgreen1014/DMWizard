@@ -49,6 +49,7 @@ public class Dagger extends ThrownWeapon {
 
     @Override
     public WeaponProperties[] initWeaponProperties() {
-        return new WeaponProperties[] {WeaponProperties.FINESSE, WeaponProperties.LIGHT, WeaponProperties.THROWN};
+        // Leave out Thrown property because this is represented by being extending abstract class
+        return new WeaponProperties[] {WeaponProperties.FINESSE, WeaponProperties.LIGHT};
     }
 }
