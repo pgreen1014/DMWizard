@@ -8,10 +8,12 @@ import com.philipgreen.dmwizard.dice.Dice;
 public abstract class BaseWeapon {
     private int mDamageDie; // Die used for rolling damage
     private int mDieNumber; // Number of damage die used
+    private WeaponType[] mWeaponTypes;
 
-    public BaseWeapon(int damageDie, int dieNumber) {
+    public BaseWeapon(int damageDie, int dieNumber, WeaponType[] weaponTypes) {
         this.mDamageDie = damageDie;
         this.mDieNumber = dieNumber;
+        this.mWeaponTypes = weaponTypes;
     }
 
     public int damageRoll() {
