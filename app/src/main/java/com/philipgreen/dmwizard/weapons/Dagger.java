@@ -6,6 +6,6 @@ package com.philipgreen.dmwizard.weapons;
 public class Dagger extends BaseWeapon {
 
     public Dagger(int damageDie, int dieNumber) {
-        super(damageDie, dieNumber, new WeaponType[] {WeaponType.MELEE, WeaponType.THROWN});
+        super(damageDie, dieNumber);
     }
 }

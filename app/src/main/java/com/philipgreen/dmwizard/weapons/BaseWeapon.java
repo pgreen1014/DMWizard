@@ -10,10 +10,9 @@ public abstract class BaseWeapon {
     private int mDieNumber; // Number of damage die used
     private WeaponType[] mWeaponTypes;
 
-    public BaseWeapon(int damageDie, int dieNumber, WeaponType[] weaponTypes) {
+    public BaseWeapon(int damageDie, int dieNumber) {
         this.mDamageDie = damageDie;
         this.mDieNumber = dieNumber;
-        this.mWeaponTypes = weaponTypes;
     }
 
     public int damageRoll() {
