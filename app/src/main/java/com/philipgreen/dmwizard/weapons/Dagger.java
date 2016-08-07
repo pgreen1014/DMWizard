@@ -1,11 +1,54 @@
 package com.philipgreen.dmwizard.weapons;
 
+import com.philipgreen.dmwizard.data.WeaponDamageType;
+import com.philipgreen.dmwizard.data.WeaponProperties;
+
 /**
  * Created by pgreen on 8/7/16.
  */
 public class Dagger extends ThrownWeapon {
 
-    public Dagger(int damageDie, int dieNumber) {
-        super(damageDie, dieNumber);
+    public Dagger() {
+        super();
+    }
+
+    @Override
+    public int initMinThrowRange() {
+        return 20;
+    }
+
+    @Override
+    public int initMaxThrowRange() {
+        return 60;
+    }
+
+    @Override
+    public int initDamageDie() {
+        return 4;
+    }
+
+    @Override
+    public int initDieNumber() {
+        return 1;
+    }
+
+    @Override
+    public int initCost() {
+        return 0;
+    }
+
+    @Override
+    public WeaponDamageType initWeaponDamageType() {
+        return WeaponDamageType.PIERCING;
+    }
+
+    @Override
+    public int initWeight() {
+        return 1;
+    }
+
+    @Override
+    public WeaponProperties[] initWeaponProperties() {
+        return new WeaponProperties[] {WeaponProperties.FINESSE, WeaponProperties.LIGHT, WeaponProperties.THROWN};
     }
 }

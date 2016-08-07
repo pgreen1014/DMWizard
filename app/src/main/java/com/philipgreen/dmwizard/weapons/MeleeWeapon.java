@@ -5,7 +5,7 @@ package com.philipgreen.dmwizard.weapons;
  */
 public abstract class MeleeWeapon extends BaseWeapon {
 
-    public MeleeWeapon(int damageDie, int dieNumber) {
-        super(damageDie, dieNumber);
+    public MeleeWeapon() {
+        super();
     }
 }
