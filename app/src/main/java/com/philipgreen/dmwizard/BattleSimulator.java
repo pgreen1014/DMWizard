@@ -26,6 +26,7 @@ public class BattleSimulator extends AppCompatActivity {
             public void onClick(View v) {
                 Skills[] skillProfs = {Skills.ATHLETICS, Skills.SURVIVAL};
                 BasePlayerClass character = new Barbarian(17, 14, 12, 10, 12, 12, 1, skillProfs);
+                Log.i(TAG, character.toString());
             }
         });
     }
