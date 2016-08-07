@@ -3,6 +3,7 @@ package com.philipgreen.dmwizard.playerClasses;
 import android.util.Log;
 
 import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.dice.Dice;
 
 import java.util.Collections;
@@ -42,6 +43,26 @@ public abstract class BasePlayerClass {
     private int mRangedAttackBonus;
     private int mMeleeDamageBonus;
     private int mRangedDamageBonus;
+
+    private Skills[] mProficientSkills;
+    private int mAcrobatics;
+    private int mAnimalHandling;
+    private int mArcana;
+    private int mAthletics;
+    private int mDeception;
+    private int mHistory;
+    private int mInsight;
+    private int mIntimidation;
+    private int mInvestigation;
+    private int mMedicine;
+    private int mNature;
+    private int mPerception;
+    private int mPerformance;
+    private int mPersuasion;
+    private int mReligion;
+    private int mSleightOfHand;
+    private int mStealth;
+    private int mSurvival;
 
     // statically create and put values into ABILITY_MODIFIER_MAP
     public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
@@ -91,6 +112,7 @@ public abstract class BasePlayerClass {
         this.mRangedDamageBonus = mProficiencyBonus + getDexterityModifier();
 
         setSavingThrows(mSavingThrowProficiencies);
+        setUpSkills(setSkillProficiencies());
     }
 
     /////////////////////////////
@@ -100,6 +122,11 @@ public abstract class BasePlayerClass {
     public abstract int setHitDie();
     public abstract BaseStats[] setSavingThrowProficiencies();
     public abstract int initializeProficiencyBonus(int level);
+    public abstract Skills[] setSkillProficiencies();
+
+    //////////////////////////
+    // CONSTRUCTOR METHODS  //
+    //////////////////////////
 
     private int setHitPoints() {
         int totalHitPoints = 0;
@@ -165,8 +192,84 @@ public abstract class BasePlayerClass {
 
     }
 
-    private HashMap<Integer, Integer> createAbilityModifierMap() {
-        return null;
+    private void setUpSkills(Skills[] skillProficiencies) {
+        this.mAcrobatics = getDexterityModifier();
+        this.mAnimalHandling = getWisdomModifier();
+        this.mArcana = getInitiativeModifier();
+        this.mAthletics = getStrengthModifier();
+        this.mDeception = getCharismaModifier();
+        this.mHistory = getIntelligenceModifier();
+        this.mInsight = getWisdomModifier();
+        this.mIntimidation = getCharisma();
+        this.mInvestigation = getInitiativeModifier();
+        this.mMedicine = getWisdomModifier();
+        this.mNature = getIntelligenceModifier();
+        this.mPerception = getWisdomModifier();
+        this.mPerformance = getCharismaModifier();
+        this.mPersuasion = getCharismaModifier();
+        this.mReligion = getIntelligenceModifier();
+        this.mSleightOfHand = getDexterityModifier();
+        this.mStealth = getDexterityModifier();
+        this.mSurvival = getWisdomModifier();
+
+        for(Skills skill: skillProficiencies) {
+            switch (skill) {
+                case ACROBATICS:
+                    this.mAcrobatics += mProficiencyBonus;
+                    break;
+                case ANIMAL_HANDLING:
+                    this.mAnimalHandling += mProficiencyBonus;
+                    break;
+                case ARCANA:
+                    this.mArcana += mProficiencyBonus;
+                    break;
+                case ATHLETICS:
+                    this.mAthletics += mProficiencyBonus;
+                    break;
+                case DECEPTION:
+                    this.mDeception += mProficiencyBonus;
+                    break;
+                case HISTORY:
+                    this.mHistory += mProficiencyBonus;
+                    break;
+                case INSIGHT:
+                    this.mInsight += mProficiencyBonus;
+                    break;
+                case INTIMIDATION:
+                    this.mIntimidation += mProficiencyBonus;
+                    break;
+                case INVESTIGATION:
+                    this.mInvestigation += mProficiencyBonus;
+                    break;
+                case MEDICINE:
+                    this.mMedicine += mProficiencyBonus;
+                    break;
+                case NATURE:
+                    this.mNature += mProficiencyBonus;
+                    break;
+                case PERCEPTION:
+                    this.mPerception += mProficiencyBonus;
+                    break;
+                case PERFORMANCE:
+                    this.mPerformance += mProficiencyBonus;
+                    break;
+                case PERSUASION:
+                    this.mPersuasion += mProficiencyBonus;
+                    break;
+                case RELIGION:
+                    this.mReligion += mProficiencyBonus;
+                    break;
+                case SLEIGHT_OF_HAND:
+                    this.mSleightOfHand += mProficiencyBonus;
+                    break;
+                case STEALTH:
+                    this.mStealth += mProficiencyBonus;
+                    break;
+                case SURVIVAL:
+                    this.mStealth += mProficiencyBonus;
+                    break;
+            }
+        }
     }
 
     ///////////////////////////////////////////////////
