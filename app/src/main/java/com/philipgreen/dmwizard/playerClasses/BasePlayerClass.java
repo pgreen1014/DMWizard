@@ -2,8 +2,11 @@ package com.philipgreen.dmwizard.playerClasses;
 
 import android.util.Log;
 
+import com.philipgreen.dmwizard.data.ArmorProficiencies;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.data.WeaponProficiencies;
+import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.dice.Dice;
 
 import java.util.Collections;
@@ -43,6 +46,9 @@ public abstract class BasePlayerClass {
     private int mRangedAttackBonus;
     private int mMeleeDamageBonus;
     private int mRangedDamageBonus;
+
+    private WeaponProficiencies[] mWeaponProficiencies;
+    private ArmorProficiencies[] mArmorProficiencies;
 
     private Skills[] mProficientSkills;
     private int mAcrobatics;
@@ -110,6 +116,8 @@ public abstract class BasePlayerClass {
         this.mMeleeDamageBonus = mProficiencyBonus + getStrengthModifier();
         this.mRangedAttackBonus = mProficiencyBonus + getDexterityModifier();
         this.mRangedDamageBonus = mProficiencyBonus + getDexterityModifier();
+        this.mWeaponProficiencies = initWeaponProficiencies();
+        this.mArmorProficiencies = initArmorProficiencies();
 
         setSavingThrows(mSavingThrowProficiencies);
         setUpSkills(setSkillProficiencies());
@@ -123,6 +131,8 @@ public abstract class BasePlayerClass {
     public abstract BaseStats[] setSavingThrowProficiencies();
     public abstract int initializeProficiencyBonus(int level);
     public abstract Skills[] setSkillProficiencies();
+    public abstract WeaponProficiencies[] initWeaponProficiencies();
+    public abstract ArmorProficiencies[] initArmorProficiencies();
 
     //////////////////////////
     // CONSTRUCTOR METHODS  //

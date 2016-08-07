@@ -2,8 +2,10 @@ package com.philipgreen.dmwizard.playerClasses;
 
 import android.util.Log;
 
+import com.philipgreen.dmwizard.data.ArmorProficiencies;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.data.WeaponProficiencies;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -57,6 +59,16 @@ public class Barbarian extends BasePlayerClass{
     @Override
     public Skills[] setSkillProficiencies() {
         return mSkillProfs;
+    }
+
+    @Override
+    public WeaponProficiencies[] initWeaponProficiencies() {
+        return new WeaponProficiencies[] {WeaponProficiencies.SIMPLE, WeaponProficiencies.MARTIAL};
+    }
+
+    @Override
+    public ArmorProficiencies[] initArmorProficiencies() {
+        return new ArmorProficiencies[] {ArmorProficiencies.LIGHT, ArmorProficiencies.MEDIUM, ArmorProficiencies.SHIELDS};
     }
 
     private void verifySkillProficiencies(Skills[] skillProfs) {
