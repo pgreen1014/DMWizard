@@ -98,7 +98,7 @@ public abstract class BasePlayerClass {
     }
 
     public BasePlayerClass(int str, int dex, int con, int intel, int wis, int cha,
-                           int level) {
+                           int level, Skills[] proficientSkills) {
         this.mClassLevel = level;
         this.mStrength = str;
         this.mDexterity = dex;
@@ -118,9 +118,10 @@ public abstract class BasePlayerClass {
         this.mRangedDamageBonus = mProficiencyBonus + getDexterityModifier();
         this.mWeaponProficiencies = initWeaponProficiencies();
         this.mArmorProficiencies = initArmorProficiencies();
+        this.mProficientSkills = proficientSkills;
 
         setSavingThrows(mSavingThrowProficiencies);
-        setUpSkills(setSkillProficiencies());
+        setUpSkills(mProficientSkills);
     }
 
     /////////////////////////////
@@ -130,7 +131,6 @@ public abstract class BasePlayerClass {
     public abstract int setHitDie();
     public abstract BaseStats[] setSavingThrowProficiencies();
     public abstract int initializeProficiencyBonus(int level);
-    public abstract Skills[] setSkillProficiencies();
     public abstract WeaponProficiencies[] initWeaponProficiencies();
     public abstract ArmorProficiencies[] initArmorProficiencies();
 
@@ -141,9 +141,10 @@ public abstract class BasePlayerClass {
     private int setHitPoints() {
         int totalHitPoints = 0;
 
-        for(int i = 1; i >= mClassLevel; i ++) {
+        for(int i = 0; i <= mClassLevel; i ++) {
 
-            if (i == 1) {
+            // first level gets full hit points
+            if (i == 0) {
                 totalHitPoints += (mHitDie + getConstitutionModifier());
             } else {
                 totalHitPoints += (Dice.rollDie(mHitDie) + getConstitutionModifier());
@@ -221,7 +222,6 @@ public abstract class BasePlayerClass {
         this.mSleightOfHand = getDexterityModifier();
         this.mStealth = getDexterityModifier();
         this.mSurvival = getWisdomModifier();
-
         for(Skills skill: skillProficiencies) {
             switch (skill) {
                 case ACROBATICS:

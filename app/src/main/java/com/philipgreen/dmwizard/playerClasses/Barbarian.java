@@ -33,11 +33,10 @@ public class Barbarian extends BasePlayerClass{
     private Skills[] mSkillProfs;
 
     public Barbarian(int str, int dex, int con, int intel, int wis, int cha, int level, Skills[] skillProfs) {
-        super(str, dex, con, intel, wis, cha, level);
+        super(str, dex, con, intel, wis, cha, level, skillProfs);
 
         this.mDailyRageNumber = NUMBER_OF_RAGES_BY_LEVEL[level];
         this.mRageDamageBonus = NUMBER_OF_RAGES_BY_LEVEL[level];
-        this.mSkillProfs = skillProfs;
     }
 
     @Override
@@ -66,11 +65,6 @@ public class Barbarian extends BasePlayerClass{
     @Override
     public int initializeProficiencyBonus(int level) {
         return PROFICIENCY_BONUS_BY_LEVEL[level];
-    }
-
-    @Override
-    public Skills[] setSkillProficiencies() {
-        return mSkillProfs;
     }
 
     @Override
