@@ -222,7 +222,7 @@ public abstract class BasePlayerClass {
         this.mSleightOfHand = getDexterityModifier();
         this.mStealth = getDexterityModifier();
         this.mSurvival = getWisdomModifier();
-
+        //TODO fix null pointer exception: skillProficiencies
         for(Skills skill: skillProficiencies) {
             switch (skill) {
                 case ACROBATICS:
