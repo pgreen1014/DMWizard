@@ -98,7 +98,7 @@ public abstract class BasePlayerClass {
     }
 
     public BasePlayerClass(int str, int dex, int con, int intel, int wis, int cha,
-                           int level) {
+                           int level, Skills[] proficientSkills) {
         this.mClassLevel = level;
         this.mStrength = str;
         this.mDexterity = dex;
@@ -118,9 +118,10 @@ public abstract class BasePlayerClass {
         this.mRangedDamageBonus = mProficiencyBonus + getDexterityModifier();
         this.mWeaponProficiencies = initWeaponProficiencies();
         this.mArmorProficiencies = initArmorProficiencies();
+        this.mProficientSkills = proficientSkills;
 
         setSavingThrows(mSavingThrowProficiencies);
-        setUpSkills(setSkillProficiencies());
+        setUpSkills(mProficientSkills);
     }
 
     /////////////////////////////
@@ -130,7 +131,6 @@ public abstract class BasePlayerClass {
     public abstract int setHitDie();
     public abstract BaseStats[] setSavingThrowProficiencies();
     public abstract int initializeProficiencyBonus(int level);
-    public abstract Skills[] setSkillProficiencies();
     public abstract WeaponProficiencies[] initWeaponProficiencies();
     public abstract ArmorProficiencies[] initArmorProficiencies();
 
@@ -222,7 +222,6 @@ public abstract class BasePlayerClass {
         this.mSleightOfHand = getDexterityModifier();
         this.mStealth = getDexterityModifier();
         this.mSurvival = getWisdomModifier();
-        //TODO fix null pointer exception: skillProficiencies
         for(Skills skill: skillProficiencies) {
             switch (skill) {
                 case ACROBATICS:
