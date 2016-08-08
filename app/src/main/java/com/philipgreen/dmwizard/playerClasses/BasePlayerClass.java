@@ -141,9 +141,10 @@ public abstract class BasePlayerClass {
     private int setHitPoints() {
         int totalHitPoints = 0;
 
-        for(int i = 1; i >= mClassLevel; i ++) {
+        for(int i = 0; i <= mClassLevel; i ++) {
 
-            if (i == 1) {
+            // first level gets full hit points
+            if (i == 0) {
                 totalHitPoints += (mHitDie + getConstitutionModifier());
             } else {
                 totalHitPoints += (Dice.rollDie(mHitDie) + getConstitutionModifier());
