@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 
@@ -26,7 +27,13 @@ public class BattleSimulator extends AppCompatActivity {
             public void onClick(View v) {
                 Skills[] skillProfs = {Skills.ATHLETICS, Skills.SURVIVAL};
                 BasePlayerClass character = new Barbarian(17, 14, 12, 10, 12, 12, 1, skillProfs);
-                Log.i(TAG, character.toString());
+                Log.i(TAG, "character: " + character.toString());
+                Log.i(TAG, "saving throw " + Integer.toString(character.getCharismaSavingThrow()));
+
+                for (int i=0; i < 100; i++) {
+                    int roll = character.rollChaSavingThrow();
+                    Log.i(TAG, Integer.toString(roll));
+                }
             }
         });
     }

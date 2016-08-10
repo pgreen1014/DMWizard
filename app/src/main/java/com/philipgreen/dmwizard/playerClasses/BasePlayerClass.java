@@ -283,6 +283,34 @@ public abstract class BasePlayerClass {
     }
 
     ///////////////////////////////////////////////////
+    ////               CHARACTER ACTIONS            ///
+    ///////////////////////////////////////////////////
+
+    public int rollStrSavingThrow() {
+        return Dice.rollDie(20) + getStrengthSavingThrow();
+    }
+
+    public int rollDexSavingThrow() {
+        return Dice.rollDie(20) + getDexteritySavingThrow();
+    }
+
+    public int rollConSavingThrow() {
+        return Dice.rollDie(20) + getConstitutionSavingThrow();
+    }
+
+    public int rollIntSavingThrow() {
+        return Dice.rollDie(20) + getIntelligenceSavingThrow();
+    }
+
+    public int rollWisSavingThrow() {
+        return Dice.rollDie(20) + getWisdomSavingThrow();
+    }
+
+    public int rollChaSavingThrow() {
+        return Dice.rollDie(20) + getCharismaSavingThrow();
+    }
+
+    ///////////////////////////////////////////////////
     ////            ABILITY MODFIER GETTERS         ///
     ///////////////////////////////////////////////////
 
