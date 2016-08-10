@@ -310,6 +310,10 @@ public abstract class BasePlayerClass {
         return Dice.rollDie(20) + getCharismaSavingThrow();
     }
 
+    public int rollInitiative() {
+        return Dice.rollDie(20) + getInitiativeModifier();
+    }
+
     ///////////////////////////////////////////////////
     ////            ABILITY MODFIER GETTERS         ///
     ///////////////////////////////////////////////////
