@@ -314,6 +314,78 @@ public abstract class BasePlayerClass {
         return Dice.rollDie(20) + getInitiativeModifier();
     }
 
+    public int rollAcrobatics() {
+        return Dice.rollDie(20) + mAcrobatics;
+    }
+
+    public int rollAnimalHandling() {
+        return Dice.rollDie(20) + mAnimalHandling;
+    }
+
+    public int rollArcana() {
+        return Dice.rollDie(20) + mArcana;
+    }
+
+    public int rollAthletics() {
+        return Dice.rollDie(20) + mAthletics;
+    }
+
+    public int rollDeception() {
+        return Dice.rollDie(20) + mDeception;
+    }
+
+    public int rollHistory() {
+        return Dice.rollDie(20) + mHistory;
+    }
+
+    public int rollInsight() {
+        return Dice.rollDie(20) + mInsight;
+    }
+
+    public int rollIntimidation() {
+        return Dice.rollDie(20) + mIntimidation;
+    }
+
+    public int rollInvestigation() {
+        return Dice.rollDie(20) + mInvestigation;
+    }
+
+    public int rollMedicine() {
+        return Dice.rollDie(20) + mMedicine;
+    }
+
+    public int rollNature() {
+        return Dice.rollDie(20) + mNature;
+    }
+
+    public int rollPerception() {
+        return Dice.rollDie(20) + mPerception;
+    }
+
+    public int rollPerformance() {
+        return Dice.rollDie(20) + mPerformance;
+    }
+
+    public int rollPersuasion() {
+        return Dice.rollDie(20) + mPersuasion;
+    }
+
+    public int rollReligion() {
+        return Dice.rollDie(20) + mReligion;
+    }
+
+    public int rollSleightOfHand() {
+        return Dice.rollDie(20) + mSleightOfHand;
+    }
+
+    public int rollStealth() {
+        return Dice.rollDie(20) + mStealth;
+    }
+
+    public int rollSurvival() {
+        return Dice.rollDie(20) + mSurvival;
+    }
+
     ///////////////////////////////////////////////////
     ////            ABILITY MODFIER GETTERS         ///
     ///////////////////////////////////////////////////
