@@ -17,4 +17,16 @@ public class PlayerCharacter {
     private BaseRaceClass mRace;
     private ArrayList<BaseWeapon> mWeapons;
 
+    // Constructor for character with single class
+    public PlayerCharacter(BasePlayerClass playerClass, BaseRaceClass playerRace) {
+        this.mClasses.add(playerClass);
+        this.mRace = playerRace;
+    }
+
+    // Constructor for character with multiple classes
+    public PlayerCharacter(ArrayList<BasePlayerClass> playerClasses, BaseRaceClass playerRace) {
+        this.mClasses = playerClasses;
+        this.mRace = playerRace;
+    }
+
 }
