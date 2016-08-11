@@ -25,7 +25,24 @@ public class BattleSimulator extends AppCompatActivity {
         mBtnCreateCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PlayerCharacter c = new PlayerCharacter(12, 14, 15, 12, 18, 17);
 
+                Log.i(TAG, Integer.toString(c.getStrenthModifier()));
+                Log.i(TAG, Integer.toString(c.getDexterityModifier()));
+                Log.i(TAG, Integer.toString(c.getConstitutionModifier()));
+                Log.i(TAG, Integer.toString(c.getIntelligenceModifier()));
+                Log.i(TAG, Integer.toString(c.getWisdomModifier()));
+                Log.i(TAG, Integer.toString(c.getCharismaModifier()));
+
+                Log.i(TAG, "-----------------------------------------");
+
+                PlayerCharacter b = new PlayerCharacter(18, 13, 16, 17, 10, 8);
+                Log.i(TAG, Integer.toString(b.getStrenthModifier()));
+                Log.i(TAG, Integer.toString(b.getDexterityModifier()));
+                Log.i(TAG, Integer.toString(b.getConstitutionModifier()));
+                Log.i(TAG, Integer.toString(b.getIntelligenceModifier()));
+                Log.i(TAG, Integer.toString(b.getWisdomModifier()));
+                Log.i(TAG, Integer.toString(b.getCharismaModifier()));
             }
         });
     }
