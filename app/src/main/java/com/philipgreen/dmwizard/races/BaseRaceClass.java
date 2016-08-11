@@ -27,5 +27,5 @@ public abstract class BaseRaceClass {
     public abstract int initSpeed();
     public abstract WeaponType[] initWeaponProficiencies();
     public abstract Languages[] initLanguages();
-    public abstract HashMap<BaseStats, Integer> initStatBonueses();
+    public abstract HashMap<BaseStats, Integer> initStatBonuses();
 }

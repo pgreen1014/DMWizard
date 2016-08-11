@@ -26,7 +26,7 @@ public class Dwarf extends BaseRaceClass {
     }
 
     @Override
-    public HashMap<BaseStats, Integer> initStatBonueses() {
+    public HashMap<BaseStats, Integer> initStatBonuses() {
         HashMap<BaseStats, Integer> statBonusMap = new HashMap<>();
         statBonusMap.put(BaseStats.CONSTITUTION, 2);
         return statBonusMap;
