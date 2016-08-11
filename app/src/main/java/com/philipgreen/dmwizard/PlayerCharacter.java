@@ -6,6 +6,9 @@ import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by pgreen on 8/11/16.
@@ -81,6 +84,33 @@ public class PlayerCharacter {
     private int mPassiveWisdom;
 
     private ArrayList<Languages> mLanguages;
+
+    // statically create and put values into ABILITY_MODIFIER_MAP
+    public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
+    static {
+        Map<Integer, Integer>tempMap = new HashMap<Integer, Integer>();
+        tempMap.put(1, -5);
+        tempMap.put(2, -4);
+        tempMap.put(3, -4);
+        tempMap.put(4, -3);
+        tempMap.put(5, -3);
+        tempMap.put(6, -2);
+        tempMap.put(7, -2);
+        tempMap.put(8, -1);
+        tempMap.put(9, -1);
+        tempMap.put(10, 0);
+        tempMap.put(11, 0);
+        tempMap.put(12, 1);
+        tempMap.put(13, 1);
+        tempMap.put(14, 2);
+        tempMap.put(15, 2);
+        tempMap.put(16, 3);
+        tempMap.put(17, 3);
+        tempMap.put(18, 4);
+        tempMap.put(19, 4);
+        tempMap.put(20, 5);
+        ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
+    }
 
     public PlayerCharacter() {
 
