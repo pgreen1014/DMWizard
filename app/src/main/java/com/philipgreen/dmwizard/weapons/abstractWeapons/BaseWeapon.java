@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.weapons;
+package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;

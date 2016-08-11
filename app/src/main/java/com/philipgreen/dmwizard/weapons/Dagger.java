@@ -2,6 +2,7 @@ package com.philipgreen.dmwizard.weapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.ThrownWeapon;
 
 /**
  * Created by pgreen on 8/7/16.
