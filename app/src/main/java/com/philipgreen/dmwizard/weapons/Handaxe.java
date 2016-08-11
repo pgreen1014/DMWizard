@@ -5,32 +5,27 @@ import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.ThrownWeapon;
 
 /**
- * Created by pgreen on 8/7/16.
+ * Created by pgreen on 8/10/16.
  */
-public class Dagger extends ThrownWeapon {
-
-    public Dagger() {
-        super();
-    }
-
+public class Handaxe extends ThrownWeapon {
     @Override
     public int initMinThrowRange() {
-        return 20;
+        return 0;
     }
 
     @Override
     public int initMaxThrowRange() {
-        return 60;
+        return 0;
     }
 
     @Override
     public int initDamageDie() {
-        return 4;
+        return 0;
     }
 
     @Override
     public int initDieNumber() {
-        return 1;
+        return 0;
     }
 
     @Override
@@ -40,17 +35,16 @@ public class Dagger extends ThrownWeapon {
 
     @Override
     public WeaponDamageType initWeaponDamageType() {
-        return WeaponDamageType.PIERCING;
+        return null;
     }
 
     @Override
     public int initWeight() {
-        return 1;
+        return 0;
     }
 
     @Override
     public WeaponProperties[] initWeaponProperties() {
-        // Leave out Thrown property because this is represented by being extending abstract class
-        return new WeaponProperties[] {WeaponProperties.FINESSE, WeaponProperties.LIGHT};
+        return new WeaponProperties[0];
     }
 }
