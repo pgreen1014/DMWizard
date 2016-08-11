@@ -10,8 +10,8 @@ import java.util.ArrayList;
 /**
  * Created by pgreen on 8/11/16.
  */
-public class PlayerClass {
-    private static final String TAG = "PlayerClass";
+public class PlayerCharacter {
+    private static final String TAG = "PlayerCharacter";
 
     private String mCharacterName;
     private Alignment mAlignment;
@@ -82,8 +82,8 @@ public class PlayerClass {
 
     private ArrayList<Languages> mLanguages;
 
-    public PlayerClass() {
-        
+    public PlayerCharacter() {
+
     }
 
 }
