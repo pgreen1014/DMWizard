@@ -39,6 +39,12 @@ public class Barbarian extends BasePlayerClass{
         this.mRageDamageBonus = NUMBER_OF_RAGES_BY_LEVEL[level];
     }
 
+    // Constructor for testing skills
+    public Barbarian(Skills[] skillProfs) {
+        super(1, 1, 1, 1, 1, 1, 1, skillProfs);
+
+    }
+
     @Override
     public String toString() {
         return "Barbarian{" +

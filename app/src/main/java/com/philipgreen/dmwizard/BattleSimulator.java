@@ -11,6 +11,8 @@ import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 
+import java.util.ArrayList;
+
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
     Button mBtnCreateCharacter;
@@ -25,24 +27,15 @@ public class BattleSimulator extends AppCompatActivity {
         mBtnCreateCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlayerCharacter c = new PlayerCharacter(12, 14, 15, 12, 18, 17);
+                Skills[] skills = new Skills[] {Skills.ATHLETICS, Skills.INTIMIDATION};
+                BasePlayerClass barb = new Barbarian(skills);
+                PlayerCharacter character = new PlayerCharacter(barb, 17, 15, 15, 9, 12, 10);
 
-                Log.i(TAG, Integer.toString(c.getStrenthModifier()));
-                Log.i(TAG, Integer.toString(c.getDexterityModifier()));
-                Log.i(TAG, Integer.toString(c.getConstitutionModifier()));
-                Log.i(TAG, Integer.toString(c.getIntelligenceModifier()));
-                Log.i(TAG, Integer.toString(c.getWisdomModifier()));
-                Log.i(TAG, Integer.toString(c.getCharismaModifier()));
+                ArrayList<Skills> proficientSkills = character.getProficientSkills();
 
-                Log.i(TAG, "-----------------------------------------");
-
-                PlayerCharacter b = new PlayerCharacter(18, 13, 16, 17, 10, 8);
-                Log.i(TAG, Integer.toString(b.getStrenthModifier()));
-                Log.i(TAG, Integer.toString(b.getDexterityModifier()));
-                Log.i(TAG, Integer.toString(b.getConstitutionModifier()));
-                Log.i(TAG, Integer.toString(b.getIntelligenceModifier()));
-                Log.i(TAG, Integer.toString(b.getWisdomModifier()));
-                Log.i(TAG, Integer.toString(b.getCharismaModifier()));
+                for(Skills skill: proficientSkills) {
+                    Log.i(TAG, skill.toString());
+                }
             }
         });
     }
