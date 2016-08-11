@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Dwarf extends BaseRaceClass {
 
     public Dwarf() {
-        
+
     }
 
     @Override
