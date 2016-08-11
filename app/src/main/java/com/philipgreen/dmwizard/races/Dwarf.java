@@ -10,6 +10,11 @@ import java.util.HashMap;
  * Created by pgreen on 8/10/16.
  */
 public class Dwarf extends BaseRaceClass {
+
+    public Dwarf() {
+        
+    }
+
     @Override
     public int initSpeed() {
         return 25;
