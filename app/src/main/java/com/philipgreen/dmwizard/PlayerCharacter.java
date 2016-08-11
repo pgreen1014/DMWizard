@@ -17,6 +17,7 @@ public class PlayerCharacter {
     private static final String TAG = "PlayerCharacter";
 
     private String mCharacterName;
+    private int mCharacterLevel;       // Character level is the total number of class levels
     private Alignment mAlignment;
     // TODO add Background
     private int mExperiencePoints;
