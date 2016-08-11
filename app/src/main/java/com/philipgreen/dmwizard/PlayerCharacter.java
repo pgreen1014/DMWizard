@@ -113,8 +113,41 @@ public class PlayerCharacter {
         ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
     }
 
-    public PlayerCharacter() {
+    public PlayerCharacter(int str, int dex, int con, int intel, int wis, int cha) {
+        this.mStrength = str;
+        this.mDexterity = dex;
+        this.mConstitution = con;
+        this.mIntelligence = intel;
+        this.mWisdom = wis;
+        this.mCharisma = cha;
+    }
 
+    /////////////////////////
+    //  ABILITY MODIFIERS  //
+    /////////////////////////
+
+    public int getStrenthModifier() {
+        return ABILITY_MODIFIER_MAP.get(mStrength);
+    }
+
+    public int getDexterityModifier() {
+        return ABILITY_MODIFIER_MAP.get(mDexterity);
+    }
+
+    public int getConstitutionModifier() {
+        return ABILITY_MODIFIER_MAP.get(mConstitution);
+    }
+
+    public int getIntelligenceModifier() {
+        return ABILITY_MODIFIER_MAP.get(mIntelligence);
+    }
+
+    public int getWisdomModifier() {
+        return ABILITY_MODIFIER_MAP.get(mWisdom);
+    }
+
+    public int getCharismaModifier() {
+        return ABILITY_MODIFIER_MAP.get(mCharisma);
     }
 
 }
