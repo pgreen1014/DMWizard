@@ -116,7 +116,7 @@ public class PlayerCharacter {
     public PlayerCharacter(BasePlayerClass playerClass, int str, int dex, int con, int intel, int wis, int cha) {
         this.mClasses = new ArrayList<>();
         mClasses.add(playerClass);
-        
+
         this.mStrength = str;
         this.mDexterity = dex;
         this.mConstitution = con;
