@@ -586,4 +586,8 @@ public abstract class BasePlayerClass {
     public void setRangedDamageBounus(int rangedDamageBounus) {
         mRangedDamageBonus = rangedDamageBounus;
     }
+
+    public Skills[] getProficientSkills() {
+        return mProficientSkills;
+    }
 }

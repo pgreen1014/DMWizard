@@ -2,6 +2,7 @@ package com.philipgreen.dmwizard;
 
 import com.philipgreen.dmwizard.data.Alignment;
 import com.philipgreen.dmwizard.data.Languages;
+import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 
@@ -63,6 +64,7 @@ public class PlayerCharacter {
     private int mDeathSaveSuccesses;
     private int mDeathSaveFailures;
 
+    private ArrayList<Skills> mProficientSkills;
     private int mAcrobatics;
     private int mAnimalHandling;
     private int mArcana;
@@ -123,6 +125,22 @@ public class PlayerCharacter {
         this.mIntelligence = intel;
         this.mWisdom = wis;
         this.mCharisma = cha;
+        this.mProficientSkills = setupSkillProficiencies(mClasses);
+    }
+
+    private ArrayList<Skills> setupSkillProficiencies(ArrayList<BasePlayerClass> classes) {
+        ArrayList<Skills> combinedProficientSkills = new ArrayList<>();
+
+        for(BasePlayerClass playerClass: classes) {
+            Skills[] skills = playerClass.getProficientSkills();
+
+            for(Skills skill: skills) {
+                combinedProficientSkills.add(skill);
+            }
+
+        }
+
+        return combinedProficientSkills;
     }
 
     /////////////////////////
@@ -153,4 +171,7 @@ public class PlayerCharacter {
         return ABILITY_MODIFIER_MAP.get(mCharisma);
     }
 
+    public ArrayList<Skills> getProficientSkills() {
+        return mProficientSkills;
+    }
 }
