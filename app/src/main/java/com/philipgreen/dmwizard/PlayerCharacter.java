@@ -33,7 +33,7 @@ public class PlayerCharacter {
     // TODO Money
 
     private BaseRaceClass mRace;
-    private ArrayList<BasePlayerClass> mClass;
+    private ArrayList<BasePlayerClass> mClasses;
 
     private int mStrength;
     private int mDexterity;
@@ -113,7 +113,10 @@ public class PlayerCharacter {
         ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
     }
 
-    public PlayerCharacter(int str, int dex, int con, int intel, int wis, int cha) {
+    public PlayerCharacter(BasePlayerClass playerClass, int str, int dex, int con, int intel, int wis, int cha) {
+        this.mClasses = new ArrayList<>();
+        mClasses.add(playerClass);
+        
         this.mStrength = str;
         this.mDexterity = dex;
         this.mConstitution = con;
