@@ -70,33 +70,6 @@ public abstract class BasePlayerClass {
     private int mStealth;
     private int mSurvival;
 
-    // statically create and put values into ABILITY_MODIFIER_MAP
-    public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
-    static {
-        Map<Integer, Integer>tempMap = new HashMap<Integer, Integer>();
-        tempMap.put(1, -5);
-        tempMap.put(2, -4);
-        tempMap.put(3, -4);
-        tempMap.put(4, -3);
-        tempMap.put(5, -3);
-        tempMap.put(6, -2);
-        tempMap.put(7, -2);
-        tempMap.put(8, -1);
-        tempMap.put(9, -1);
-        tempMap.put(10, 0);
-        tempMap.put(11, 0);
-        tempMap.put(12, 1);
-        tempMap.put(13, 1);
-        tempMap.put(14, 2);
-        tempMap.put(15, 2);
-        tempMap.put(16, 3);
-        tempMap.put(17, 3);
-        tempMap.put(18, 4);
-        tempMap.put(19, 4);
-        tempMap.put(20, 5);
-        ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
-    }
-
     public BasePlayerClass(int str, int dex, int con, int intel, int wis, int cha,
                            int level, Skills[] proficientSkills) {
         this.mClassLevel = level;
@@ -110,18 +83,9 @@ public abstract class BasePlayerClass {
         this.mHitDie  = setHitDie();
         this.mSavingThrowProficiencies = setSavingThrowProficiencies();
 
-        this.mInitiativeModifier = getDexterityModifier();
-        this.mHitPoints = setHitPoints();
-        this.mMeleeAttackBonus = mProficiencyBonus + getStrengthModifier();
-        this.mMeleeDamageBonus = mProficiencyBonus + getStrengthModifier();
-        this.mRangedAttackBonus = mProficiencyBonus + getDexterityModifier();
-        this.mRangedDamageBonus = mProficiencyBonus + getDexterityModifier();
         this.mWeaponProficiencies = initWeaponProficiencies();
         this.mArmorProficiencies = initArmorProficiencies();
         this.mProficientSkills = proficientSkills;
-
-        setSavingThrows(mSavingThrowProficiencies);
-        setUpSkills(mProficientSkills);
     }
 
     /////////////////////////////
@@ -133,154 +97,6 @@ public abstract class BasePlayerClass {
     public abstract int initializeProficiencyBonus(int level);
     public abstract WeaponProficiencies[] initWeaponProficiencies();
     public abstract ArmorProficiencies[] initArmorProficiencies();
-
-    //////////////////////////
-    // CONSTRUCTOR METHODS  //
-    //////////////////////////
-
-    private int setHitPoints() {
-        int totalHitPoints = 0;
-
-        for(int i = 0; i <= mClassLevel; i ++) {
-
-            // first level gets full hit points
-            if (i == 0) {
-                totalHitPoints += (mHitDie + getConstitutionModifier());
-            } else {
-                totalHitPoints += (Dice.rollDie(mHitDie) + getConstitutionModifier());
-            }
-        }
-
-        return totalHitPoints;
-    }
-
-    private void setSavingThrows(BaseStats[] savingThrowProficiencies) {
-        // Set proficient saving throws
-        for(BaseStats stat: savingThrowProficiencies) {
-            switch (stat) {
-                case STRENGTH:
-                    mStrengthSavingThrow = getStrengthModifier() + mProficiencyBonus;
-                    break;
-                case DEXTERITY:
-                    mDexteritySavingThrow = getDexterityModifier() + mProficiencyBonus;
-                    break;
-                case CONSTITUTION:
-                    mConstitutionSavingThrow = getConstitutionModifier() + mProficiencyBonus;
-                    break;
-                case INTELLIGENCE:
-                    mIntelligenceSavingThrow = getIntelligenceModifier() + mProficiencyBonus;
-                    break;
-                case WISDOM:
-                    mWisdomSavingThrow = getWisdomModifier() + mProficiencyBonus;
-                    break;
-                case CHARISMA:
-                    mCharismaSavingThrow = getCharismaModifier() + mProficiencyBonus;
-                    break;
-                default:
-                    Log.e(TAG, "Undefined enumeration constant: BaseStats: " + stat.toString());
-            }
-        }
-
-        // Whatever saving throws were not set should be set to character's stat modifier
-        if(mStrengthSavingThrow == 0) {
-            mStrengthSavingThrow = getStrengthModifier();
-        }
-        if(mDexteritySavingThrow == 0) {
-            mDexteritySavingThrow = getDexterityModifier();
-        }
-        if(mConstitutionSavingThrow == 0) {
-            mConstitutionSavingThrow = getConstitutionModifier();
-        }
-        if(mIntelligenceSavingThrow == 0) {
-            mIntelligenceSavingThrow = getIntelligenceModifier();
-        }
-        if(mWisdomSavingThrow == 0) {
-            mWisdomSavingThrow = getWisdomModifier();
-        }
-        if(mCharismaSavingThrow == 0) {
-            mCharismaSavingThrow = getCharismaModifier();
-        }
-
-    }
-
-    private void setUpSkills(Skills[] skillProficiencies) {
-        this.mAcrobatics = getDexterityModifier();
-        this.mAnimalHandling = getWisdomModifier();
-        this.mArcana = getInitiativeModifier();
-        this.mAthletics = getStrengthModifier();
-        this.mDeception = getCharismaModifier();
-        this.mHistory = getIntelligenceModifier();
-        this.mInsight = getWisdomModifier();
-        this.mIntimidation = getCharisma();
-        this.mInvestigation = getInitiativeModifier();
-        this.mMedicine = getWisdomModifier();
-        this.mNature = getIntelligenceModifier();
-        this.mPerception = getWisdomModifier();
-        this.mPerformance = getCharismaModifier();
-        this.mPersuasion = getCharismaModifier();
-        this.mReligion = getIntelligenceModifier();
-        this.mSleightOfHand = getDexterityModifier();
-        this.mStealth = getDexterityModifier();
-        this.mSurvival = getWisdomModifier();
-        for(Skills skill: skillProficiencies) {
-            switch (skill) {
-                case ACROBATICS:
-                    this.mAcrobatics += mProficiencyBonus;
-                    break;
-                case ANIMAL_HANDLING:
-                    this.mAnimalHandling += mProficiencyBonus;
-                    break;
-                case ARCANA:
-                    this.mArcana += mProficiencyBonus;
-                    break;
-                case ATHLETICS:
-                    this.mAthletics += mProficiencyBonus;
-                    break;
-                case DECEPTION:
-                    this.mDeception += mProficiencyBonus;
-                    break;
-                case HISTORY:
-                    this.mHistory += mProficiencyBonus;
-                    break;
-                case INSIGHT:
-                    this.mInsight += mProficiencyBonus;
-                    break;
-                case INTIMIDATION:
-                    this.mIntimidation += mProficiencyBonus;
-                    break;
-                case INVESTIGATION:
-                    this.mInvestigation += mProficiencyBonus;
-                    break;
-                case MEDICINE:
-                    this.mMedicine += mProficiencyBonus;
-                    break;
-                case NATURE:
-                    this.mNature += mProficiencyBonus;
-                    break;
-                case PERCEPTION:
-                    this.mPerception += mProficiencyBonus;
-                    break;
-                case PERFORMANCE:
-                    this.mPerformance += mProficiencyBonus;
-                    break;
-                case PERSUASION:
-                    this.mPersuasion += mProficiencyBonus;
-                    break;
-                case RELIGION:
-                    this.mReligion += mProficiencyBonus;
-                    break;
-                case SLEIGHT_OF_HAND:
-                    this.mSleightOfHand += mProficiencyBonus;
-                    break;
-                case STEALTH:
-                    this.mStealth += mProficiencyBonus;
-                    break;
-                case SURVIVAL:
-                    this.mStealth += mProficiencyBonus;
-                    break;
-            }
-        }
-    }
 
     ///////////////////////////////////////////////////
     ////               CHARACTER ACTIONS            ///
@@ -386,33 +202,6 @@ public abstract class BasePlayerClass {
         return Dice.rollDie(20) + mSurvival;
     }
 
-    ///////////////////////////////////////////////////
-    ////            ABILITY MODFIER GETTERS         ///
-    ///////////////////////////////////////////////////
-
-    public int getStrengthModifier() {
-        return ABILITY_MODIFIER_MAP.get(this.mStrength);
-    }
-
-    public int getDexterityModifier() {
-        return ABILITY_MODIFIER_MAP.get(this.mDexterity);
-    }
-
-    public int getConstitutionModifier() {
-        return ABILITY_MODIFIER_MAP.get(this.mConstitution);
-    }
-
-    public int getIntelligenceModifier() {
-        return ABILITY_MODIFIER_MAP.get(this.mIntelligence);
-    }
-
-    public int getWisdomModifier() {
-        return ABILITY_MODIFIER_MAP.get(this.mWisdom);
-    }
-
-    public int getCharismaModifier() {
-        return ABILITY_MODIFIER_MAP.get(this.mCharisma);
-    }
 
     ///////////////////////////////////////////////////
     ///               GETTERS AND SETTERS           ///
@@ -585,5 +374,13 @@ public abstract class BasePlayerClass {
 
     public void setRangedDamageBounus(int rangedDamageBounus) {
         mRangedDamageBonus = rangedDamageBounus;
+    }
+
+    public Skills[] getSkillProficiencies() {
+        return this.mProficientSkills;
+    }
+
+    public BaseStats[] getSavingThrowProficiencies() {
+        return this.mSavingThrowProficiencies;
     }
 }
