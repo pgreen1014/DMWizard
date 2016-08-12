@@ -590,4 +590,8 @@ public abstract class BasePlayerClass {
     public Skills[] getProficientSkills() {
         return mProficientSkills;
     }
+
+    public BaseStats[] getSavingThrowProficiencies() {
+        return mSavingThrowProficiencies;
+    }
 }
