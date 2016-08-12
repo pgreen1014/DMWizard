@@ -1,6 +1,10 @@
 package com.philipgreen.dmwizard;
 
+import android.util.ArraySet;
+import android.util.Log;
+
 import com.philipgreen.dmwizard.data.Alignment;
+import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.dice.Dice;
@@ -10,6 +14,7 @@ import com.philipgreen.dmwizard.races.BaseRaceClass;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -44,9 +49,10 @@ public class PlayerCharacter {
     private int mWisdom;
     private int mCharisma;
 
+    private HashSet<BaseStats> mSavingThrowProficiencies;  // A set because there should be no repeated values TODO needs testing
     private int mStrengthSavingThrow;
     private int mDexteritySavingThrow;
-    private int mConstituionSavingThrow;
+    private int mConstitutionSavingThrow;
     private int mIntelligenceSavingThrow;
     private int mWisdomSavingThrow;
     private int mCharismaSavingThrow;
@@ -126,8 +132,13 @@ public class PlayerCharacter {
         this.mIntelligence = intel;
         this.mWisdom = wis;
         this.mCharisma = cha;
+
+        this.mInitiative = getDexterityModifier();
         this.mProficientSkills = setupSkillProficiencies(mClasses);
+        this.mSavingThrowProficiencies = setUpSavingThrowProficiencies(mClasses);
+
         setUpSkills(mProficientSkills);
+        setSavingThrows(mSavingThrowProficiencies);
     }
 
     // Grabs skill proficiencies from all classes to create an array list of all character proficiencies
@@ -151,7 +162,7 @@ public class PlayerCharacter {
         this.mAcrobatics = getDexterityModifier();
         this.mAnimalHandling = getWisdomModifier();
         this.mArcana = getIntelligenceModifier();
-        this.mAthletics = getStrenthModifier();
+        this.mAthletics = getStrengthModifier();
         this.mDeception = getCharismaModifier();
         this.mHistory = getIntelligenceModifier();
         this.mInsight = getWisdomModifier();
@@ -226,11 +237,74 @@ public class PlayerCharacter {
         }
     }
 
+    private HashSet<BaseStats> setUpSavingThrowProficiencies(ArrayList<BasePlayerClass> playerClasses) {
+        HashSet<BaseStats> savingThrowProficiencies = new HashSet<>();
+
+        for(BasePlayerClass playerClass: playerClasses) {
+            BaseStats[] proficiencies = playerClass.getSavingThrowProficiencies();
+
+            for(BaseStats proficiency: proficiencies) {
+                savingThrowProficiencies.add(proficiency);
+            }
+        }
+
+        return savingThrowProficiencies;
+    }
+
+    private void setSavingThrows(HashSet<BaseStats> savingThrowProficiencies) {
+        // Set proficient saving throws
+        for(BaseStats stat: savingThrowProficiencies) {
+            switch (stat) {
+                case STRENGTH:
+                    mStrengthSavingThrow = getStrengthModifier() + mProficiencyBonus;
+                    break;
+                case DEXTERITY:
+                    mDexteritySavingThrow = getDexterityModifier() + mProficiencyBonus;
+                    break;
+                case CONSTITUTION:
+                    mConstitutionSavingThrow = getConstitutionModifier() + mProficiencyBonus;
+                    break;
+                case INTELLIGENCE:
+                    mIntelligenceSavingThrow = getIntelligenceModifier() + mProficiencyBonus;
+                    break;
+                case WISDOM:
+                    mWisdomSavingThrow = getWisdomModifier() + mProficiencyBonus;
+                    break;
+                case CHARISMA:
+                    mCharismaSavingThrow = getCharismaModifier() + mProficiencyBonus;
+                    break;
+                default:
+                    Log.e(TAG, "Undefined enumeration constant: BaseStats: " + stat.toString());
+            }
+        }
+
+        // Whatever saving throws were not set should be set to character's stat modifier
+        if(mStrengthSavingThrow == 0) {
+            mStrengthSavingThrow = getStrengthModifier();
+        }
+        if(mDexteritySavingThrow == 0) {
+            mDexteritySavingThrow = getDexterityModifier();
+        }
+        if(mConstitutionSavingThrow == 0) {
+            mConstitutionSavingThrow = getConstitutionModifier();
+        }
+        if(mIntelligenceSavingThrow == 0) {
+            mIntelligenceSavingThrow = getIntelligenceModifier();
+        }
+        if(mWisdomSavingThrow == 0) {
+            mWisdomSavingThrow = getWisdomModifier();
+        }
+        if(mCharismaSavingThrow == 0) {
+            mCharismaSavingThrow = getCharismaModifier();
+        }
+
+    }
+
     /////////////////////////
     //  ABILITY MODIFIERS  //
     /////////////////////////
 
-    public int getStrenthModifier() {
+    public int getStrengthModifier() {
         return ABILITY_MODIFIER_MAP.get(mStrength);
     }
 
@@ -261,6 +335,34 @@ public class PlayerCharacter {
     ////////////////////////////////
     //      CHARACTER ACTIONS     //
     ////////////////////////////////
+
+    public int rollStrSavingThrow() {
+        return Dice.rollDie(20) + getStrengthSavingThrow();
+    }
+
+    public int rollDexSavingThrow() {
+        return Dice.rollDie(20) + getDexteritySavingThrow();
+    }
+
+    public int rollConSavingThrow() {
+        return Dice.rollDie(20) + getConstitutionSavingThrow();
+    }
+
+    public int rollIntSavingThrow() {
+        return Dice.rollDie(20) + getIntelligenceSavingThrow();
+    }
+
+    public int rollWisSavingThrow() {
+        return Dice.rollDie(20) + getWisdomSavingThrow();
+    }
+
+    public int rollChaSavingThrow() {
+        return Dice.rollDie(20) + getCharismaSavingThrow();
+    }
+
+    public int rollInitiative() {
+        return Dice.rollDie(20) + getInitiativeModifier();
+    }
 
     public int rollAcrobatics() {
         return Dice.rollDie(20) + mAcrobatics;
@@ -332,5 +434,61 @@ public class PlayerCharacter {
 
     public int rollSurvival() {
         return Dice.rollDie(20) + mSurvival;
+    }
+
+    /////////////////////////////////
+    //     GETTERS AND SETTERS     //
+    /////////////////////////////////
+
+    public int getStrengthSavingThrow() {
+        return mStrengthSavingThrow;
+    }
+
+    public void setStrengthSavingThrow(int strengthSavingThrow) {
+        mStrengthSavingThrow = strengthSavingThrow;
+    }
+
+    public int getDexteritySavingThrow() {
+        return mDexteritySavingThrow;
+    }
+
+    public void setDexteritySavingThrow(int dexteritySavingThrow) {
+        mDexteritySavingThrow = dexteritySavingThrow;
+    }
+
+    public int getConstitutionSavingThrow() {
+        return mConstitutionSavingThrow;
+    }
+
+    public void setConstitutionSavingThrow(int constitutionSavingThrow) {
+        mConstitutionSavingThrow = constitutionSavingThrow;
+    }
+
+    public int getIntelligenceSavingThrow() {
+        return mIntelligenceSavingThrow;
+    }
+
+    public void setIntelligenceSavingThrow(int intelligenceSavingThrow) {
+        mIntelligenceSavingThrow = intelligenceSavingThrow;
+    }
+
+    public int getWisdomSavingThrow() {
+        return mWisdomSavingThrow;
+    }
+
+    public void setWisdomSavingThrow(int wisdomSavingThrow) {
+        mWisdomSavingThrow = wisdomSavingThrow;
+    }
+
+    public int getCharismaSavingThrow() {
+        return mCharismaSavingThrow;
+    }
+
+    public int getInitiativeModifier() {
+        return mInitiative;
+    }
+
+    public void setInitiativeModifier(int initiative) {
+        mInitiative = initiative;
     }
 }
