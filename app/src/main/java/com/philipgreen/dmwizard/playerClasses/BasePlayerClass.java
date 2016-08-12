@@ -206,13 +206,13 @@ public abstract class BasePlayerClass {
     private void setUpSkills(Skills[] skillProficiencies) {
         this.mAcrobatics = getDexterityModifier();
         this.mAnimalHandling = getWisdomModifier();
-        this.mArcana = getInitiativeModifier();
+        this.mArcana = getIntelligenceModifier();
         this.mAthletics = getStrengthModifier();
         this.mDeception = getCharismaModifier();
         this.mHistory = getIntelligenceModifier();
         this.mInsight = getWisdomModifier();
         this.mIntimidation = getCharisma();
-        this.mInvestigation = getInitiativeModifier();
+        this.mInvestigation = getIntelligenceModifier();
         this.mMedicine = getWisdomModifier();
         this.mNature = getIntelligenceModifier();
         this.mPerception = getWisdomModifier();
