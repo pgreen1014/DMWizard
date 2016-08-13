@@ -22,6 +22,8 @@ import java.util.Map;
  */
 public class PlayerCharacter {
     private static final String TAG = "PlayerCharacter";
+    // Proficiency bonus modifiers by level. correct modifier = level - 1
+    private static final int[] PROFICIENCY_BONUS_BY_LEVEL = {2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6};
 
     private String mCharacterName;
     private int mCharacterLevel;       // Character level is the total number of class levels
@@ -126,6 +128,9 @@ public class PlayerCharacter {
         this.mClasses = new ArrayList<>();
         mClasses.add(playerClass);
 
+        initCharacterLevel(mClasses);
+        initProficiencyBonus(mCharacterLevel);
+
         this.mStrength = str;
         this.mDexterity = dex;
         this.mConstitution = con;
@@ -139,6 +144,25 @@ public class PlayerCharacter {
 
         setUpSkills(mProficientSkills);
         setSavingThrows(mSavingThrowProficiencies);
+    }
+
+    private int initCharacterLevel(ArrayList<BasePlayerClass> classes) {
+        int characterLevel = 0;
+
+        for(BasePlayerClass playerClass: classes) {
+            characterLevel += playerClass.getClassLevel();
+        }
+
+        return characterLevel;
+    }
+
+    private void initProficiencyBonus(int characterLevel) {
+        // if Character level is greater than 20 then set to highest proficiency
+        if (mCharacterLevel > 20) {
+            mProficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[19];
+            return;
+        }
+        mProficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[mCharacterLevel - 1];
     }
 
     // Grabs skill proficiencies from all classes to create an array list of all character proficiencies
