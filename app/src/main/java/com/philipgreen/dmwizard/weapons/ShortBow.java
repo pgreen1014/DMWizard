@@ -8,6 +8,8 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
  * Created by pgreen on 8/13/16.
  */
 public class ShortBow extends RangedWeapon {
+    private final static String TAG = "ShortBow";
+
     @Override
     public int initDamageDie() {
         return 0;
