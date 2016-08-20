@@ -97,15 +97,9 @@ public abstract class BasePlayerClass {
         ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
     }
 
-    public BasePlayerClass(int str, int dex, int con, int intel, int wis, int cha,
-                           int level, Skills[] proficientSkills) {
+    public BasePlayerClass(int level, Skills[] proficientSkills) {
         this.mClassLevel = level;
-        this.mStrength = str;
-        this.mDexterity = dex;
-        this.mConstitution = con;
-        this.mIntelligence = intel;
-        this.mWisdom = wis;
-        this.mCharisma = cha;
+
         this.mProficiencyBonus = initializeProficiencyBonus(this.mClassLevel);
         this.mHitDie  = setHitDie();
         this.mSavingThrowProficiencies = setSavingThrowProficiencies();

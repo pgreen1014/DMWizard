@@ -32,17 +32,11 @@ public class Barbarian extends BasePlayerClass{
     private int mRageDamageBonus;
     private Skills[] mSkillProfs;
 
-    public Barbarian(int str, int dex, int con, int intel, int wis, int cha, int level, Skills[] skillProfs) {
-        super(str, dex, con, intel, wis, cha, level, skillProfs);
+    public Barbarian(int level, Skills[] skillProfs) {
+        super(level, skillProfs);
 
         this.mDailyRageNumber = NUMBER_OF_RAGES_BY_LEVEL[level];
         this.mRageDamageBonus = NUMBER_OF_RAGES_BY_LEVEL[level];
-    }
-
-    // Constructor for testing skills
-    public Barbarian(Skills[] skillProfs) {
-        super(1, 1, 1, 1, 1, 1, 1, skillProfs);
-
     }
 
     @Override
