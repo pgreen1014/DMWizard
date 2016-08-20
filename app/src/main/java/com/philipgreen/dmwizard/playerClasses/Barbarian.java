@@ -41,14 +41,7 @@ public class Barbarian extends BasePlayerClass{
 
     @Override
     public String toString() {
-        return "Barbarian{" +
-                "\nStrength = " + getStrength() +
-                "\nDexterity = " + getDexterity() +
-                "\nConstitution = " + getConstitution() +
-                "\nIntelligence = " + getIntelligence() +
-                "\nWisdom = " + getWisdom() +
-                "\nCharisma = " + getCharisma() +
-                '}';
+        return "Barbarian";
     }
 
     @Override
