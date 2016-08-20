@@ -27,15 +27,10 @@ public class BattleSimulator extends AppCompatActivity {
         mBtnCreateCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Skills[] skills = new Skills[] {Skills.ATHLETICS, Skills.INTIMIDATION};
-                BasePlayerClass barb = new Barbarian(skills);
-                PlayerCharacter character = new PlayerCharacter(barb, 17, 15, 15, 9, 12, 10);
-
-                ArrayList<Skills> proficientSkills = character.getProficientSkills();
-
-                for(Skills skill: proficientSkills) {
-                    Log.i(TAG, skill.toString());
-                }
+                Skills[] playerSkills = new Skills[] {Skills.ANIMAL_HANDLING, Skills.SURVIVAL};
+                BasePlayerClass playerClass = new Barbarian(1, playerSkills);
+                PlayerCharacter player = new PlayerCharacter(playerClass, 17, 15, 14, 10, 13, 9);
+                Log.i(TAG, player.toString());
             }
         });
     }
