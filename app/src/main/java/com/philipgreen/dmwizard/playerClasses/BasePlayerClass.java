@@ -102,20 +102,11 @@ public abstract class BasePlayerClass {
 
         this.mProficiencyBonus = initializeProficiencyBonus(this.mClassLevel);
         this.mHitDie  = setHitDie();
-        this.mSavingThrowProficiencies = setSavingThrowProficiencies();
 
-        this.mInitiativeModifier = getDexterityModifier();
-        this.mHitPoints = setHitPoints();
-        this.mMeleeAttackBonus = mProficiencyBonus + getStrengthModifier();
-        this.mMeleeDamageBonus = mProficiencyBonus + getStrengthModifier();
-        this.mRangedAttackBonus = mProficiencyBonus + getDexterityModifier();
-        this.mRangedDamageBonus = mProficiencyBonus + getDexterityModifier();
         this.mWeaponProficiencies = initWeaponProficiencies();
         this.mArmorProficiencies = initArmorProficiencies();
         this.mProficientSkills = proficientSkills;
-
-        setSavingThrows(mSavingThrowProficiencies);
-        setUpSkills(mProficientSkills);
+        this.mSavingThrowProficiencies = setSavingThrowProficiencies();
     }
 
     /////////////////////////////
