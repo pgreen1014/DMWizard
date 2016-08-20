@@ -128,7 +128,7 @@ public class PlayerCharacter {
         this.mClasses = new ArrayList<>();
         mClasses.add(playerClass);
 
-        initCharacterLevel(mClasses);
+        this.mCharacterLevel = setCharacterLevel(mClasses);
         initProficiencyBonus(mCharacterLevel);
 
         this.mStrength = str;
@@ -146,7 +146,55 @@ public class PlayerCharacter {
         setSavingThrows(mSavingThrowProficiencies);
     }
 
-    private int initCharacterLevel(ArrayList<BasePlayerClass> classes) {
+    public String toString() {
+        return "Proficiency bonus: " + Integer.toString(mProficiencyBonus) + "\n\n"
+                + "Classes: " + getClassesToString() + "\n"
+                + "Initiative: " + Integer.toString(getInitiativeModifier()) + "\n\n"
+                + "ABILITIES\n"
+                + "Strength: " + Integer.toString(mStrength) + "\n"
+                + "Strength modifier: " + Integer.toString(getStrengthModifier()) + "\n\n"
+                + "Dexterity: " + Integer.toString(mDexterity) + "\n"
+                + "Dexterity modifier: " + Integer.toString(getDexterityModifier()) + "\n\n"
+                + "Constitution: " + Integer.toString(mConstitution) + "\n"
+                + "Constitution modifier: " + Integer.toString(getConstitutionModifier()) + "\n\n"
+                + "Intelligence: " + Integer.toString(mIntelligence) + "\n"
+                + "Intelligence modifier: " + Integer.toString(getIntelligenceModifier()) + "\n\n"
+                + "Wisdom: " + Integer.toString(mWisdom) + "\n"
+                + "Wisdom modifier: " + Integer.toString(getWisdomModifier()) + "\n\n"
+                + "Charisma: " + Integer.toString(mCharisma) + "\n"
+                + "Charisma modifier: " + Integer.toString(getCharismaModifier()) + "\n\n"
+                + "SAVING THROWS\n"
+                + "Saving Throw Proficiencies: " + getProficientSavesToString() + "\n"
+                + "Strength Saving Throw: " + Integer.toString(getStrengthSavingThrow()) + "\n"
+                + "Dexterity Saving Throw: " + Integer.toString(getDexteritySavingThrow()) + "\n"
+                + "Constitution Saving Throw: " + Integer.toString(getConstitutionSavingThrow()) + "\n"
+                + "Intelligence Saving Throw: " + Integer.toString(getIntelligenceSavingThrow()) + "\n"
+                + "Wisdom Saving Throw: " + Integer.toString(getWisdomSavingThrow()) + "\n"
+                + "Charisma Saving Throw: " + Integer.toString(getCharismaSavingThrow()) + "\n\n"
+                + "SKILLS\n"
+                + "Proficient Skills: " + getProficientSkillsToString() + "\n"
+                + "Acrobatics: " + Integer.toString(mAcrobatics) + "\n"
+                + "Animal Handling: " + Integer.toString(mAnimalHandling) + "\n"
+                + "Arcana: " + Integer.toString(mArcana) + "\n"
+                + "Athletics: " + Integer.toString(mAthletics) + "\n"
+                + "Deception: " + Integer.toString(mDeception) + "\n"
+                + "History: " + Integer.toString(mHistory) + "\n"
+                + "Insight: " + Integer.toString(mInsight) + "\n"
+                + "Intimidation: " + Integer.toString(mIntimidation) + "\n"
+                + "Investigation: " + Integer.toString(mInvestigation) + "\n"
+                + "Medicine: " + Integer.toString(mMedicine) + "\n"
+                + "Nature: " + Integer.toString(mNature) + "\n"
+                + "Perception: " + Integer.toString(mPerception) + "\n"
+                + "Performance: " + Integer.toString(mPerformance) + "\n"
+                + "Persuasion: " + Integer.toString(mPersuasion) + "\n"
+                + "Religion: " + Integer.toString(mReligion) + "\n"
+                + "Sleight of Hand: " + Integer.toString(mSleightOfHand) + "\n"
+                + "Stealth: " + Integer.toString(mStealth) + "\n"
+                + "Survival: " + Integer.toString(mSurvival);
+
+    }
+
+    private int setCharacterLevel(ArrayList<BasePlayerClass> classes) {
         int characterLevel = 0;
 
         for(BasePlayerClass playerClass: classes) {
@@ -255,7 +303,7 @@ public class PlayerCharacter {
                     this.mStealth += mProficiencyBonus;
                     break;
                 case SURVIVAL:
-                    this.mStealth += mProficiencyBonus;
+                    this.mSurvival += mProficiencyBonus;
                     break;
             }
         }
@@ -514,5 +562,109 @@ public class PlayerCharacter {
 
     public void setInitiativeModifier(int initiative) {
         mInitiative = initiative;
+    }
+
+    public String getClassesToString() {
+        String classes = "";
+        for(BasePlayerClass playerClass: mClasses) {
+            classes += playerClass.toString() + " ";
+        }
+        return classes;
+    }
+
+    public String getProficientSavesToString() {
+        String stats = "";
+        for(BaseStats stat: mSavingThrowProficiencies) {
+            switch (stat) {
+                case STRENGTH:
+                    stats += "Strength ";
+                    break;
+                case DEXTERITY:
+                    stats += "Dexterity ";
+                    break;
+                case CONSTITUTION:
+                    stats += "Constitution ";
+                    break;
+                case INTELLIGENCE:
+                    stats += "Intelligence ";
+                    break;
+                case WISDOM:
+                    stats += "Wisdom ";
+                    break;
+                case CHARISMA:
+                    stats += "Charisma ";
+                    break;
+                default:
+                    Log.e(TAG, "undefined BaseStat enumerated type");
+                    break;
+            }
+        }
+        return stats;
+    }
+
+    public String getProficientSkillsToString() {
+        String skills = "";
+        for(Skills skill: mProficientSkills) {
+            switch (skill) {
+                case ACROBATICS:
+                    skills += "Acrobatics ";
+                    break;
+                case ANIMAL_HANDLING:
+                    skills += "Animal_Handling ";
+                    break;
+                case ARCANA:
+                    skills += "Arcana ";
+                    break;
+                case ATHLETICS:
+                    skills += "Athletics ";
+                    break;
+                case DECEPTION:
+                    skills += "Deception ";
+                    break;
+                case HISTORY:
+                    skills += "History ";
+                    break;
+                case INSIGHT:
+                    skills += "Insight ";
+                    break;
+                case INTIMIDATION:
+                    skills += "Intimidation ";
+                    break;
+                case INVESTIGATION:
+                    skills += "Investigation ";
+                    break;
+                case MEDICINE:
+                    skills += "Medicine ";
+                    break;
+                case NATURE:
+                    skills += "Nature ";
+                    break;
+                case PERCEPTION:
+                    skills += "Perception ";
+                    break;
+                case PERFORMANCE:
+                    skills += "Performance ";
+                    break;
+                case PERSUASION:
+                    skills += "Persuasion ";
+                    break;
+                case RELIGION:
+                    skills += "Religion ";
+                    break;
+                case SLEIGHT_OF_HAND:
+                    skills += "Sleight_of_Hand ";
+                    break;
+                case STEALTH:
+                    skills += "Stealth ";
+                    break;
+                case SURVIVAL:
+                    skills += "Survival ";
+                    break;
+                default:
+                    Log.e(TAG, "Undefined Skills enumerated type ");
+                    break;
+            }
+        }
+        return skills;
     }
 }
