@@ -124,6 +124,7 @@ public class PlayerCharacter {
         ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
     }
 
+    // Constructor for creating a level 1 character
     public PlayerCharacter(BasePlayerClass playerClass, int str, int dex, int con, int intel, int wis, int cha) {
         this.mClasses = new ArrayList<>();
         mClasses.add(playerClass);
