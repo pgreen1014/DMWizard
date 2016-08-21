@@ -17,7 +17,10 @@ public abstract class BaseRaceClass {
 
 
     public BaseRaceClass() {
-
+        this.mSpeed = initSpeed();
+        this.mWeaponProficiencies = initWeaponProficiencies();
+        this.mLanguages = initLanguages();
+        this.mStatBonuses = initStatBonuses();
     }
 
     /////////////////////////
