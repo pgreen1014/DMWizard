@@ -217,7 +217,8 @@ public class PlayerCharacter {
             // Level 1 character will only have one class at index 0
             int hitDie = classes.get(0).getHitDie();
             // Max Hit points
-            this.mHitPoints = hitDie + getConstitutionModifier();
+            this.mMaxHitPoints = hitDie + getConstitutionModifier();
+            this.mHitPoints = mMaxHitPoints;
             return;
         }
 
@@ -236,6 +237,8 @@ public class PlayerCharacter {
                 }
             }
         }
+        this.mHitPoints = hitPoints;
+        this.mMaxHitPoints = hitPoints;
 
 
     }
