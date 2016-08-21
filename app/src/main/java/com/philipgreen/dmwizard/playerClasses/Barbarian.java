@@ -56,11 +56,6 @@ public class Barbarian extends BasePlayerClass{
     }
 
     @Override
-    public int initializeProficiencyBonus(int level) {
-        return PROFICIENCY_BONUS_BY_LEVEL[level];
-    }
-
-    @Override
     public WeaponProficiencies[] initWeaponProficiencies() {
         return new WeaponProficiencies[] {WeaponProficiencies.SIMPLE, WeaponProficiencies.MARTIAL};
     }
