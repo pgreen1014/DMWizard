@@ -125,9 +125,10 @@ public class PlayerCharacter {
     }
 
     // Constructor for creating a level 1 character
-    public PlayerCharacter(BasePlayerClass playerClass, int str, int dex, int con, int intel, int wis, int cha) {
+    public PlayerCharacter(BasePlayerClass playerClass, BaseRaceClass playerRace, int str, int dex, int con, int intel, int wis, int cha) {
         this.mClasses = new ArrayList<>();
         mClasses.add(playerClass);
+        this.mRace = playerRace;
 
         this.mCharacterLevel = setCharacterLevel(mClasses);
         initProficiencyBonus(mCharacterLevel);
