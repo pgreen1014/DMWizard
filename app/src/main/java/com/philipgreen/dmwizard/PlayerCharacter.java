@@ -70,8 +70,8 @@ public class PlayerCharacter {
     private int mMaxHitPoints;
     private int mTemporaryHitPoints;
     private int HitDice;
-    private int mDeathSaveSuccesses;
-    private int mDeathSaveFailures;
+    private int mDeathSaveSuccesses = 0;
+    private int mDeathSaveFailures = 0;
 
     private ArrayList<Skills> mProficientSkills;
     private int mAcrobatics;
@@ -155,6 +155,7 @@ public class PlayerCharacter {
         return "Proficiency bonus: " + Integer.toString(mProficiencyBonus) + "\n\n"
                 + "Classes: " + getClassesToString() + "\n"
                 + "Initiative: " + Integer.toString(getInitiativeModifier()) + "\n"
+                + "MaxHitPoints: " + Integer.toString(mMaxHitPoints) + "\n"
                 + "HitPoint: " + Integer.toString(mHitPoints) + "\n\n"
                 + "ABILITIES\n"
                 + "Strength: " + Integer.toString(mStrength) + "\n"
