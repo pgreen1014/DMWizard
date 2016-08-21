@@ -143,14 +143,19 @@ public class PlayerCharacter {
         this.mProficientSkills = setupSkillProficiencies(mClasses);
         this.mSavingThrowProficiencies = setUpSavingThrowProficiencies(mClasses);
 
+        initHitPoints(mClasses);
         setUpSkills(mProficientSkills);
         setSavingThrows(mSavingThrowProficiencies);
+
+        // TODO account for armor
+        this.mArmorClass = 10 + getDexterityModifier();
     }
 
     public String toString() {
         return "Proficiency bonus: " + Integer.toString(mProficiencyBonus) + "\n\n"
                 + "Classes: " + getClassesToString() + "\n"
-                + "Initiative: " + Integer.toString(getInitiativeModifier()) + "\n\n"
+                + "Initiative: " + Integer.toString(getInitiativeModifier()) + "\n"
+                + "HitPoint: " + Integer.toString(mHitPoints) + "\n\n"
                 + "ABILITIES\n"
                 + "Strength: " + Integer.toString(mStrength) + "\n"
                 + "Strength modifier: " + Integer.toString(getStrengthModifier()) + "\n\n"
@@ -205,6 +210,36 @@ public class PlayerCharacter {
         return characterLevel;
     }
 
+    private void initHitPoints(ArrayList<BasePlayerClass> classes) {
+        int hitPoints = 0;
+
+        if(mCharacterLevel == 1) {
+            // Level 1 character will only have one class at index 0
+            int hitDie = classes.get(0).getHitDie();
+            // Max Hit points
+            this.mHitPoints = hitDie + getConstitutionModifier();
+            return;
+        }
+
+        for(int i = 0; i < classes.size(); i++) {
+            BasePlayerClass playerClass = classes.get(i);
+            int hitDie = playerClass.getHitDie();
+            for(int level = 0; level < playerClass.getClassLevel(); level++) {
+
+                // If this was starting class and first level give full hit points (starting class should be index 0)
+                if (i == 0 && level == 0) {
+                    hitPoints += hitDie + getConstitutionModifier();
+                } else {
+                    int dieRoll = rollLevelHitPoints(playerClass);
+                    hitPoints += dieRoll;
+                    Log.i(TAG, "hit point roll: " + Integer.toString(dieRoll));
+                }
+            }
+        }
+
+
+    }
+
     private void initProficiencyBonus(int characterLevel) {
         // if Character level is greater than 20 then set to highest proficiency
         if (mCharacterLevel > 20) {
@@ -228,6 +263,10 @@ public class PlayerCharacter {
         }
 
         return combinedProficientSkills;
+    }
+
+    public int rollLevelHitPoints(BasePlayerClass playerClass) {
+        return Dice.rollDie(playerClass.getHitDie()) + getConstitutionModifier();
     }
 
     // Set skill modifiers
