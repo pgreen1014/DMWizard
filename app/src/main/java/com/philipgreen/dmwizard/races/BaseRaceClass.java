@@ -2,7 +2,7 @@ package com.philipgreen.dmwizard.races;
 
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
-import com.philipgreen.dmwizard.data.WeaponType;
+import com.philipgreen.dmwizard.data.Weapons;
 
 import java.util.HashMap;
 
@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public abstract class BaseRaceClass {
     private int mSpeed;              // Base speed in feet
-    private WeaponType[] mWeaponProficiencies;
+    private Weapons[] mWeaponProficiencies;
     private Languages[] mLanguages;
     private HashMap<BaseStats, Integer> mStatBonuses;
 
@@ -28,7 +28,7 @@ public abstract class BaseRaceClass {
     /////////////////////////
 
     public abstract int initSpeed();
-    public abstract WeaponType[] initWeaponProficiencies();
+    public abstract Weapons[] initWeaponProficiencies();
     public abstract Languages[] initLanguages();
     public abstract HashMap<BaseStats, Integer> initStatBonuses();
 
@@ -40,7 +40,7 @@ public abstract class BaseRaceClass {
         return mSpeed;
     }
 
-    public WeaponType[] getWeaponProficiencies() {
+    public Weapons[] getWeaponProficiencies() {
         return mWeaponProficiencies;
     }
 
