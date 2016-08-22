@@ -6,6 +6,7 @@ import com.philipgreen.dmwizard.data.Alignment;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
 import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.data.Weapons;
 import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
@@ -508,12 +509,16 @@ public class PlayerCharacter {
     }
 
     // Weapon attack
-    private int attack(BaseWeapon weapon) {
-        int damage = 0;
-
-        //switch ()
-
-        return damage;
+    public int attack(BaseWeapon weapon) {
+        // if weapon is ranged add dex modifier
+        if (weapon.getWeaponProperties().contains(WeaponProperties.RANGE)) {
+            return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
+        // else weapon is a melee weapon and use str modifier
+        } else {
+            int roll = weapon.damageRoll();
+            Log.i(TAG, "roll: " + Integer.toString(roll));
+            return roll + mProficiencyBonus + getStrengthModifier();
+        }
     }
 
     ////////////////////////////////

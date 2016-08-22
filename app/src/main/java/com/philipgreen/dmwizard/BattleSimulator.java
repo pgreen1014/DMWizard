@@ -39,7 +39,7 @@ public class BattleSimulator extends AppCompatActivity {
                 Log.i(TAG, player.toString());
 
                 BaseWeapon weapon = new Dagger();
-                int damageRoll = weapon.damageRoll();
+                int damageRoll = player.attack(weapon);
                 Log.i("BattleSimulator", "dagger damage roll: " + Integer.toString(damageRoll));
             }
         });
