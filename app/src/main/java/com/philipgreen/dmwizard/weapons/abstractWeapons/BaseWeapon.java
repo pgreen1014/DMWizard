@@ -37,4 +37,13 @@ public abstract class BaseWeapon {
     public int damageRoll() {
         return Dice.rollDice(mDamageDie, mDieNumber);
     }
+    
+
+    //#################
+    //     GETTERS
+    //#################
+
+    public HashSet<WeaponProperties> getWeaponProperties() {
+        return mWeaponProperties;
+    }
 }
