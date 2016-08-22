@@ -659,6 +659,10 @@ public class PlayerCharacter {
         mInitiative = initiative;
     }
 
+    //###################
+    // TO STRING METHODS
+    //###################
+
     public String getClassesToString() {
         String classes = "";
         for(BasePlayerClass playerClass: mClasses) {
@@ -670,29 +674,7 @@ public class PlayerCharacter {
     public String getProficientSavesToString() {
         String stats = "";
         for(BaseStats stat: mSavingThrowProficiencies) {
-            switch (stat) {
-                case STRENGTH:
-                    stats += "Strength ";
-                    break;
-                case DEXTERITY:
-                    stats += "Dexterity ";
-                    break;
-                case CONSTITUTION:
-                    stats += "Constitution ";
-                    break;
-                case INTELLIGENCE:
-                    stats += "Intelligence ";
-                    break;
-                case WISDOM:
-                    stats += "Wisdom ";
-                    break;
-                case CHARISMA:
-                    stats += "Charisma ";
-                    break;
-                default:
-                    Log.e(TAG, "undefined BaseStat enumerated type");
-                    break;
-            }
+            stats += stat.toString() + " ";
         }
         return stats;
     }
@@ -700,66 +682,9 @@ public class PlayerCharacter {
     public String getProficientSkillsToString() {
         String skills = "";
         for(Skills skill: mProficientSkills) {
-            switch (skill) {
-                case ACROBATICS:
-                    skills += "Acrobatics ";
-                    break;
-                case ANIMAL_HANDLING:
-                    skills += "Animal_Handling ";
-                    break;
-                case ARCANA:
-                    skills += "Arcana ";
-                    break;
-                case ATHLETICS:
-                    skills += "Athletics ";
-                    break;
-                case DECEPTION:
-                    skills += "Deception ";
-                    break;
-                case HISTORY:
-                    skills += "History ";
-                    break;
-                case INSIGHT:
-                    skills += "Insight ";
-                    break;
-                case INTIMIDATION:
-                    skills += "Intimidation ";
-                    break;
-                case INVESTIGATION:
-                    skills += "Investigation ";
-                    break;
-                case MEDICINE:
-                    skills += "Medicine ";
-                    break;
-                case NATURE:
-                    skills += "Nature ";
-                    break;
-                case PERCEPTION:
-                    skills += "Perception ";
-                    break;
-                case PERFORMANCE:
-                    skills += "Performance ";
-                    break;
-                case PERSUASION:
-                    skills += "Persuasion ";
-                    break;
-                case RELIGION:
-                    skills += "Religion ";
-                    break;
-                case SLEIGHT_OF_HAND:
-                    skills += "Sleight_of_Hand ";
-                    break;
-                case STEALTH:
-                    skills += "Stealth ";
-                    break;
-                case SURVIVAL:
-                    skills += "Survival ";
-                    break;
-                default:
-                    Log.e(TAG, "Undefined Skills enumerated type ");
-                    break;
+                skills += skill.toString() + " ";
             }
-        }
+
         return skills;
     }
 
