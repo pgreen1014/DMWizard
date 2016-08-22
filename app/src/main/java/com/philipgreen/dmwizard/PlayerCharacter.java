@@ -524,40 +524,45 @@ public class PlayerCharacter {
     /**
      * Makes a throw weapon attack
      * @param weapon being used in attack.
-     * @param versatileModifier: modifier for weapons with WeaponProperties.VERSATILE. Must take BaseStats.STRENGTH or BaseStats.DEXTERITY.
+     * @param finesseModifier: modifier for weapons with WeaponProperties.FINESSE. Must take BaseStats.STRENGTH or BaseStats.DEXTERITY.
      *                         A null value will utilize the higher modifier
      * @return damage for thrown weapon attack
      * @throws IllegalArgumentException if weapon does not have WeaponProperties.THROWN
      *                                  or if versatileModifier is not of the type BaseStats.STRENGTH or BaseStats.DEXTERITY
      */
-    public int throwAttack(BaseWeapon weapon, BaseStats versatileModifier) throws IllegalArgumentException{
+    public int throwAttack(BaseWeapon weapon, BaseStats finesseModifier) throws IllegalArgumentException{
         // Throw exception if weapon is not of type thrown
         if (!weapon.getWeaponProperties().contains(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException(weapon.toString() + " is not of the WeaponProperties type THROWN");
         }
-        if (versatileModifier != null && versatileModifier != BaseStats.STRENGTH && versatileModifier != BaseStats.DEXTERITY) {
-            throw new IllegalArgumentException("versatileModifier must be of the type STRENGTH or DEXTERITY");
-        }
 
         // if weapon is not versatile
-        if (!weapon.getWeaponProperties().contains(WeaponProperties.VERSATILE)) {
+        if (!weapon.getWeaponProperties().contains(WeaponProperties.FINESSE)) {
+            Log.i(TAG, "not finesse, used str");
             return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
         // else weapon is versatile and can use str or dex modifier
         } else {
-            switch (versatileModifier) {
+            if (finesseModifier == null) {
+                // if weapon is versatile but null argument was applied then use greater value
+                // use Strength if higher or equal to
+                if (mStrength >= mDexterity) {
+                    Log.i(TAG, "null value given used str");
+                    return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+                } else {
+                    Log.i(TAG, "null value given, used dex");
+                    return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
+                }
+            }
+            switch (finesseModifier) {
                 case STRENGTH:
+                    Log.i(TAG, "used str");
                     return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
                 case DEXTERITY:
+                    Log.i(TAG, "used dex");
                     return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
-                // if weapon is versatile but null argument was applied then use greater value
                 default:
-                    // use Strength if higher or equal to
-                    if (mStrength >= mDexterity) {
-                        return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
-                    // else Dex is greater and use dex
-                    } else {
-                        return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
-                    }
+                    // Throw exception if modifier is being supplied and is not strength or dexterity
+                    throw new IllegalArgumentException("finesseModifier must be of the type STRENGTH or DEXTERITY");
             }
         }
         // TODO: account for enemy range
