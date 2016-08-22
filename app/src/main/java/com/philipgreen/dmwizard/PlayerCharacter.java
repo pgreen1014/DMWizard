@@ -508,6 +508,15 @@ public class PlayerCharacter {
         return Dice.rollDie(20);
     }
 
+    // Weapon attack
+    private int attack(BaseWeapon weapon) {
+        int damage = 0;
+
+        //switch ()
+
+        return damage;
+    }
+
     ////////////////////////////////
     //      CHARACTER ACTIONS     //
     ////////////////////////////////
