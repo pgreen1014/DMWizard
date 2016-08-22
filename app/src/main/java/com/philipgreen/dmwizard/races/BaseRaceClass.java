@@ -31,4 +31,24 @@ public abstract class BaseRaceClass {
     public abstract WeaponType[] initWeaponProficiencies();
     public abstract Languages[] initLanguages();
     public abstract HashMap<BaseStats, Integer> initStatBonuses();
+
+    //#######################
+    //        GETTERS
+    //#######################
+
+    public int getSpeed() {
+        return mSpeed;
+    }
+
+    public WeaponType[] getWeaponProficiencies() {
+        return mWeaponProficiencies;
+    }
+
+    public Languages[] getLanguages() {
+        return mLanguages;
+    }
+
+    public HashMap<BaseStats, Integer> getStatBonuses() {
+        return mStatBonuses;
+    }
 }
