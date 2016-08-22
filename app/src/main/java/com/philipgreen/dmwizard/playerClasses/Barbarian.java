@@ -32,8 +32,8 @@ public class Barbarian extends BasePlayerClass{
     private int mRageDamageBonus;
     private Skills[] mSkillProfs;
 
-    public Barbarian(int str, int dex, int con, int intel, int wis, int cha, int level, Skills[] skillProfs) {
-        super(str, dex, con, intel, wis, cha, level, skillProfs);
+    public Barbarian(int level, Skills[] skillProfs) {
+        super(level, skillProfs);
 
         this.mDailyRageNumber = NUMBER_OF_RAGES_BY_LEVEL[level];
         this.mRageDamageBonus = NUMBER_OF_RAGES_BY_LEVEL[level];
@@ -41,14 +41,7 @@ public class Barbarian extends BasePlayerClass{
 
     @Override
     public String toString() {
-        return "Barbarian{" +
-                "\nStrength = " + getStrength() +
-                "\nDexterity = " + getDexterity() +
-                "\nConstitution = " + getConstitution() +
-                "\nIntelligence = " + getIntelligence() +
-                "\nWisdom = " + getWisdom() +
-                "\nCharisma = " + getCharisma() +
-                '}';
+        return "Barbarian";
     }
 
     @Override
@@ -60,11 +53,6 @@ public class Barbarian extends BasePlayerClass{
     public BaseStats[] setSavingThrowProficiencies() {
         BaseStats[] proficiencies = {BaseStats.STRENGTH, BaseStats.CONSTITUTION};
         return proficiencies;
-    }
-
-    @Override
-    public int initializeProficiencyBonus(int level) {
-        return PROFICIENCY_BONUS_BY_LEVEL[level];
     }
 
     @Override
