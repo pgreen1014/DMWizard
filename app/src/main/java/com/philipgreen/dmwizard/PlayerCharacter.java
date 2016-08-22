@@ -7,6 +7,7 @@ import com.philipgreen.dmwizard.data.Alignment;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
 import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.data.WeaponType;
 import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
@@ -95,7 +96,8 @@ public class PlayerCharacter {
 
     private int mPassiveWisdom;
 
-    private ArrayList<Languages> mLanguages;
+    private HashSet<Languages> mLanguages = new HashSet<>();
+    private HashSet<WeaponType> mWeaponProficiencies = new HashSet<>();
 
     // statically create and put values into ABILITY_MODIFIER_MAP
     public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
@@ -139,14 +141,19 @@ public class PlayerCharacter {
         this.mIntelligence = intel;
         this.mWisdom = wis;
         this.mCharisma = cha;
+        initRaceStatBonuses(playerRace);
 
         this.mInitiative = getDexterityModifier();
         this.mProficientSkills = setupSkillProficiencies(mClasses);
         this.mSavingThrowProficiencies = setUpSavingThrowProficiencies(mClasses);
+        this.mSpeed = playerRace.getSpeed();
+
 
         initHitPoints(mClasses);
         setUpSkills(mProficientSkills);
         setSavingThrows(mSavingThrowProficiencies);
+        initLanguages(playerRace);
+        initWeaponProficiencies(playerRace);
 
         // TODO account for armor
         this.mArmorClass = 10 + getDexterityModifier();
@@ -198,7 +205,9 @@ public class PlayerCharacter {
                 + "Religion: " + Integer.toString(mReligion) + "\n"
                 + "Sleight of Hand: " + Integer.toString(mSleightOfHand) + "\n"
                 + "Stealth: " + Integer.toString(mStealth) + "\n"
-                + "Survival: " + Integer.toString(mSurvival);
+                + "Survival: " + Integer.toString(mSurvival) + "\n\n"
+                + "Languages: " + getLanguagesToString() + "\n"
+                + "Weapon Proficiencies " + getWeaponProficienciesToString();
 
     }
 
@@ -242,7 +251,42 @@ public class PlayerCharacter {
         this.mHitPoints = hitPoints;
         this.mMaxHitPoints = hitPoints;
 
+    }
 
+    private void initRaceStatBonuses(BaseRaceClass race) {
+        // Iterate through race StatBonuses map and add value to stats
+        for(Map.Entry<BaseStats, Integer> entry: race.getStatBonuses().entrySet()) {
+            switch (entry.getKey()) {
+                case STRENGTH:
+                    mStrength += entry.getValue();
+                    break;
+                case DEXTERITY:
+                    mDexterity += entry.getValue();
+                    break;
+                case CONSTITUTION:
+                    mConstitution += entry.getValue();
+                    break;
+                case INTELLIGENCE:
+                    mIntelligence += entry.getValue();
+                    break;
+                case WISDOM:
+                    mWisdom += entry.getValue();
+                    break;
+                case CHARISMA:
+                    mCharisma += entry.getValue();
+                    break;
+                default:
+                    Log.e(TAG, "Undefined BaseStat");
+                    break;
+            }
+        }
+    }
+
+    private void initWeaponProficiencies(BaseRaceClass race) {
+
+        for(WeaponType weapon: race.getWeaponProficiencies()) {
+            mWeaponProficiencies.add(weapon);
+        }
     }
 
     private void initProficiencyBonus(int characterLevel) {
@@ -252,6 +296,12 @@ public class PlayerCharacter {
             return;
         }
         mProficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[mCharacterLevel - 1];
+    }
+
+    private void initLanguages(BaseRaceClass race) {
+        for(Languages language: race.getLanguages()) {
+            mLanguages.add(language);
+        }
     }
 
     // Grabs skill proficiencies from all classes to create an array list of all character proficiencies
@@ -712,4 +762,21 @@ public class PlayerCharacter {
         }
         return skills;
     }
+
+    public String getLanguagesToString() {
+        String languageList = "";
+        for(Languages languages: mLanguages) {
+            languageList += languages.toString() + " ";
+        }
+        return languageList;
+    }
+
+    public String getWeaponProficienciesToString() {
+        String weapProfsList= "";
+        for (WeaponType weaponType: mWeaponProficiencies) {
+            weapProfsList += weaponType.toString() + " ";
+        }
+        return weapProfsList;
+    }
+
 }
