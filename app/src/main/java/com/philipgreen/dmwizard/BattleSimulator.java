@@ -12,6 +12,8 @@ import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 import com.philipgreen.dmwizard.races.Dwarf;
+import com.philipgreen.dmwizard.weapons.Dagger;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 import java.util.ArrayList;
 
@@ -35,6 +37,10 @@ public class BattleSimulator extends AppCompatActivity {
 
                 PlayerCharacter player = new PlayerCharacter(playerClass, playerRace, 17, 15, 14, 10, 13, 9);
                 Log.i(TAG, player.toString());
+
+                BaseWeapon weapon = new Dagger();
+                int damageRoll = weapon.damageRoll();
+                Log.i("BattleSimulator", "dagger damage roll: " + Integer.toString(damageRoll));
             }
         });
     }
