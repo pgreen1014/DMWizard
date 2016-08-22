@@ -18,6 +18,7 @@ public abstract class BaseWeapon {
     private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
 
     public BaseWeapon() {
+        setWeaponProperties();
     }
 
     // ABSTRACT METHODS
@@ -36,6 +37,10 @@ public abstract class BaseWeapon {
 
     public int damageRoll() {
         return Dice.rollDice(mDamageDie, mDieNumber);
+    }
+
+    protected void addWeaponProperty(WeaponProperties property) {
+        mWeaponProperties.add(property);
     }
     
 
