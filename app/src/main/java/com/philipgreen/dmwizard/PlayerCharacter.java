@@ -11,6 +11,7 @@ import com.philipgreen.dmwizard.data.WeaponType;
 import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -503,7 +504,7 @@ public class PlayerCharacter {
     //         ATTACKS
     //##############################
 
-    private int attackRoll() {
+    public int attackRoll() {
         return Dice.rollDie(20);
     }
 
