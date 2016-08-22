@@ -504,7 +504,7 @@ public class PlayerCharacter {
     //         ATTACKS
     //##############################
 
-    public int attackRoll() {
+    private int attackRoll() {
         return Dice.rollDie(20);
     }
 
