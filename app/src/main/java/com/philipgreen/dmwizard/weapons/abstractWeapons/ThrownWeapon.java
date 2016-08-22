@@ -1,5 +1,6 @@
 package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
+import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**
@@ -13,6 +14,7 @@ public abstract class ThrownWeapon extends MeleeWeapon {
 
     public ThrownWeapon() {
         super();
+        addWeaponProperty(WeaponProperties.THROWN);
     }
 
     // ABSTRACT METHODS
