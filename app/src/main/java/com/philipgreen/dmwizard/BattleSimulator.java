@@ -10,6 +10,8 @@ import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
+import com.philipgreen.dmwizard.races.BaseRaceClass;
+import com.philipgreen.dmwizard.races.Dwarf;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,9 @@ public class BattleSimulator extends AppCompatActivity {
             public void onClick(View v) {
                 Skills[] playerSkills = new Skills[] {Skills.ANIMAL_HANDLING, Skills.SURVIVAL};
                 BasePlayerClass playerClass = new Barbarian(1, playerSkills);
-                PlayerCharacter player = new PlayerCharacter(playerClass, 17, 15, 14, 10, 13, 9);
+                BaseRaceClass playerRace = new Dwarf();
+
+                PlayerCharacter player = new PlayerCharacter(playerClass, playerRace, 17, 15, 14, 10, 13, 9);
                 Log.i(TAG, player.toString());
             }
         });
