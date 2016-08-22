@@ -521,6 +521,48 @@ public class PlayerCharacter {
         }
     }
 
+    /**
+     * Makes a throw weapon attack
+     * @param weapon being used in attack.
+     * @param versatileModifier: modifier for weapons with WeaponProperties.VERSATILE. Must take BaseStats.STRENGTH or BaseStats.DEXTERITY.
+     *                         A null value will utilize the higher modifier
+     * @return damage for thrown weapon attack
+     * @throws IllegalArgumentException if weapon does not have WeaponProperties.THROWN
+     *                                  or if versatileModifier is not of the type BaseStats.STRENGTH or BaseStats.DEXTERITY
+     */
+    public int throwAttack(BaseWeapon weapon, BaseStats versatileModifier) throws IllegalArgumentException{
+        // Throw exception if weapon is not of type thrown
+        if (!weapon.getWeaponProperties().contains(WeaponProperties.THROWN)) {
+            throw new IllegalArgumentException(weapon.toString() + " is not of the WeaponProperties type THROWN");
+        }
+        if (versatileModifier != null && versatileModifier != BaseStats.STRENGTH && versatileModifier != BaseStats.DEXTERITY) {
+            throw new IllegalArgumentException("versatileModifier must be of the type STRENGTH or DEXTERITY");
+        }
+
+        // if weapon is not versatile
+        if (!weapon.getWeaponProperties().contains(WeaponProperties.VERSATILE)) {
+            return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+        // else weapon is versatile and can use str or dex modifier
+        } else {
+            switch (versatileModifier) {
+                case STRENGTH:
+                    return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+                case DEXTERITY:
+                    return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
+                // if weapon is versatile but null argument was applied then use greater value
+                default:
+                    // use Strength if higher or equal to
+                    if (mStrength >= mDexterity) {
+                        return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+                    // else Dex is greater and use dex
+                    } else {
+                        return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
+                    }
+            }
+        }
+        // TODO: account for enemy range
+    }
+
     ////////////////////////////////
     //      CHARACTER ACTIONS     //
     ////////////////////////////////
