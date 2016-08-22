@@ -499,6 +499,14 @@ public class PlayerCharacter {
         return mProficientSkills;
     }
 
+    //##############################
+    //         ATTACKS
+    //##############################
+
+    private int attackRoll() {
+        return Dice.rollDie(20);
+    }
+
     ////////////////////////////////
     //      CHARACTER ACTIONS     //
     ////////////////////////////////
