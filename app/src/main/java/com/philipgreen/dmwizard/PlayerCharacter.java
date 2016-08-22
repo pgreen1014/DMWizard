@@ -1,13 +1,12 @@
 package com.philipgreen.dmwizard;
 
-import android.util.ArraySet;
 import android.util.Log;
 
 import com.philipgreen.dmwizard.data.Alignment;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
 import com.philipgreen.dmwizard.data.Skills;
-import com.philipgreen.dmwizard.data.WeaponType;
+import com.philipgreen.dmwizard.data.Weapons;
 import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
@@ -98,7 +97,7 @@ public class PlayerCharacter {
     private int mPassiveWisdom;
 
     private HashSet<Languages> mLanguages = new HashSet<>();
-    private HashSet<WeaponType> mWeaponProficiencies = new HashSet<>();
+    private HashSet<Weapons> mWeaponProficiencies = new HashSet<>();
 
     // statically create and put values into ABILITY_MODIFIER_MAP
     public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
@@ -285,7 +284,7 @@ public class PlayerCharacter {
 
     private void initWeaponProficiencies(BaseRaceClass race) {
 
-        for(WeaponType weapon: race.getWeaponProficiencies()) {
+        for(Weapons weapon: race.getWeaponProficiencies()) {
             mWeaponProficiencies.add(weapon);
         }
     }
@@ -716,8 +715,8 @@ public class PlayerCharacter {
 
     public String getWeaponProficienciesToString() {
         String weapProfsList= "";
-        for (WeaponType weaponType: mWeaponProficiencies) {
-            weapProfsList += weaponType.toString() + " ";
+        for (Weapons weapons : mWeaponProficiencies) {
+            weapProfsList += weapons.toString() + " ";
         }
         return weapProfsList;
     }
