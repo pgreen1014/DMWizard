@@ -530,7 +530,7 @@ public class PlayerCharacter {
      * @throws IllegalArgumentException if weapon does not have WeaponProperties.THROWN
      *                                  or if versatileModifier is not of the type BaseStats.STRENGTH or BaseStats.DEXTERITY
      */
-    public int throwAttack(BaseWeapon weapon, BaseStats finesseModifier) throws IllegalArgumentException{
+    public int throwWeaponAttack(BaseWeapon weapon, BaseStats finesseModifier) throws IllegalArgumentException{
         // Throw exception if weapon is not of type thrown
         if (!weapon.getWeaponProperties().contains(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException(weapon.toString() + " is not of the WeaponProperties type THROWN");
