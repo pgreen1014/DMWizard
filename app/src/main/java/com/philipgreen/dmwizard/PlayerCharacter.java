@@ -524,13 +524,13 @@ public class PlayerCharacter {
     /**
      * Makes a throw weapon attack
      * @param weapon being used in attack.
-     * @param finesseModifier: modifier for weapons with WeaponProperties.FINESSE. Must take BaseStats.STRENGTH or BaseStats.DEXTERITY.
+     * @param abilityModifierForFinesseWeapon: modifier for weapons with WeaponProperties.FINESSE. Must take BaseStats.STRENGTH or BaseStats.DEXTERITY.
      *                         A null value will utilize the higher modifier
      * @return damage for thrown weapon attack
      * @throws IllegalArgumentException if weapon does not have WeaponProperties.THROWN
      *                                  or if versatileModifier is not of the type BaseStats.STRENGTH or BaseStats.DEXTERITY
      */
-    public int throwWeaponAttack(BaseWeapon weapon, BaseStats finesseModifier) throws IllegalArgumentException{
+    public int throwWeaponAttack(BaseWeapon weapon, BaseStats abilityModifierForFinesseWeapon) throws IllegalArgumentException{
         // Throw exception if weapon is not of type thrown
         if (!weapon.getWeaponProperties().contains(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException(weapon.toString() + " is not of the WeaponProperties type THROWN");
@@ -541,7 +541,7 @@ public class PlayerCharacter {
             return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
         // else weapon is versatile and can use str or dex modifier
         } else {
-            if (finesseModifier == null) {
+            if (abilityModifierForFinesseWeapon == null) {
                 // if weapon is versatile but null argument was applied then use greater value
                 // use Strength if higher or equal to
                 if (mStrength >= mDexterity) {
@@ -550,7 +550,7 @@ public class PlayerCharacter {
                     return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
                 }
             }
-            switch (finesseModifier) {
+            switch (abilityModifierForFinesseWeapon) {
                 case STRENGTH:
                     return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
                 case DEXTERITY:
