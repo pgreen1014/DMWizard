@@ -8,7 +8,8 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
  */
 public class AttackBuilder {
     private BaseWeapon mAttackingWeapon;
-    private BasePlayerClass mAttackTarget;
+    private BasePlayerClass mPlayerBeingAttacked;
+    private BasePlayerClass mPlayerMakingAttack;
 
     public AttackBuilder() {
 
@@ -18,7 +19,11 @@ public class AttackBuilder {
         mAttackingWeapon = weapon;
     }
 
-    public void setAttackTarget(BasePlayerClass attackTarget) {
-        mAttackTarget = attackTarget;
+    public void setAttackTarget(BasePlayerClass playerBeingAttacked) {
+        mPlayerBeingAttacked = playerBeingAttacked;
+    }
+
+    public void setPlayerMakingAttack(BasePlayerClass playerMakingAttack) {
+        mPlayerMakingAttack = playerMakingAttack;
     }
 }
