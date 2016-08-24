@@ -2,7 +2,7 @@ package com.philipgreen.dmwizard.races;
 
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
-import com.philipgreen.dmwizard.data.WeaponType;
+import com.philipgreen.dmwizard.data.Weapons;
 
 import java.util.HashMap;
 
@@ -21,8 +21,8 @@ public class Dwarf extends BaseRaceClass {
     }
 
     @Override
-    public WeaponType[] initWeaponProficiencies() {
-        return new WeaponType[] {WeaponType.BATTLEAXE, WeaponType.HANDAXE, WeaponType.LIGHT_HAMMER, WeaponType.WARHAMMER};
+    public Weapons[] initWeaponProficiencies() {
+        return new Weapons[] {Weapons.BATTLEAXE, Weapons.HANDAXE, Weapons.LIGHT_HAMMER, Weapons.WARHAMMER};
     }
 
     @Override
