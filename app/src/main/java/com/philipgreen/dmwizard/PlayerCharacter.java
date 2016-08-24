@@ -496,6 +496,11 @@ public class PlayerCharacter {
         return ABILITY_MODIFIER_MAP.get(mCharisma);
     }
 
+    private int getProficiencyBonusWithModifier(int abilityModifier) {
+        return mProficiencyBonus + abilityModifier;
+    }
+
+
     public ArrayList<Skills> getProficientSkills() {
         return mProficientSkills;
     }
@@ -538,29 +543,33 @@ public class PlayerCharacter {
 
         // if weapon is not versatile
         if (!weapon.getWeaponProperties().contains(WeaponProperties.FINESSE)) {
-            return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+            return rollWeaponDamage(weapon, getStrengthModifier());
         // else weapon is versatile and can use str or dex modifier
         } else {
             if (abilityModifierForFinesseWeapon == null) {
                 // if weapon is versatile but null argument was applied then use greater value
                 // use Strength if higher or equal to
                 if (mStrength >= mDexterity) {
-                    return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+                    return rollWeaponDamage(weapon, getStrengthModifier());
                 } else {
-                    return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
+                    return rollWeaponDamage(weapon, getDexterityModifier());
                 }
             }
             switch (abilityModifierForFinesseWeapon) {
                 case STRENGTH:
-                    return weapon.damageRoll() + mProficiencyBonus + getStrengthModifier();
+                    return rollWeaponDamage(weapon, getStrengthModifier());
                 case DEXTERITY:
-                    return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
+                    return rollWeaponDamage(weapon, getDexterityModifier());
                 default:
                     // Throw exception if modifier is being supplied and is not strength or dexterity
                     throw new IllegalArgumentException("finesseModifier must be of the type STRENGTH or DEXTERITY");
             }
         }
         // TODO: account for enemy range
+    }
+
+    private int rollWeaponDamage(BaseWeapon weapon, int abilityModifier) {
+        return weapon.damageRoll() + mProficiencyBonus + abilityModifier;
     }
 
     ////////////////////////////////
