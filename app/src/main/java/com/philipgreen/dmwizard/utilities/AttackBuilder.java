@@ -1,5 +1,6 @@
 package com.philipgreen.dmwizard.utilities;
 
+import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**
@@ -7,6 +8,7 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
  */
 public class AttackBuilder {
     private BaseWeapon mAttackingWeapon;
+    private BasePlayerClass mAttackTarget;
 
     public AttackBuilder() {
 
@@ -14,5 +16,9 @@ public class AttackBuilder {
 
     public void setWeapon(BaseWeapon weapon) {
         mAttackingWeapon = weapon;
+    }
+
+    public void setAttackTarget(BasePlayerClass attackTarget) {
+        mAttackTarget = attackTarget;
     }
 }
