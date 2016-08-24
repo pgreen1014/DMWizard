@@ -13,6 +13,7 @@ public class AttackBuilder {
     private BasePlayerClass mPlayerBeingAttacked;
     private BasePlayerClass mPlayerMakingAttack;
     private BaseStats mAttackModifier;
+    private int mPlayerDistance;
 
     public AttackBuilder() {
 
@@ -36,5 +37,9 @@ public class AttackBuilder {
 
     public void setAttackModifier(BaseStats attackModifier) {
         mAttackModifier = attackModifier;
+    }
+
+    public void setPlayerDistance(int playerDistance) {
+        mPlayerDistance = playerDistance;
     }
 }
