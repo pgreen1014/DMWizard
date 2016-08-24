@@ -1,5 +1,6 @@
 package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
+import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**
@@ -9,5 +10,6 @@ public abstract class RangedWeapon extends BaseWeapon {
 
     public RangedWeapon() {
         super();
+        addWeaponProperty(WeaponProperties.RANGE);
     }
 }
