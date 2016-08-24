@@ -24,6 +24,8 @@ public class AttackBuilder {
     private boolean mRangedAttack = false;
     private boolean mThrownAttack = false;
 
+    private boolean mAttackBuildCompleted = false;
+
     public AttackBuilder() {
 
     }
@@ -77,6 +79,20 @@ public class AttackBuilder {
         }
 
         mThrownAttack = true;
+    }
+
+    // Checks to make sure built attack follows DnD rules
+    public void build() {
+
+        mAttackBuildCompleted = true;
+    }
+
+    // build() must be called before executeAttack can be run
+    public void executeAttack() {
+        if (!mAttackBuildCompleted) {
+            return;
+        }
+        // TODO fill out method
     }
 
 
