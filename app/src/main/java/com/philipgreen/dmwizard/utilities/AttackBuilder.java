@@ -14,8 +14,8 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.ThrownWeapon;
 public class AttackBuilder {
     private static final String TAG = "AttackBuilder";
 
-    private BaseWeapon mAttackingWeapon;
-    private boolean mIsOffHandWeapon = false;
+    private BaseWeapon mMainHandAttackingWeapon;
+    private BaseWeapon mOffHandAttackingWeapon;
     private BasePlayerClass mPlayerBeingAttacked;
     private BasePlayerClass mPlayerMakingAttack;
     private BaseStats mAttackModifier;
@@ -32,12 +32,12 @@ public class AttackBuilder {
 
     }
 
-    public void setAttackingWeapon(BaseWeapon weapon) {
-        mAttackingWeapon = weapon;
+    public void setMainHandAttackingWeapon(BaseWeapon weapon) {
+        mMainHandAttackingWeapon = weapon;
     }
 
-    public void setOffHandWeapon () {
-        mIsOffHandWeapon = true;
+    public void setOffHandAttackingWeapon(BaseWeapon weapon) {
+        mOffHandAttackingWeapon = weapon;
     }
 
     public void setAttackTarget(BasePlayerClass playerBeingAttacked) {
@@ -88,7 +88,7 @@ public class AttackBuilder {
 
     // Checks to make sure built attack follows DnD rules
     public void build() throws NullPointerException, IllegalArgumentException {
-        if (mAttackingWeapon == null) {
+        if (mMainHandAttackingWeapon == null) {
             throw new NullPointerException("Must set attacking weapon");
         }
         if (mPlayerBeingAttacked == null) {
@@ -99,31 +99,31 @@ public class AttackBuilder {
         }
 
         if (mMeleeAttack) {
-            if (weaponContainsProperty(mAttackingWeapon, WeaponProperties.RANGE)) {
+            if (weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
             }
-            if (mAttackModifier != BaseStats.STRENGTH && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.FINESSE)) {
-                throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
+            if (mAttackModifier != BaseStats.STRENGTH && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.FINESSE)) {
+                throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mMainHandAttackingWeapon.toString());
             }
-            if (mIsOffHandWeapon && mIsTwoHandedAttack && weaponContainsProperty(mAttackingWeapon, WeaponProperties.VERSATILE)) {
+            if (mOffHandAttackingWeapon != null && mIsTwoHandedAttack && weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.VERSATILE)) {
                 throw new IllegalArgumentException("Cannot make off hand weapon attack and two handed weapon attack with the same attack");
             }
-            if (mIsOffHandWeapon && weaponContainsProperty(mAttackingWeapon, WeaponProperties.TWO_HANDED)) {
+            if (mOffHandAttackingWeapon != null && weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.TWO_HANDED)) {
                 throw new IllegalArgumentException("Cannot make off hand weapon attack with two handed weapon");
             }
         }
 
         if (mRangedAttack) {
-            if (!weaponContainsProperty(mAttackingWeapon, WeaponProperties.RANGE)) {
+            if (!weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
-            if (mAttackModifier != BaseStats.DEXTERITY && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.FINESSE)) {
-                throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
+            if (mAttackModifier != BaseStats.DEXTERITY && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.FINESSE)) {
+                throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mMainHandAttackingWeapon.toString());
             }
         }
 
-        if (mThrownAttack && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.THROWN)) {
-            throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
+        if (mThrownAttack && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.THROWN)) {
+            throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mMainHandAttackingWeapon.toString());
         }
 
 
