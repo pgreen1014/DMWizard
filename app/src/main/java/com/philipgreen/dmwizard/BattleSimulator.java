@@ -8,16 +8,12 @@ import android.widget.Button;
 
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
-import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
-import com.philipgreen.dmwizard.weapons.Warhammer;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-
-import java.util.ArrayList;
 
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
@@ -43,6 +39,8 @@ public class BattleSimulator extends AppCompatActivity {
                 BaseWeapon dagger = new Dagger();
                 int damageRoll = player.throwWeaponAttack(dagger, BaseStats.DEXTERITY);
                 Log.i("BattleSimulator", "dagger damage roll: " + Integer.toString(damageRoll));
+
+
             }
         });
     }

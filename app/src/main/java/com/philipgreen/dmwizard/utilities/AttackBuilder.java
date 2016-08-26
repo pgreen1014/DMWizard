@@ -21,10 +21,11 @@ public class AttackBuilder {
     private BaseStats mAttackModifier;
     private int mPlayerDistance;
     private boolean mIsTwoHandedAttack = false;
+    private AttackType mAttackType;
 
-    private boolean mMeleeAttack = false;
-    private boolean mRangedAttack = false;
-    private boolean mThrownAttack = false;
+    private enum AttackType {
+        MELEE, RANGED, THROWN
+    }
 
     private AttackBuilder() {
 
@@ -64,24 +65,15 @@ public class AttackBuilder {
     }
 
     public void setMeleeAttack() {
-        mMeleeAttack = true;
-        // Make sure other attack fields are set to false
-        mRangedAttack = false;
-        mThrownAttack = false;
+        mAttackType = AttackType.MELEE;
     }
 
     public void setRangedAttack() {
-        mRangedAttack = true;
-        // Make sure other attack fields are set to false
-        mMeleeAttack = false;
-        mThrownAttack = false;
+        mAttackType = AttackType.RANGED;
     }
 
     public void setThrownAttack() {
-        mThrownAttack = true;
-        // Make sure other attack fields are set to false
-        mMeleeAttack = false;
-        mRangedAttack = false;
+        mAttackType = AttackType.RANGED;
     }
 
     // Checks to make sure built attack follows DnD rules
@@ -96,7 +88,7 @@ public class AttackBuilder {
             throw new NullPointerException("Must set player making attack");
         }
 
-        if (mMeleeAttack) {
+        if (mAttackType == AttackType.MELEE) {
             if (weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
             }
@@ -111,7 +103,7 @@ public class AttackBuilder {
             }
         }
 
-        if (mRangedAttack) {
+        if (mAttackType == AttackType.RANGED) {
             if (!weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
@@ -120,7 +112,7 @@ public class AttackBuilder {
             }
         }
 
-        if (mThrownAttack && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.THROWN)) {
+        if (mAttackType == AttackType.THROWN && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mMainHandAttackingWeapon.toString());
         }
 
@@ -130,9 +122,6 @@ public class AttackBuilder {
     // build() must be called before executeAttack can be run
     public void executeAttack() {
 
-        if (mMeleeAttack) {
-
-        }
 
         // TODO fill out method
 
