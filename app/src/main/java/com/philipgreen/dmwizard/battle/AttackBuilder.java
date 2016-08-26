@@ -116,14 +116,46 @@ public class AttackBuilder {
         return new AttackBuilder();
     }
 
-    // build() must be called before executeAttack can be run
-    public void executeAttack() {
+    ///////////////
+    //  GETTERS  //
+    ///////////////
 
 
-        // TODO fill out method
-
+    public BaseWeapon getMainHandAttackingWeapon() {
+        return mMainHandAttackingWeapon;
     }
 
+    public BaseWeapon getOffHandAttackingWeapon() {
+        return mOffHandAttackingWeapon;
+    }
+
+    public BasePlayerClass getPlayerBeingAttacked() {
+        return mPlayerBeingAttacked;
+    }
+
+    public BasePlayerClass getPlayerMakingAttack() {
+        return mPlayerMakingAttack;
+    }
+
+    public BaseStats getAttackModifier() {
+        return mAttackModifier;
+    }
+
+    public int getPlayerDistance() {
+        return mPlayerDistance;
+    }
+
+    public boolean isTwoHandedAttack() {
+        return mIsTwoHandedAttack;
+    }
+
+    public AttackType getAttackType() {
+        return mAttackType;
+    }
+
+    ///////////////////////////
+    //     PRIVATE METHODS   //
+    ///////////////////////////
 
     private boolean weaponContainsProperty(BaseWeapon weapon, WeaponProperties property) {
         return weapon.getWeaponProperties().contains(property);
