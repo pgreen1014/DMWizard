@@ -12,12 +12,12 @@ public class AttackBuilder {
     private static final String TAG = "AttackBuilder";
 
     private BaseWeapon mMainHandAttackingWeapon;
-    private BaseWeapon mOffHandAttackingWeapon;
     private BasePlayerClass mPlayerBeingAttacked;
     private BasePlayerClass mPlayerMakingAttack;
     private BaseStats mAttackModifier;
     private int mPlayerDistance;
     private boolean mIsTwoHandedAttack = false;
+    private boolean mIsOffHandWeaponAttack = false;
     private AttackType mAttackType;
 
     protected enum AttackType {
@@ -30,10 +30,6 @@ public class AttackBuilder {
 
     public void setMainHandAttackingWeapon(BaseWeapon weapon) {
         mMainHandAttackingWeapon = weapon;
-    }
-
-    public void setOffHandAttackingWeapon(BaseWeapon weapon) {
-        mOffHandAttackingWeapon = weapon;
     }
 
     public void setAttackTarget(BasePlayerClass playerBeingAttacked) {
@@ -59,6 +55,10 @@ public class AttackBuilder {
 
     public void setTwoHandedAttack() {
         mIsTwoHandedAttack = true;
+    }
+
+    public void setOffHandWeaponAttack() {
+        mIsOffHandWeaponAttack = true;
     }
 
     public void setMeleeAttack() {
@@ -92,11 +92,10 @@ public class AttackBuilder {
             if (mAttackModifier != BaseStats.STRENGTH && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mMainHandAttackingWeapon.toString());
             }
-            if (mOffHandAttackingWeapon != null && mIsTwoHandedAttack && weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.VERSATILE)) {
-                throw new IllegalArgumentException("Cannot make off hand weapon attack and two handed weapon attack with the same attack");
-            }
-            if (mOffHandAttackingWeapon != null && weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.TWO_HANDED)) {
-                throw new IllegalArgumentException("Cannot make off hand weapon attack with two handed weapon");
+            if (isTwoHandedAttack() &&
+                    (!weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.TWO_HANDED) ||
+                            !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.VERSATILE))) {
+
             }
         }
 
@@ -125,10 +124,6 @@ public class AttackBuilder {
         return mMainHandAttackingWeapon;
     }
 
-    public BaseWeapon getOffHandAttackingWeapon() {
-        return mOffHandAttackingWeapon;
-    }
-
     public BasePlayerClass getPlayerBeingAttacked() {
         return mPlayerBeingAttacked;
     }
@@ -149,6 +144,10 @@ public class AttackBuilder {
         return mIsTwoHandedAttack;
     }
 
+    public boolean isOffHandWeaponAttack() {
+        return mIsOffHandWeaponAttack;
+    }
+
     public AttackType getAttackType() {
         return mAttackType;
     }
@@ -159,5 +158,13 @@ public class AttackBuilder {
 
     private boolean weaponContainsProperty(BaseWeapon weapon, WeaponProperties property) {
         return weapon.getWeaponProperties().contains(property);
+    }
+
+    ///////////////////////////////
+    // ATTACK VALIDATION METHODS //
+    ///////////////////////////////
+
+    private boolean validateTwoHandedAttack() {
+        return false;
     }
 }
