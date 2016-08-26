@@ -20,7 +20,7 @@ public class AttackBuilder {
     private boolean mIsTwoHandedAttack = false;
     private AttackType mAttackType;
 
-    private enum AttackType {
+    protected enum AttackType {
         MELEE, RANGED, THROWN
     }
 
