@@ -74,7 +74,7 @@ public class AttackBuilder {
     }
 
     // Checks to make sure built attack follows DnD rules
-    public AttackBuilder build() throws NullPointerException, IllegalArgumentException {
+    public Attack build() throws NullPointerException, IllegalArgumentException {
         if (mAttackingWeapon == null) {
             throw new NullPointerException("Must set attacking weapon");
         }
@@ -112,7 +112,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
 
-        return new AttackBuilder();
+        return new Attack(this);
     }
 
     ///////////////
