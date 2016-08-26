@@ -42,7 +42,10 @@ public abstract class BaseWeapon {
     protected void addWeaponProperty(WeaponProperties property) {
         mWeaponProperties.add(property);
     }
-    
+
+    public boolean containsWeaponProperty(WeaponProperties property) {
+        return getWeaponProperties().contains(property);
+    }
 
     //#################
     //     GETTERS

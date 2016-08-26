@@ -86,29 +86,29 @@ public class AttackBuilder {
         }
 
         if (mAttackType == AttackType.MELEE) {
-            if (weaponContainsProperty(mAttackingWeapon, WeaponProperties.RANGE)) {
+            if (mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
             }
-            if (mAttackModifier != BaseStats.STRENGTH && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.FINESSE)) {
+            if (mAttackModifier != BaseStats.STRENGTH && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
             }
             if (isTwoHandedAttack() &&
-                    (!weaponContainsProperty(mAttackingWeapon, WeaponProperties.TWO_HANDED) ||
-                            !weaponContainsProperty(mAttackingWeapon, WeaponProperties.VERSATILE))) {
+                    (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.TWO_HANDED) ||
+                            !mAttackingWeapon.containsWeaponProperty(WeaponProperties.VERSATILE))) {
 
             }
         }
 
         if (mAttackType == AttackType.RANGED) {
-            if (!weaponContainsProperty(mAttackingWeapon, WeaponProperties.RANGE)) {
+            if (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
-            if (mAttackModifier != BaseStats.DEXTERITY && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.FINESSE)) {
+            if (mAttackModifier != BaseStats.DEXTERITY && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE))) {
                 throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
             }
         }
 
-        if (mAttackType == AttackType.THROWN && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.THROWN)) {
+        if (mAttackType == AttackType.THROWN && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
 
@@ -150,14 +150,6 @@ public class AttackBuilder {
 
     public AttackType getAttackType() {
         return mAttackType;
-    }
-
-    ///////////////////////////
-    //     PRIVATE METHODS   //
-    ///////////////////////////
-
-    private boolean weaponContainsProperty(BaseWeapon weapon, WeaponProperties property) {
-        return weapon.getWeaponProperties().contains(property);
     }
 
     ///////////////////////////////
