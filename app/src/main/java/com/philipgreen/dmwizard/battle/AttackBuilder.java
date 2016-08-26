@@ -1,12 +1,9 @@
-package com.philipgreen.dmwizard.utilities;
-
-import android.util.Log;
+package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.ThrownWeapon;
 
 /**
  * Created by pgreen on 8/23/16.
