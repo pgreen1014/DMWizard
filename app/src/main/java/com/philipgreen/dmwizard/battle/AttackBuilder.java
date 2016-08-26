@@ -95,7 +95,7 @@ public class AttackBuilder {
             if (isTwoHandedAttack() &&
                     (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.TWO_HANDED) ||
                             !mAttackingWeapon.containsWeaponProperty(WeaponProperties.VERSATILE))) {
-
+                throw new IllegalArgumentException("Cannot use Two Handed attack with weapon " + mAttackingWeapon.toString());
             }
         }
 
@@ -103,7 +103,7 @@ public class AttackBuilder {
             if (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
-            if (mAttackModifier != BaseStats.DEXTERITY && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE))) {
+            if (mAttackModifier != BaseStats.DEXTERITY && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
             }
         }
@@ -155,8 +155,5 @@ public class AttackBuilder {
     ///////////////////////////////
     // ATTACK VALIDATION METHODS //
     ///////////////////////////////
-
-    private boolean validateTwoHandedAttack() {
-        return false;
-    }
+    //TODO clean up .build() by created modularized methods to check for valid build
 }
