@@ -26,9 +26,7 @@ public class AttackBuilder {
     private boolean mRangedAttack = false;
     private boolean mThrownAttack = false;
 
-    private boolean mAttackBuildCompleted = false;
-
-    public AttackBuilder() {
+    private AttackBuilder() {
 
     }
 
@@ -87,7 +85,7 @@ public class AttackBuilder {
     }
 
     // Checks to make sure built attack follows DnD rules
-    public void build() throws NullPointerException, IllegalArgumentException {
+    public AttackBuilder build() throws NullPointerException, IllegalArgumentException {
         if (mMainHandAttackingWeapon == null) {
             throw new NullPointerException("Must set attacking weapon");
         }
@@ -126,16 +124,18 @@ public class AttackBuilder {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mMainHandAttackingWeapon.toString());
         }
 
-
-        mAttackBuildCompleted = true;
+        return new AttackBuilder();
     }
 
     // build() must be called before executeAttack can be run
     public void executeAttack() {
-        if (!mAttackBuildCompleted) {
-            return;
+
+        if (mMeleeAttack) {
+
         }
+
         // TODO fill out method
+
     }
 
 
