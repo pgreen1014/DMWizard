@@ -11,7 +11,7 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 public class AttackBuilder {
     private static final String TAG = "AttackBuilder";
 
-    private BaseWeapon mMainHandAttackingWeapon;
+    private BaseWeapon mAttackingWeapon;
     private BasePlayerClass mPlayerBeingAttacked;
     private BasePlayerClass mPlayerMakingAttack;
     private BaseStats mAttackModifier;
@@ -28,8 +28,8 @@ public class AttackBuilder {
 
     }
 
-    public void setMainHandAttackingWeapon(BaseWeapon weapon) {
-        mMainHandAttackingWeapon = weapon;
+    public void setAttackingWeapon(BaseWeapon weapon) {
+        mAttackingWeapon = weapon;
     }
 
     public void setAttackTarget(BasePlayerClass playerBeingAttacked) {
@@ -75,7 +75,7 @@ public class AttackBuilder {
 
     // Checks to make sure built attack follows DnD rules
     public AttackBuilder build() throws NullPointerException, IllegalArgumentException {
-        if (mMainHandAttackingWeapon == null) {
+        if (mAttackingWeapon == null) {
             throw new NullPointerException("Must set attacking weapon");
         }
         if (mPlayerBeingAttacked == null) {
@@ -86,30 +86,30 @@ public class AttackBuilder {
         }
 
         if (mAttackType == AttackType.MELEE) {
-            if (weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.RANGE)) {
+            if (weaponContainsProperty(mAttackingWeapon, WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
             }
-            if (mAttackModifier != BaseStats.STRENGTH && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.FINESSE)) {
-                throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mMainHandAttackingWeapon.toString());
+            if (mAttackModifier != BaseStats.STRENGTH && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.FINESSE)) {
+                throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
             }
             if (isTwoHandedAttack() &&
-                    (!weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.TWO_HANDED) ||
-                            !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.VERSATILE))) {
+                    (!weaponContainsProperty(mAttackingWeapon, WeaponProperties.TWO_HANDED) ||
+                            !weaponContainsProperty(mAttackingWeapon, WeaponProperties.VERSATILE))) {
 
             }
         }
 
         if (mAttackType == AttackType.RANGED) {
-            if (!weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.RANGE)) {
+            if (!weaponContainsProperty(mAttackingWeapon, WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
-            if (mAttackModifier != BaseStats.DEXTERITY && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.FINESSE)) {
-                throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mMainHandAttackingWeapon.toString());
+            if (mAttackModifier != BaseStats.DEXTERITY && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.FINESSE)) {
+                throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
             }
         }
 
-        if (mAttackType == AttackType.THROWN && !weaponContainsProperty(mMainHandAttackingWeapon, WeaponProperties.THROWN)) {
-            throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mMainHandAttackingWeapon.toString());
+        if (mAttackType == AttackType.THROWN && !weaponContainsProperty(mAttackingWeapon, WeaponProperties.THROWN)) {
+            throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
 
         return new AttackBuilder();
@@ -120,8 +120,8 @@ public class AttackBuilder {
     ///////////////
 
 
-    public BaseWeapon getMainHandAttackingWeapon() {
-        return mMainHandAttackingWeapon;
+    public BaseWeapon getAttackingWeapon() {
+        return mAttackingWeapon;
     }
 
     public BasePlayerClass getPlayerBeingAttacked() {
