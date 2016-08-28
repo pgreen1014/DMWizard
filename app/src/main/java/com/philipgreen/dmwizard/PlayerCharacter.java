@@ -510,7 +510,7 @@ public class PlayerCharacter {
     //##############################
 
     private int attackRoll() {
-        return Dice.rollDie(20);
+        return Dice.rollDie(20) + mProficiencyBonus;
     }
 
     // Weapon attack
