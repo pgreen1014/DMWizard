@@ -14,6 +14,16 @@ public class Dagger extends ThrownWeapon {
     }
 
     @Override
+    public int initVersatileDamageDie() {
+        return 0;
+    }
+
+    @Override
+    public int initVersatileDieNumber() {
+        return 0;
+    }
+
+    @Override
     public int initMinThrowRange() {
         return 20;
     }

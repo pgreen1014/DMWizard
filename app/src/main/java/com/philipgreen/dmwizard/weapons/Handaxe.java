@@ -47,4 +47,14 @@ public class Handaxe extends ThrownWeapon {
     public WeaponProperties[] initWeaponProperties() {
         return new WeaponProperties[0];
     }
+
+    @Override
+    public int initVersatileDamageDie() {
+        return 0;
+    }
+
+    @Override
+    public int initVersatileDieNumber() {
+        return 0;
+    }
 }
