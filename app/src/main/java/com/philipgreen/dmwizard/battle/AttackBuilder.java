@@ -1,5 +1,6 @@
 package com.philipgreen.dmwizard.battle;
 
+import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
@@ -12,8 +13,8 @@ public class AttackBuilder {
     private static final String TAG = "AttackBuilder";
 
     private BaseWeapon mAttackingWeapon;
-    private BasePlayerClass mPlayerBeingAttacked;
-    private BasePlayerClass mPlayerMakingAttack;
+    private PlayerCharacter mPlayerBeingAttacked;
+    private PlayerCharacter mPlayerMakingAttack;
     private BaseStats mAttackModifier;
     private int mPlayerDistance;
     private boolean mIsTwoHandedAttack = false;
@@ -32,11 +33,11 @@ public class AttackBuilder {
         mAttackingWeapon = weapon;
     }
 
-    public void setAttackTarget(BasePlayerClass playerBeingAttacked) {
+    public void setAttackTarget(PlayerCharacter playerBeingAttacked) {
         mPlayerBeingAttacked = playerBeingAttacked;
     }
 
-    public void setPlayerMakingAttack(BasePlayerClass playerMakingAttack) {
+    public void setPlayerMakingAttack(PlayerCharacter playerMakingAttack) {
         mPlayerMakingAttack = playerMakingAttack;
     }
 
@@ -124,11 +125,11 @@ public class AttackBuilder {
         return mAttackingWeapon;
     }
 
-    public BasePlayerClass getPlayerBeingAttacked() {
+    public PlayerCharacter getPlayerBeingAttacked() {
         return mPlayerBeingAttacked;
     }
 
-    public BasePlayerClass getPlayerMakingAttack() {
+    public PlayerCharacter getPlayerMakingAttack() {
         return mPlayerMakingAttack;
     }
 
