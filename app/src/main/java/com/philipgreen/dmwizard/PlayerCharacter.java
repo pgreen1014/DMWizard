@@ -732,6 +732,10 @@ public class PlayerCharacter {
         mInitiative = initiative;
     }
 
+    public int getArmorClass() {
+        return mArmorClass;
+    }
+
     //###################
     // TO STRING METHODS
     //###################
