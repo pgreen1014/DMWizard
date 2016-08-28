@@ -496,8 +496,24 @@ public class PlayerCharacter {
         return ABILITY_MODIFIER_MAP.get(mCharisma);
     }
 
-    private int getProficiencyBonusWithModifier(int abilityModifier) {
-        return mProficiencyBonus + abilityModifier;
+    public int getAbilityModifier(BaseStats ability) {
+        switch(ability) {
+            case STRENGTH:
+                return getStrengthModifier();
+            case DEXTERITY:
+                return getDexterityModifier();
+            case CONSTITUTION:
+                return getConstitutionModifier();
+            case INTELLIGENCE:
+                return getIntelligenceModifier();
+            case WISDOM:
+                return getWisdomModifier();
+            case CHARISMA:
+                return getCharismaModifier();
+            default:
+                Log.e(TAG, "Unhandled BaseStat: " + ability.toString());
+                return 0;
+        }
     }
 
 
