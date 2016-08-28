@@ -3,7 +3,6 @@ package com.philipgreen.dmwizard.battle;
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**
@@ -15,7 +14,7 @@ public class AttackBuilder {
     private BaseWeapon mAttackingWeapon;
     private PlayerCharacter mPlayerBeingAttacked;
     private PlayerCharacter mPlayerMakingAttack;
-    private BaseStats mAttackModifier;
+    private BaseStats mAttackModifierStat;
     private int mPlayerDistance;
     private boolean mIsTwoHandedAttack = false;
     private boolean mIsOffHandWeaponAttack = false;
@@ -42,9 +41,9 @@ public class AttackBuilder {
     }
 
     // Only necessary for weapons with WeaponProperties.Finesse
-    public void setAttackModifier(BaseStats attackModifier) throws IllegalArgumentException {
+    public void setAttackModifierStat(BaseStats attackModifier) throws IllegalArgumentException {
         if (attackModifier == BaseStats.STRENGTH || attackModifier == BaseStats.DEXTERITY) {
-            mAttackModifier = attackModifier;
+            mAttackModifierStat = attackModifier;
         } else {
             throw new IllegalArgumentException("Attack Modifier can only be of the type BaseStats.Strength or BaseStats.Dexterity");
         }
@@ -90,7 +89,7 @@ public class AttackBuilder {
             if (mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
             }
-            if (mAttackModifier != BaseStats.STRENGTH && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
+            if (mAttackModifierStat != BaseStats.STRENGTH && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
             }
             if (isTwoHandedAttack() &&
@@ -104,7 +103,7 @@ public class AttackBuilder {
             if (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
-            if (mAttackModifier != BaseStats.DEXTERITY && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
+            if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
             }
         }
@@ -133,8 +132,8 @@ public class AttackBuilder {
         return mPlayerMakingAttack;
     }
 
-    public BaseStats getAttackModifier() {
-        return mAttackModifier;
+    public BaseStats getAttackModifierStat() {
+        return mAttackModifierStat;
     }
 
     public int getPlayerDistance() {

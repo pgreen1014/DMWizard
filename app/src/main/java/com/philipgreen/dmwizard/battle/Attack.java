@@ -2,7 +2,6 @@ package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
-import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**
@@ -14,7 +13,7 @@ public class Attack {
     private BaseWeapon mAttackingWeapon;
     private PlayerCharacter mPlayerBeingAttacked;
     private PlayerCharacter mPlayerMakingAttack;
-    private BaseStats mAttackModifier;
+    private BaseStats mAttackModifierStat;
     private int mPlayerDistance;
     private boolean mIsTwoHandedAttack;
     private boolean mIsOffHandWeaponAttack;
@@ -24,7 +23,7 @@ public class Attack {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
         mPlayerBeingAttacked = attackBuild.getPlayerBeingAttacked();
         mPlayerMakingAttack = attackBuild.getPlayerMakingAttack();
-        mAttackModifier = attackBuild.getAttackModifier();
+        mAttackModifierStat = attackBuild.getAttackModifierStat();
         mPlayerDistance = attackBuild.getPlayerDistance();
         mIsTwoHandedAttack = attackBuild.isTwoHandedAttack();
         mIsOffHandWeaponAttack = attackBuild.isOffHandWeaponAttack();
@@ -43,8 +42,8 @@ public class Attack {
         return mPlayerMakingAttack;
     }
 
-    public BaseStats getAttackModifier() {
-        return mAttackModifier;
+    public BaseStats getAttackModifierStat() {
+        return mAttackModifierStat;
     }
 
     public int getPlayerDistance() {
