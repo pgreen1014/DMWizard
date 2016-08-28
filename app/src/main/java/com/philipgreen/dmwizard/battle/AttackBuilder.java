@@ -97,6 +97,9 @@ public class AttackBuilder {
                             !mAttackingWeapon.containsWeaponProperty(WeaponProperties.VERSATILE))) {
                 throw new IllegalArgumentException("Cannot use Two Handed attack with weapon " + mAttackingWeapon.toString());
             }
+            if (mAttackingWeapon.containsWeaponProperty(WeaponProperties.TWO_HANDED) && mIsOffHandWeaponAttack) {
+                throw new IllegalArgumentException( mAttackingWeapon.toString() + " weapon must be used with two hands");
+            }
         }
 
         if (mAttackType == AttackType.RANGED) {
