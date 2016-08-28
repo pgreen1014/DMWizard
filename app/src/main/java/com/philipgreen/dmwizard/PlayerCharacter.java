@@ -509,7 +509,7 @@ public class PlayerCharacter {
     //         ATTACKS
     //##############################
 
-    private int attackRoll() {
+    public int attackRoll() {
         return Dice.rollDie(20) + mProficiencyBonus;
     }
 
