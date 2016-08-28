@@ -24,7 +24,7 @@ public class AttackBuilder {
         MELEE, RANGED, THROWN
     }
 
-    private AttackBuilder() {
+    public AttackBuilder() {
 
     }
 
