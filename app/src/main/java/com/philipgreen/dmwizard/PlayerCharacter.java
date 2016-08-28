@@ -100,6 +100,10 @@ public class PlayerCharacter {
     private HashSet<Languages> mLanguages = new HashSet<>();
     private HashSet<Weapons> mWeaponProficiencies = new HashSet<>();
 
+    // Character States
+    private boolean mDead = false;
+    private boolean mUnconscious = false;
+
     // statically create and put values into ABILITY_MODIFIER_MAP
     public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
     static {
@@ -516,7 +520,6 @@ public class PlayerCharacter {
         }
     }
 
-
     public ArrayList<Skills> getProficientSkills() {
         return mProficientSkills;
     }
@@ -629,6 +632,19 @@ public class PlayerCharacter {
         return Dice.rollDie(20) + mSurvival;
     }
 
+    public void takeDamage(int damage) {
+        mHitPoints -= damage;
+
+        // If player takes enough damage at once to where his/her hit points are equal to 0 - Maximum hit points then that character dies
+        if (mHitPoints <= 0 - mMaxHitPoints) {
+            mDead = true;
+        } else if (mHitPoints <= 0) {
+            mUnconscious = true;
+            // Because there are no negative hit points in 5e, hit points will never be below 0
+            mHitPoints = 0;
+        }
+    }
+
     /////////////////////////////////
     //     GETTERS AND SETTERS     //
     /////////////////////////////////
@@ -687,6 +703,10 @@ public class PlayerCharacter {
 
     public int getArmorClass() {
         return mArmorClass;
+    }
+
+    public int getHitPoints() {
+        return mHitPoints;
     }
 
     //###################
