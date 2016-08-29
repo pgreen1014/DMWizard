@@ -14,6 +14,7 @@ import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
+import com.philipgreen.dmwizard.weapons.ShortBow;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 public class BattleSimulator extends AppCompatActivity {
@@ -34,7 +35,6 @@ public class BattleSimulator extends AppCompatActivity {
                 BasePlayerClass playerClass = new Barbarian(1, playerSkills);
                 BaseRaceClass playerRace = new Dwarf();
                 PlayerCharacter player1 = new PlayerCharacter(playerClass, playerRace, 17, 14, 14, 10, 13, 9);
-                Log.i(TAG, player1.toString());
 
                 Skills[] player2Skills = new Skills[] {Skills.INTIMIDATION, Skills.NATURE};
                 BasePlayerClass player2Class = new Barbarian(1, player2Skills);
@@ -42,8 +42,16 @@ public class BattleSimulator extends AppCompatActivity {
                 PlayerCharacter player2 = new PlayerCharacter(player2Class, player2Race, 12, 13, 14, 15, 16, 18);
 
                 AttackBuilder attackBuilder = new AttackBuilder();
-                
+                attackBuilder
+                        .setPlayerMakingAttack(player1)
+                        .setAttackTarget(player2)
+                        .setAttackingWeapon(new Dagger())
+                        .setAttackModifierStat(BaseStats.DEXTERITY)
+                        .setMeleeAttack();
 
+                Log.i(TAG, attackBuilder.toString());
+
+                
 
             }
         });
