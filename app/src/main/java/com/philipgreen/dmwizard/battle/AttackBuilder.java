@@ -28,49 +28,70 @@ public class AttackBuilder {
 
     }
 
-    public void setAttackingWeapon(BaseWeapon weapon) {
-        mAttackingWeapon = weapon;
+    public String toString() {
+        return "Attacking weapon: " + mAttackingWeapon.toString() + "\n"
+                + " Attack Modifier: " + mAttackModifierStat.toString() + "\n"
+                + " Player Distance: " + Integer.toString(mPlayerDistance) + "\n"
+                + " Is two handed attack: " + mIsTwoHandedAttack + "\n"
+                + " Is off hand weapon: " + mIsOffHandWeaponAttack + "\n"
+                + " Attack Type: " + mAttackType.toString() + "\n"
+                + " Attacking Player: " + "\n" + mPlayerMakingAttack.toString() + "\n\n"
+                + " Defending Player: " + "\n" + mPlayerBeingAttacked.toString();
     }
 
-    public void setAttackTarget(PlayerCharacter playerBeingAttacked) {
-        mPlayerBeingAttacked = playerBeingAttacked;
+    public AttackBuilder setAttackingWeapon(BaseWeapon weapon) {
+        this.mAttackingWeapon = weapon;
+        return this;
     }
 
-    public void setPlayerMakingAttack(PlayerCharacter playerMakingAttack) {
+    public AttackBuilder setAttackTarget(PlayerCharacter playerBeingAttacked) {
+        this.mPlayerBeingAttacked = playerBeingAttacked;
+        return this;
+    }
+
+    public AttackBuilder setPlayerMakingAttack(PlayerCharacter playerMakingAttack) {
         mPlayerMakingAttack = playerMakingAttack;
+        return this;
     }
 
     // Only necessary for weapons with WeaponProperties.Finesse
-    public void setAttackModifierStat(BaseStats attackModifier) throws IllegalArgumentException {
+    public AttackBuilder setAttackModifierStat(BaseStats attackModifier) throws IllegalArgumentException {
         if (attackModifier == BaseStats.STRENGTH || attackModifier == BaseStats.DEXTERITY) {
-            mAttackModifierStat = attackModifier;
+            this.mAttackModifierStat = attackModifier;
         } else {
             throw new IllegalArgumentException("Attack Modifier can only be of the type BaseStats.Strength or BaseStats.Dexterity");
         }
+        return this;
     }
 
-    public void setPlayerDistance(int playerDistance) {
+    public AttackBuilder setPlayerDistance(int playerDistance) {
         mPlayerDistance = playerDistance;
+        return this;
     }
 
-    public void setTwoHandedAttack() {
+    public AttackBuilder setTwoHandedAttack() {
         mIsTwoHandedAttack = true;
+        return this;
     }
 
-    public void setOffHandWeaponAttack() {
+    public AttackBuilder setOffHandWeaponAttack() {
         mIsOffHandWeaponAttack = true;
+        return this;
     }
 
-    public void setMeleeAttack() {
+    public AttackBuilder setMeleeAttack() {
         mAttackType = AttackType.MELEE;
+        return this;
     }
 
-    public void setRangedAttack() {
+    public AttackBuilder setRangedAttack() {
         mAttackType = AttackType.RANGED;
+        return this;
     }
 
-    public void setThrownAttack() {
+    public AttackBuilder setThrownAttack() {
         mAttackType = AttackType.RANGED;
+        return this;
     }
 
     // Checks to make sure built attack follows DnD rules
