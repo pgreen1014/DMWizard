@@ -61,4 +61,15 @@ public class Attack {
     public AttackBuilder.AttackType getAttackType() {
         return mAttackType;
     }
+
+    public String toString() {
+        return "Attacking weapon: " + mAttackingWeapon.toString() + "\n"
+                + " Attack Modifier: " + mAttackModifierStat.toString() + "\n"
+                + " Player Distance: " + Integer.toString(mPlayerDistance) + "\n"
+                + " Is two handed attack: " + mIsTwoHandedAttack + "\n"
+                + " Is off hand weapon: " + mIsOffHandWeaponAttack + "\n"
+                + " Attack Type: " + mAttackType.toString() + "\n"
+                + " Attacking Player: " + "\n" + mPlayerMakingAttack.toString() + "\n\n"
+                + " Defending Player: " + "\n" + mPlayerBeingAttacked.toString();
+    }
 }
