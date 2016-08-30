@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.philipgreen.dmwizard.battle.Attack;
 import com.philipgreen.dmwizard.battle.AttackBuilder;
+import com.philipgreen.dmwizard.battle.BattleManager;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
@@ -42,16 +44,26 @@ public class BattleSimulator extends AppCompatActivity {
                 PlayerCharacter player2 = new PlayerCharacter(player2Class, player2Race, 12, 13, 14, 15, 16, 18);
 
                 AttackBuilder attackBuilder = new AttackBuilder();
-                attackBuilder
+                Attack attack= attackBuilder
                         .setPlayerMakingAttack(player1)
                         .setAttackTarget(player2)
                         .setAttackingWeapon(new Dagger())
                         .setAttackModifierStat(BaseStats.DEXTERITY)
-                        .setMeleeAttack();
+                        .setMeleeAttack()
+                        .build();
 
-                Log.i(TAG, attackBuilder.toString());
 
-                
+                BattleManager battleManager = new BattleManager();
+
+                int hpBeforeAttack = player2.getHitPoints();
+                Log.i(TAG, "Player starts with: " + Integer.toString(hpBeforeAttack));
+
+                battleManager.exectuteAttack(attack);
+
+                int hpAfterAttack = player2.getHitPoints();
+                Log.i(TAG, "Player now has: " + Integer.toString(hpAfterAttack));
+
+
 
             }
         });
