@@ -39,4 +39,14 @@ public class ShortBow extends RangedWeapon {
     public WeaponProperties[] initWeaponProperties() {
         return new WeaponProperties[] {WeaponProperties.AMMUNITION, WeaponProperties.RANGE, WeaponProperties.TWO_HANDED};
     }
+
+    @Override
+    protected int minRangeInFeet() {
+        return 80;
+    }
+
+    @Override
+    protected int maxRangeInFeet() {
+        return 320;
+    }
 }
