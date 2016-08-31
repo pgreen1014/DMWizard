@@ -16,8 +16,6 @@ import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
-import com.philipgreen.dmwizard.weapons.ShortBow;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
@@ -58,7 +56,7 @@ public class BattleSimulator extends AppCompatActivity {
                 int hpBeforeAttack = player2.getHitPoints();
                 Log.i(TAG, "Player starts with: " + Integer.toString(hpBeforeAttack));
 
-                battleManager.exectuteAttack(attack);
+                battleManager.executeAttack(attack);
 
                 int hpAfterAttack = player2.getHitPoints();
                 Log.i(TAG, "Player now has: " + Integer.toString(hpAfterAttack));

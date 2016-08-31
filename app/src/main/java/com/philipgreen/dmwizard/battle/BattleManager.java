@@ -5,6 +5,7 @@ import android.util.Log;
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 
 /**
  * Created by pgreen on 8/25/16.
@@ -17,7 +18,7 @@ public class BattleManager {
 
     public BattleManager() {}
 
-    public void exectuteAttack(Attack attack) {
+    public void executeAttack(Attack attack) {
         mAttacker = attack.getPlayerMakingAttack();
         mDefender = attack.getPlayerBeingAttacked();
         AttackBuilder.AttackType attackType = attack.getAttackType();
@@ -65,6 +66,9 @@ public class BattleManager {
     }
 
     private int executeRangedAttack(Attack attack) {
+        // Use ammunition
+        RangedWeapon weapon = (RangedWeapon) attack.getAttackingWeapon();
+        weapon.useAmmunition();
         // Ranged attack rolls should use dexterity modifier
         rollAttack(mAttacker.getDexterityModifier());
         int damage = 0;
