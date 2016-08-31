@@ -12,12 +12,12 @@ public class ShortBow extends RangedWeapon {
 
     @Override
     public int initDamageDie() {
-        return 0;
+        return 6;
     }
 
     @Override
     public int initDieNumber() {
-        return 0;
+        return 1;
     }
 
     @Override
@@ -27,16 +27,16 @@ public class ShortBow extends RangedWeapon {
 
     @Override
     public WeaponDamageType initWeaponDamageType() {
-        return null;
+        return WeaponDamageType.PIERCING;
     }
 
     @Override
     public int initWeight() {
-        return 0;
+        return 2;
     }
 
     @Override
     public WeaponProperties[] initWeaponProperties() {
-        return new WeaponProperties[0];
+        return new WeaponProperties[] {WeaponProperties.AMMUNITION, WeaponProperties.RANGE, WeaponProperties.TWO_HANDED};
     }
 }

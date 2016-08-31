@@ -11,6 +11,7 @@ public abstract class RangedWeapon extends BaseWeapon {
 
     public RangedWeapon() {
         super();
+        // add RANGE PROPERTY in case property not added in class
         addWeaponProperty(WeaponProperties.RANGE);
     }
 
