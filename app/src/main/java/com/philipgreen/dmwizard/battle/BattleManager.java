@@ -48,7 +48,7 @@ public class BattleManager {
 
     private int executeMeleeAttack(Attack attack) {
         // Melee attack rolls should use strength modifier
-        executeAttackRoll(mAttacker.getStrengthModifier());
+        rollAttack(mAttacker.getStrengthModifier());
         int damage = 0;
 
         if (mAttackSuccessful) {
@@ -66,7 +66,7 @@ public class BattleManager {
 
     private int executeRangedAttack(Attack attack) {
         // Ranged attack rolls should use dexterity modifier
-        executeAttackRoll(mAttacker.getDexterityModifier());
+        rollAttack(mAttacker.getDexterityModifier());
         int damage = 0;
 
         if (mAttackSuccessful) {
@@ -79,13 +79,13 @@ public class BattleManager {
         int damage = 0;
         // if attacking weapon is ranged
         if (attack.getAttackingWeapon().containsWeaponProperty(WeaponProperties.RANGE)) {
-            executeAttackRoll(mAttacker.getDexterityModifier());
+            rollAttack(mAttacker.getDexterityModifier());
             if (mAttackSuccessful) {
                 damage += rollDamage(attack);
             }
         // Else attacking weapon is melee
         } else {
-            executeAttackRoll(mAttacker.getStrengthModifier());
+            rollAttack(mAttacker.getStrengthModifier());
             if (mAttackSuccessful) {
                 damage += rollDamage(attack);
             }
@@ -93,7 +93,7 @@ public class BattleManager {
         return damage;
     }
 
-    private void executeAttackRoll(int attackModifier) {
+    private void rollAttack(int attackModifier) {
         int attackRoll = mAttacker.attackRoll() + attackModifier;
         mAttackSuccessful = attackRoll >= mDefender.getArmorClass();
     }
