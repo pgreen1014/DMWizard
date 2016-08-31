@@ -16,6 +16,7 @@ import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
+import com.philipgreen.dmwizard.weapons.ShortBow;
 
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
@@ -41,17 +42,22 @@ public class BattleSimulator extends AppCompatActivity {
                 BaseRaceClass player2Race = new Dwarf();
                 PlayerCharacter player2 = new PlayerCharacter(player2Class, player2Race, 12, 13, 14, 15, 16, 18);
 
+                ShortBow shortBow = new ShortBow();
+                shortBow.setAmmunition(20);
+
                 AttackBuilder attackBuilder = new AttackBuilder();
-                Attack attack= attackBuilder
+                Attack attack = attackBuilder
                         .setPlayerMakingAttack(player1)
                         .setAttackTarget(player2)
-                        .setAttackingWeapon(new Dagger())
+                        .setAttackingWeapon(shortBow)
                         .setAttackModifierStat(BaseStats.DEXTERITY)
-                        .setMeleeAttack()
+                        .setRangedAttack()
                         .build();
 
 
                 BattleManager battleManager = new BattleManager();
+
+                Log.i(TAG, "Starting Ammunition: " + Integer.toString(shortBow.getAmmunition()));
 
                 int hpBeforeAttack = player2.getHitPoints();
                 Log.i(TAG, "Player starts with: " + Integer.toString(hpBeforeAttack));
@@ -60,6 +66,8 @@ public class BattleSimulator extends AppCompatActivity {
 
                 int hpAfterAttack = player2.getHitPoints();
                 Log.i(TAG, "Player now has: " + Integer.toString(hpAfterAttack));
+
+                Log.i(TAG, "Ending Ammunition: " + Integer.toString(shortBow.getAmmunition()));
 
 
 
