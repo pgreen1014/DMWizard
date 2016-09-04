@@ -55,8 +55,11 @@ public class BattleManager {
         if (mAttackSuccessful) {
             // if weapon is versatile and is being used to make two-handed attack
             if (attack.isTwoHandedAttack() && attack.getAttackingWeapon().containsWeaponProperty(WeaponProperties.VERSATILE)) {
+                // TODO rewrite for new weapon interface implementation
+                /*
                 MeleeWeapon versatileWeapon = (MeleeWeapon) attack.getAttackingWeapon();
                 damage += versatileWeapon.rollTwoHandedDamage() + mAttacker.getAbilityModifier(attack.getAttackModifierStat());
+                */
             } else {
                 damage += rollDamage(attack);
             }
