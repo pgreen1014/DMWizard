@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.weapons.propertyInterfaces;
+package com.philipgreen.dmwizard.weapons.weaponBehavior;
 
 /**
  * Created by pgreen on 9/4/16.
