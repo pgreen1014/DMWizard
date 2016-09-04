@@ -3,12 +3,11 @@ package com.philipgreen.dmwizard.weapons;
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 
 /**
  * Created by pgreen on 8/7/16.
  */
-public class Dagger extends MeleeWeapon implements Throwable {
+public class Dagger extends MeleeWeapon {
 
     public Dagger() {
         super();
@@ -45,13 +44,4 @@ public class Dagger extends MeleeWeapon implements Throwable {
         return new WeaponProperties[] {WeaponProperties.FINESSE, WeaponProperties.LIGHT, WeaponProperties.THROWN};
     }
 
-    @Override
-    public int maxThrownRange() {
-        return 60;
-    }
-
-    @Override
-    public int minThrownRange() {
-        return 20;
-    }
 }

@@ -17,6 +17,7 @@ import com.philipgreen.dmwizard.races.BaseRaceClass;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
 import com.philipgreen.dmwizard.weapons.ShortBow;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
@@ -32,44 +33,12 @@ public class BattleSimulator extends AppCompatActivity {
         mBtnCreateCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Skills[] playerSkills = new Skills[] {Skills.ANIMAL_HANDLING, Skills.SURVIVAL};
-                BasePlayerClass playerClass = new Barbarian(1, playerSkills);
-                BaseRaceClass playerRace = new Dwarf();
-                PlayerCharacter player1 = new PlayerCharacter(playerClass, playerRace, 17, 14, 14, 10, 13, 9);
 
-                Skills[] player2Skills = new Skills[] {Skills.INTIMIDATION, Skills.NATURE};
-                BasePlayerClass player2Class = new Barbarian(1, player2Skills);
-                BaseRaceClass player2Race = new Dwarf();
-                PlayerCharacter player2 = new PlayerCharacter(player2Class, player2Race, 12, 13, 14, 15, 16, 18);
+                BaseWeapon dagger = new Dagger();
 
-                ShortBow shortBow = new ShortBow();
-                shortBow.setAmmunition(20);
-
-                AttackBuilder attackBuilder = new AttackBuilder();
-                Attack attack = attackBuilder
-                        .setPlayerMakingAttack(player1)
-                        .setAttackTarget(player2)
-                        .setAttackingWeapon(shortBow)
-                        .setAttackModifierStat(BaseStats.DEXTERITY)
-                        .setRangedAttack()
-                        .build();
-
-
-                BattleManager battleManager = new BattleManager();
-
-                Log.i(TAG, "Starting Ammunition: " + Integer.toString(shortBow.getAmmunition()));
-
-                int hpBeforeAttack = player2.getHitPoints();
-                Log.i(TAG, "Player starts with: " + Integer.toString(hpBeforeAttack));
-
-                battleManager.executeAttack(attack);
-
-                int hpAfterAttack = player2.getHitPoints();
-                Log.i(TAG, "Player now has: " + Integer.toString(hpAfterAttack));
-
-                Log.i(TAG, "Ending Ammunition: " + Integer.toString(shortBow.getAmmunition()));
-
-
+                int minRange = dagger.getMinRange();
+                int maxRange = dagger.getMaxRange();
+                //int minThrow = dagger.
 
             }
         });

@@ -12,9 +12,11 @@ import java.util.HashSet;
 public abstract class BaseWeapon {
     private int mDamageDie = initDamageDie(); // Die used for rolling damage
     private int mDieNumber = initDieNumber(); // Number of damage die used
+    private int mMinRange = initMinRange();
+    private int mMaxRange = initMaxRange();
     private int mCost = initCost();
-    private WeaponDamageType mWeaponDamageType = initWeaponDamageType();
     private int mWeight = initWeight();
+    private WeaponDamageType mWeaponDamageType = initWeaponDamageType();
     private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
 
     public BaseWeapon() {
@@ -24,6 +26,8 @@ public abstract class BaseWeapon {
     // ABSTRACT METHODS
     public abstract int initDamageDie();
     public abstract int initDieNumber();
+    public abstract int initMinRange();
+    public abstract int initMaxRange();
     public abstract int initCost();
     public abstract WeaponDamageType initWeaponDamageType();
     public abstract int initWeight();
@@ -53,5 +57,13 @@ public abstract class BaseWeapon {
 
     public HashSet<WeaponProperties> getWeaponProperties() {
         return mWeaponProperties;
+    }
+
+    public int getMinRange() {
+        return mMinRange;
+    }
+
+    public int getMaxRange() {
+        return mMaxRange;
     }
 }
