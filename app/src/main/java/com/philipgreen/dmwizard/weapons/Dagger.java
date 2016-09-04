@@ -15,16 +15,6 @@ public class Dagger extends MeleeWeapon implements Throwable {
     }
 
     @Override
-    public int initVersatileDamageDie() {
-        return 0;
-    }
-
-    @Override
-    public int initVersatileDieNumber() {
-        return 0;
-    }
-
-    @Override
     public int initDamageDie() {
         return 4;
     }
