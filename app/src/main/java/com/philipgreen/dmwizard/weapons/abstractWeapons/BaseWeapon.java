@@ -1,8 +1,13 @@
 package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
+import android.support.annotation.Nullable;
+import android.util.Log;
+
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.dice.Dice;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 
 import java.util.HashSet;
 
@@ -10,17 +15,23 @@ import java.util.HashSet;
  * Created by pgreen on 8/7/16.
  */
 public abstract class BaseWeapon {
-    private int mDamageDie = initDamageDie(); // Die used for rolling damage
-    private int mDieNumber = initDieNumber(); // Number of damage die used
-    private int mMinRange = initMinRange();
-    private int mMaxRange = initMaxRange();
-    private int mCost = initCost();
-    private int mWeight = initWeight();
-    private WeaponDamageType mWeaponDamageType = initWeaponDamageType();
-    private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
+    private static final String TAG = "BaseWeapon";
 
-    public BaseWeapon() {
+    private int mDamageDie; // Die used for rolling damage
+    private int mDieNumber; // Number of damage die used
+    private int mMinRange;
+    private int mMaxRange;
+    private int mCost;
+    private int mWeight;
+    private WeaponDamageType mWeaponDamageType;
+
+    private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
+    private Throwable mThrowableProperty;
+
+    public BaseWeapon(@Nullable BaseWeaponProperty[] weaponProperties) {
         setWeaponProperties();
+        initWeaponPropertyImplementations(weaponProperties);
+        initializeMemberVariables();
     }
 
     // ABSTRACT METHODS
@@ -33,9 +44,34 @@ public abstract class BaseWeapon {
     public abstract int initWeight();
     public abstract WeaponProperties[] initWeaponProperties();
 
+    private void initializeMemberVariables() {
+        mDamageDie = initDamageDie();
+        mDieNumber = initDieNumber();
+        mMinRange = initMinRange();
+        mMaxRange = initMaxRange();
+        mCost = initCost();
+        mWeight = initWeight();
+        mWeaponDamageType = initWeaponDamageType();
+    }
+
     private void setWeaponProperties() {
         for(WeaponProperties property: initWeaponProperties()) {
             mWeaponProperties.add(property);
+        }
+    }
+
+    private void initWeaponPropertyImplementations(BaseWeaponProperty[] weaponProperties) {
+        if (weaponProperties.length == 0) {
+            Log.i(TAG, "weapon contains no weapon properties: " + this.toString());
+            return;
+        }
+
+        for (BaseWeaponProperty weaponProperty: weaponProperties) {
+            switch (weaponProperty.getType()) {
+                case THROWN:
+                    mThrowableProperty = (Throwable) weaponProperty;
+                    break;
+            }
         }
     }
 
@@ -49,6 +85,26 @@ public abstract class BaseWeapon {
 
     public boolean containsWeaponProperty(WeaponProperties property) {
         return getWeaponProperties().contains(property);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                WEAPON PROPERTY METHODS                                     //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public int getMaxThrownRange() {
+        if (mThrowableProperty == null) {
+            Log.e(TAG, "weapon is not throwable: " + this.toString());
+            return 0;
+        }
+        return mThrowableProperty.maxThrownRange();
+    }
+
+    public int getMinThrownRage() {
+        if (mThrowableProperty == null) {
+            Log.e(TAG, "weapon is not throwable: " + this.toString());
+            return 0;
+        }
+        return mThrowableProperty.minThrownRange();
     }
 
     //#################

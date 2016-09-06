@@ -38,7 +38,13 @@ public class BattleSimulator extends AppCompatActivity {
 
                 int minRange = dagger.getMinRange();
                 int maxRange = dagger.getMaxRange();
-                //int minThrow = dagger.
+                int minThrow = dagger.getMinThrownRage();
+                int maxThrow = dagger.getMaxThrownRange();
+
+                Log.i(TAG, "minRange: " + Integer.toString(minRange));
+                Log.i(TAG, "maxRange: " + Integer.toString(maxRange));
+                Log.i(TAG, "minThrowRange: " + Integer.toString(minThrow));
+                Log.i(TAG, "maxThrowRange: " + Integer.toString(maxThrow));
 
             }
         });

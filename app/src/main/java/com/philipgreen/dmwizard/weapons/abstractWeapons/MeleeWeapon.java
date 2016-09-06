@@ -2,6 +2,7 @@ package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 
 /**
  * Created by pgreen on 8/7/16.
@@ -9,8 +10,8 @@ import com.philipgreen.dmwizard.data.WeaponProperties;
 public class MeleeWeapon extends BaseWeapon {
     private static final String TAG = "MeleeWeapon";
 
-    protected MeleeWeapon() {
-        super();
+    protected MeleeWeapon(BaseWeaponProperty[] weaponProperties) {
+        super(weaponProperties);
     }
 
     @Override
@@ -31,9 +32,9 @@ public class MeleeWeapon extends BaseWeapon {
     @Override
     public int initMaxRange() {
         if (this.containsWeaponProperty(WeaponProperties.REACH)) {
-            return this.getMinRange() + 5;
+            return 10;
         } else {
-            return 0;
+            return 5;
         }
     }
 
