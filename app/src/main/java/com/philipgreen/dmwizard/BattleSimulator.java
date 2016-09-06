@@ -11,6 +11,7 @@ import com.philipgreen.dmwizard.battle.AttackBuilder;
 import com.philipgreen.dmwizard.battle.BattleManager;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
@@ -18,6 +19,7 @@ import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
 import com.philipgreen.dmwizard.weapons.ShortBow;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
