@@ -1,8 +1,6 @@
 package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
 import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 
 /**
  * Created by pgreen on 8/7/16.
@@ -12,8 +10,8 @@ public abstract class RangedWeapon extends BaseWeapon {
     private int mMinRangeInFeet = minRangeInFeet();
     private int mMaxRangeInFeet = maxRangeInFeet();
 
-    public RangedWeapon(BaseWeaponProperty[] weaponProperties) {
-        super(weaponProperties);
+    public RangedWeapon() {
+        super();
         // add RANGE PROPERTY in case property not added in class
         addWeaponProperty(WeaponProperties.RANGE);
     }

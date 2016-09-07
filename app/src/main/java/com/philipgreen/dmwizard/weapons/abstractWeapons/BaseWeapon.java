@@ -1,12 +1,10 @@
 package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.dice.Dice;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 
 import java.util.HashSet;
@@ -28,9 +26,8 @@ public abstract class BaseWeapon {
     private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
     private Throwable mThrowableProperty;
 
-    public BaseWeapon(@Nullable BaseWeaponProperty[] weaponProperties) {
+    public BaseWeapon() {
         setWeaponProperties();
-        initWeaponPropertyImplementations(weaponProperties);
         initializeMemberVariables();
     }
 
@@ -57,21 +54,6 @@ public abstract class BaseWeapon {
     private void setWeaponProperties() {
         for(WeaponProperties property: initWeaponProperties()) {
             mWeaponProperties.add(property);
-        }
-    }
-
-    private void initWeaponPropertyImplementations(BaseWeaponProperty[] weaponProperties) {
-        if (weaponProperties.length == 0) {
-            Log.i(TAG, "weapon contains no weapon properties: " + this.toString());
-            return;
-        }
-
-        for (BaseWeaponProperty weaponProperty: weaponProperties) {
-            switch (weaponProperty.getType()) {
-                case THROWN:
-                    mThrowableProperty = (Throwable) weaponProperty;
-                    break;
-            }
         }
     }
 

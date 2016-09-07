@@ -2,7 +2,6 @@ package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 
 /**
  * Created by pgreen on 8/7/16.
@@ -10,8 +9,8 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 public class MeleeWeapon extends BaseWeapon {
     private static final String TAG = "MeleeWeapon";
 
-    protected MeleeWeapon(BaseWeaponProperty[] weaponProperties) {
-        super(weaponProperties);
+    protected MeleeWeapon() {
+        super();
     }
 
     @Override

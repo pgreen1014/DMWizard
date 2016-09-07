@@ -3,7 +3,6 @@ package com.philipgreen.dmwizard.weapons;
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 
 /**
  * Created by pgreen on 8/13/16.
@@ -11,8 +10,8 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.BaseWeaponProperty;
 public class ShortBow extends RangedWeapon {
     private final static String TAG = "ShortBow";
 
-    public ShortBow(BaseWeaponProperty[] weaponProperties) {
-        super(weaponProperties);
+    public ShortBow() {
+        super();
     }
 
     @Override
