@@ -9,48 +9,28 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Reach;
  */
 public abstract class MeleeWeapon extends BaseWeapon {
     private static final String TAG = "MeleeWeapon";
+    private int mMinRange = 0;
+    private int mMaxRange;
 
     protected MeleeWeapon() {
         super();
+        initMaxRange();
     }
 
-    @Override
-    public int initDamageDie() {
-        return 0;
-    }
-
-    @Override
-    public int initDieNumber() {
-        return 0;
-    }
-
-    @Override
-    public int initMinRange() {
-        return 0;
-    }
-
-    @Override
-    public int initMaxRange() {
+    public void initMaxRange() {
         if (this instanceof Reach) {
-            return 10;
+            mMaxRange = 10;
         } else {
-            return 5;
+            mMaxRange = 5;
         }
     }
 
-    @Override
-    public int initCost() {
-        return 0;
+    public int getMinRange() {
+        return mMinRange;
     }
 
-    @Override
-    public WeaponDamageType initWeaponDamageType() {
-        return null;
-    }
-
-    @Override
-    public int initWeight() {
-        return 0;
+    public int getMaxRange() {
+        return mMaxRange;
     }
 
 

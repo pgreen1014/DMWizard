@@ -15,6 +15,16 @@ public class ShortBow extends RangedWeapon {
     }
 
     @Override
+    protected int minRange() {
+        return 80;
+    }
+
+    @Override
+    protected int maxRange() {
+        return 320;
+    }
+
+    @Override
     public int initDamageDie() {
         return 6;
     }
@@ -22,16 +32,6 @@ public class ShortBow extends RangedWeapon {
     @Override
     public int initDieNumber() {
         return 1;
-    }
-
-    @Override
-    public int initMinRange() {
-        return 0;
-    }
-
-    @Override
-    public int initMaxRange() {
-        return 0;
     }
 
     @Override
@@ -47,15 +47,5 @@ public class ShortBow extends RangedWeapon {
     @Override
     public int initWeight() {
         return 2;
-    }
-
-    @Override
-    protected int minRangeInFeet() {
-        return 80;
-    }
-
-    @Override
-    protected int maxRangeInFeet() {
-        return 320;
     }
 }

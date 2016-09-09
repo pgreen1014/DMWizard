@@ -27,8 +27,6 @@ public abstract class BaseWeapon {
 
     private int mDamageDie; // Die used for rolling damage
     private int mDieNumber; // Number of damage die used
-    private int mMinRange;
-    private int mMaxRange;
     private int mCost;
     private int mWeight;
     private WeaponDamageType mWeaponDamageType;
@@ -36,8 +34,6 @@ public abstract class BaseWeapon {
     public BaseWeapon() {
         mDamageDie = initDamageDie();
         mDieNumber = initDieNumber();
-        mMinRange = initMinRange();
-        mMaxRange = initMaxRange();
         mCost = initCost();
         mWeight = initWeight();
         mWeaponDamageType = initWeaponDamageType();
@@ -46,8 +42,6 @@ public abstract class BaseWeapon {
     // ABSTRACT METHODS
     public abstract int initDamageDie();
     public abstract int initDieNumber();
-    public abstract int initMinRange();
-    public abstract int initMaxRange();
     public abstract int initCost();
     public abstract WeaponDamageType initWeaponDamageType();
     public abstract int initWeight();
@@ -89,11 +83,4 @@ public abstract class BaseWeapon {
     //     GETTERS
     //#################
 
-    public int getMinRange() {
-        return mMinRange;
-    }
-
-    public int getMaxRange() {
-        return mMaxRange;
-    }
 }
