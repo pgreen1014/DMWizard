@@ -5,7 +5,17 @@ import android.util.Log;
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.dice.Dice;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Ammunition;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Finesse;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Light;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Loading;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Range;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Reach;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Special;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.TwoHanded;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.WeaponProperty;
 
 import java.util.HashSet;
 
@@ -24,11 +34,15 @@ public abstract class BaseWeapon {
     private WeaponDamageType mWeaponDamageType;
 
     private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
-    private Throwable mThrowableProperty;
 
     public BaseWeapon() {
-        setWeaponProperties();
-        initializeMemberVariables();
+        mDamageDie = initDamageDie();
+        mDieNumber = initDieNumber();
+        mMinRange = initMinRange();
+        mMaxRange = initMaxRange();
+        mCost = initCost();
+        mWeight = initWeight();
+        mWeaponDamageType = initWeaponDamageType();
     }
 
     // ABSTRACT METHODS
@@ -39,23 +53,6 @@ public abstract class BaseWeapon {
     public abstract int initCost();
     public abstract WeaponDamageType initWeaponDamageType();
     public abstract int initWeight();
-    public abstract WeaponProperties[] initWeaponProperties();
-
-    private void initializeMemberVariables() {
-        mDamageDie = initDamageDie();
-        mDieNumber = initDieNumber();
-        mMinRange = initMinRange();
-        mMaxRange = initMaxRange();
-        mCost = initCost();
-        mWeight = initWeight();
-        mWeaponDamageType = initWeaponDamageType();
-    }
-
-    private void setWeaponProperties() {
-        for(WeaponProperties property: initWeaponProperties()) {
-            mWeaponProperties.add(property);
-        }
-    }
 
     public int damageRoll() {
         return Dice.rollDice(mDamageDie, mDieNumber);
@@ -65,28 +62,33 @@ public abstract class BaseWeapon {
         mWeaponProperties.add(property);
     }
 
-    public boolean containsWeaponProperty(WeaponProperties property) {
-        return getWeaponProperties().contains(property);
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                WEAPON PROPERTY METHODS                                     //
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public int getMaxThrownRange() {
-        if (mThrowableProperty == null) {
-            Log.e(TAG, "weapon is not throwable: " + this.toString());
-            return 0;
+    public boolean hasWeaponProperty(WeaponProperties property) {
+        switch (property) {
+            case AMMUNITION:
+                return this instanceof Ammunition;
+            case FINESSE:
+                return this instanceof Finesse;
+            case LIGHT:
+                return this instanceof Light;
+            case LOADING:
+                return this instanceof Loading;
+            case RANGE:
+                return this instanceof Range;
+            case REACH:
+                return this instanceof Reach;
+            case SPECIAL:
+                return this instanceof Special;
+            case THROWN:
+                return this instanceof Throwable;
+            case TWO_HANDED:
+                return this instanceof TwoHanded;
+            case VERSATILE:
+                return this instanceof Versatile;
+            default:
+                Log.e(TAG, "Unhandeled property " + property.toString());
+                return false;
         }
-        return mThrowableProperty.maxThrownRange();
-    }
 
-    public int getMinThrownRage() {
-        if (mThrowableProperty == null) {
-            Log.e(TAG, "weapon is not throwable: " + this.toString());
-            return 0;
-        }
-        return mThrowableProperty.minThrownRange();
     }
 
     //#################

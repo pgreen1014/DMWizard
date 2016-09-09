@@ -2,6 +2,7 @@ package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Reach;
 
 /**
  * Created by pgreen on 8/7/16.
@@ -30,7 +31,7 @@ public abstract class MeleeWeapon extends BaseWeapon {
 
     @Override
     public int initMaxRange() {
-        if (this.containsWeaponProperty(WeaponProperties.REACH)) {
+        if (this instanceof Reach) {
             return 10;
         } else {
             return 5;
