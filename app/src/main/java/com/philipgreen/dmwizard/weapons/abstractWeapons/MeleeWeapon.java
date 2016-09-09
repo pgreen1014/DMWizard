@@ -6,7 +6,7 @@ import com.philipgreen.dmwizard.data.WeaponProperties;
 /**
  * Created by pgreen on 8/7/16.
  */
-public class MeleeWeapon extends BaseWeapon {
+public abstract class MeleeWeapon extends BaseWeapon {
     private static final String TAG = "MeleeWeapon";
 
     protected MeleeWeapon() {
