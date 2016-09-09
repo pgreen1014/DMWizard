@@ -6,4 +6,5 @@ package com.philipgreen.dmwizard.weapons.propertyInterfaces;
 public interface Throwable {
     public int maxThrownRange();
     public int minThrownRange();
+    public int throwAttack();
 }
