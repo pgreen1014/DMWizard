@@ -53,9 +53,5 @@ public abstract class MeleeWeapon extends BaseWeapon {
         return 0;
     }
 
-    @Override
-    public WeaponProperties[] initWeaponProperties() {
-        return new WeaponProperties[0];
-    }
 
 }

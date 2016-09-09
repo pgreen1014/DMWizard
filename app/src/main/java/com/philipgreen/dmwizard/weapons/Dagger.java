@@ -42,12 +42,6 @@ public class Dagger extends MeleeWeapon implements Throwable, Light, Finesse {
     }
 
     @Override
-    public WeaponProperties[] initWeaponProperties() {
-        // Leave out Thrown property because this is represented by being extending abstract class
-        return new WeaponProperties[] {WeaponProperties.FINESSE, WeaponProperties.LIGHT, WeaponProperties.THROWN};
-    }
-
-    @Override
     public int maxThrownRange() {
         return 60;
     }
