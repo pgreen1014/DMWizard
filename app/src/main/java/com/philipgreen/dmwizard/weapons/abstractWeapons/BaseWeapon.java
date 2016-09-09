@@ -33,8 +33,6 @@ public abstract class BaseWeapon {
     private int mWeight;
     private WeaponDamageType mWeaponDamageType;
 
-    private HashSet<WeaponProperties> mWeaponProperties = new HashSet<>();
-
     public BaseWeapon() {
         mDamageDie = initDamageDie();
         mDieNumber = initDieNumber();
@@ -56,10 +54,6 @@ public abstract class BaseWeapon {
 
     public int damageRoll() {
         return Dice.rollDice(mDamageDie, mDieNumber);
-    }
-
-    protected void addWeaponProperty(WeaponProperties property) {
-        mWeaponProperties.add(property);
     }
 
     public boolean hasWeaponProperty(WeaponProperties property) {
@@ -85,7 +79,7 @@ public abstract class BaseWeapon {
             case VERSATILE:
                 return this instanceof Versatile;
             default:
-                Log.e(TAG, "Unhandeled property " + property.toString());
+                Log.e(TAG, "Unhandled property " + property.toString());
                 return false;
         }
 
@@ -94,10 +88,6 @@ public abstract class BaseWeapon {
     //#################
     //     GETTERS
     //#################
-
-    public HashSet<WeaponProperties> getWeaponProperties() {
-        return mWeaponProperties;
-    }
 
     public int getMinRange() {
         return mMinRange;
