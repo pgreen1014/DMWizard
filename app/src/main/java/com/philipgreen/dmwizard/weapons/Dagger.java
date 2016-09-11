@@ -34,7 +34,7 @@ public class Dagger extends MeleeWeapon implements Throwable, Light, Finesse {
 
     @Override
     public int damageRoll() {
-        return Dice.rollDice(4, 1);
+        return Dice.rollDice(1, 4);
     }
 
     @Override

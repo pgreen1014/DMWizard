@@ -13,7 +13,7 @@ public class Dart extends BaseWeapon implements Throwable, Finesse{
 
     @Override
     public int damageRoll() {
-        return Dice.rollDice(4, 1);
+        return Dice.rollDice(1, 4);
     }
 
     @Override
