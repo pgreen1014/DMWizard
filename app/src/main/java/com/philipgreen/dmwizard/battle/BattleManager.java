@@ -54,7 +54,7 @@ public class BattleManager {
 
         if (mAttackSuccessful) {
             // if weapon is versatile and is being used to make two-handed attack
-            if (attack.isTwoHandedAttack() && attack.getAttackingWeapon().containsWeaponProperty(WeaponProperties.VERSATILE)) {
+            if (attack.isTwoHandedAttack() && attack.getAttackingWeapon().hasWeaponProperty(WeaponProperties.VERSATILE)) {
                 // TODO rewrite for new weapon interface implementation
                 /*
                 MeleeWeapon versatileWeapon = (MeleeWeapon) attack.getAttackingWeapon();
@@ -85,7 +85,7 @@ public class BattleManager {
     private int executeThrowAttack(Attack attack) {
         int damage = 0;
         // if attacking weapon is ranged
-        if (attack.getAttackingWeapon().containsWeaponProperty(WeaponProperties.RANGE)) {
+        if (attack.getAttackingWeapon().hasWeaponProperty(WeaponProperties.RANGE)) {
             rollAttack(mAttacker.getDexterityModifier());
             if (mAttackSuccessful) {
                 damage += rollDamage(attack);
