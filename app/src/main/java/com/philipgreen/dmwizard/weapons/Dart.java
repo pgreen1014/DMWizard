@@ -1,6 +1,7 @@
 package com.philipgreen.dmwizard.weapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
+import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Finesse;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
@@ -11,13 +12,8 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 public class Dart extends BaseWeapon implements Throwable, Finesse{
 
     @Override
-    public int initDamageDie() {
-        return 4;
-    }
-
-    @Override
-    public int initDieNumber() {
-        return 1;
+    public int damageRoll() {
+        return Dice.rollDice(4, 1);
     }
 
     @Override

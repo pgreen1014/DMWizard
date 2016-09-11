@@ -32,23 +32,16 @@ public abstract class BaseWeapon {
     private WeaponDamageType mWeaponDamageType;
 
     public BaseWeapon() {
-        mDamageDie = initDamageDie();
-        mDieNumber = initDieNumber();
         mCost = initCost();
         mWeight = initWeight();
         mWeaponDamageType = initWeaponDamageType();
     }
 
     // ABSTRACT METHODS
-    public abstract int initDamageDie();
-    public abstract int initDieNumber();
     public abstract int initCost();
     public abstract WeaponDamageType initWeaponDamageType();
     public abstract int initWeight();
-
-    public int damageRoll() {
-        return Dice.rollDice(mDamageDie, mDieNumber);
-    }
+    public abstract int damageRoll();
 
     public boolean hasWeaponProperty(WeaponProperties property) {
         switch (property) {
