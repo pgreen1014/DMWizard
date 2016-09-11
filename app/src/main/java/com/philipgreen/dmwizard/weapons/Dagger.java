@@ -1,8 +1,7 @@
 package com.philipgreen.dmwizard.weapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
-import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.dice.Dice;
+import com.philipgreen.dmwizard.utils.Dice;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Finesse;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Light;

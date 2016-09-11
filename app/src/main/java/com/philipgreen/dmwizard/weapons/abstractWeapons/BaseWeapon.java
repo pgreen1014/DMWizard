@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.dice.Dice;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Ammunition;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Finesse;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Light;
@@ -15,9 +14,6 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Special;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.TwoHanded;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.WeaponProperty;
-
-import java.util.HashSet;
 
 /**
  * Created by pgreen on 8/7/16.

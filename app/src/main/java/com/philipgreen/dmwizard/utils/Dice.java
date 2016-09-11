@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.dice;
+package com.philipgreen.dmwizard.utils;
 
 /**
  * Created by pgreen on 8/6/16.
