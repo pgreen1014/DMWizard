@@ -107,32 +107,32 @@ public class AttackBuilder {
         }
 
         if (mAttackType == AttackType.MELEE) {
-            if (mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
+            if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
             }
-            if (mAttackModifierStat != BaseStats.STRENGTH && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
+            if (mAttackModifierStat != BaseStats.STRENGTH && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
             }
             if (isTwoHandedAttack() &&
-                    (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.TWO_HANDED) ||
-                            !mAttackingWeapon.containsWeaponProperty(WeaponProperties.VERSATILE))) {
+                    (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED) ||
+                            !mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE))) {
                 throw new IllegalArgumentException("Cannot use Two Handed attack with weapon " + mAttackingWeapon.toString());
             }
-            if (mAttackingWeapon.containsWeaponProperty(WeaponProperties.TWO_HANDED) && mIsOffHandWeaponAttack) {
+            if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED) && mIsOffHandWeaponAttack) {
                 throw new IllegalArgumentException( mAttackingWeapon.toString() + " weapon must be used with two hands");
             }
         }
 
         if (mAttackType == AttackType.RANGED) {
-            if (!mAttackingWeapon.containsWeaponProperty(WeaponProperties.RANGE)) {
+            if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
                 throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
             }
-            if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.FINESSE)) {
+            if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
                 throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
             }
         }
 
-        if (mAttackType == AttackType.THROWN && !mAttackingWeapon.containsWeaponProperty(WeaponProperties.THROWN)) {
+        if (mAttackType == AttackType.THROWN && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
 
