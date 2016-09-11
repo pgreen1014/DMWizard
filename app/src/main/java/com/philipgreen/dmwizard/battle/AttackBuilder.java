@@ -4,6 +4,7 @@ import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/23/16.
@@ -94,46 +95,18 @@ public class AttackBuilder {
         return this;
     }
 
-    // Checks to make sure built attack follows DnD rules
+    // Checks to make sure built attack follows DnD rules then returns the Attack
     public Attack build() throws NullPointerException, IllegalArgumentException {
-        if (mAttackingWeapon == null) {
-            throw new NullPointerException("Must set attacking weapon");
-        }
-        if (mPlayerBeingAttacked == null) {
-            throw new NullPointerException("Must set player being attacked");
-        }
-        if (mPlayerMakingAttack == null) {
-            throw new NullPointerException("Must set player making attack");
-        }
+        validateNecessaryFieldsAreSet();
 
         if (mAttackType == AttackType.MELEE) {
-            if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
-                throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
-            }
-            if (mAttackModifierStat != BaseStats.STRENGTH && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
-                throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
-            }
-            if (isTwoHandedAttack() &&
-                    (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED) ||
-                            !mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE))) {
-                throw new IllegalArgumentException("Cannot use Two Handed attack with weapon " + mAttackingWeapon.toString());
-            }
-            if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED) && mIsOffHandWeaponAttack) {
-                throw new IllegalArgumentException( mAttackingWeapon.toString() + " weapon must be used with two hands");
-            }
-        }
-
-        if (mAttackType == AttackType.RANGED) {
-            if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
-                throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
-            }
-            if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
-                throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
-            }
-        }
-
-        if (mAttackType == AttackType.THROWN && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
-            throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
+           validateMeleeAttack();
+        } else if (mAttackType == AttackType.RANGED) {
+            validateRangeAttack();
+        } else if (mAttackType == AttackType.THROWN) {
+            validateThrownAttack();
+        } else {
+            throw new NullPointerException("Attack type not set");
         }
 
         return new Attack(this);
@@ -180,4 +153,61 @@ public class AttackBuilder {
     // ATTACK VALIDATION METHODS //
     ///////////////////////////////
     //TODO clean up .build() by created modularized methods to check for valid build
+
+    private void validateNecessaryFieldsAreSet() throws NullPointerException {
+        if (mAttackingWeapon == null) {
+            throw new NullPointerException("Must set attacking weapon");
+        }
+        if (mPlayerBeingAttacked == null) {
+            throw new NullPointerException("Must set player being attacked");
+        }
+        if (mPlayerMakingAttack == null) {
+            throw new NullPointerException("Must set player making attack");
+        }
+    }
+
+    private void validateMeleeAttack() throws IllegalArgumentException{
+        // Cannot use Ranged weapon as melee
+        if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
+            throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
+        }
+
+        // if using Dexterity and is not a Finesse Weapon (Modifier can only be set to Dex or Str)
+        if (mAttackModifierStat != BaseStats.STRENGTH && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
+            throw new IllegalArgumentException("Cannot use Dexterity modifier with weapon: " + mAttackingWeapon.toString());
+        }
+
+        // If using weapon two handed but cannot be used two handed
+        if (isTwoHandedAttack() && !canUseTwoHanded()) {
+            throw new IllegalArgumentException("Cannot use Two Handed attack with weapon " + mAttackingWeapon.toString());
+        }
+
+        // If using two handed weapon with offhand
+        if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED) && isOffHandWeaponAttack()) {
+            throw new IllegalArgumentException( mAttackingWeapon.toString() + " weapon must be used with two hands");
+        }
+    }
+
+    private void validateRangeAttack() throws IllegalArgumentException {
+        // Make sure attacking weapon has ranged property
+        if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
+            throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
+        }
+
+        // If using strength modifier and attacking weapon does not have Finesse property
+        if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
+            throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
+        }
+    }
+
+    private void validateThrownAttack() throws IllegalArgumentException {
+        if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
+            throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
+        }
+    }
+
+    private boolean canUseTwoHanded() {
+        return mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED)
+                || mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE);
+    }
 }
