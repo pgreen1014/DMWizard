@@ -32,5 +32,6 @@ public abstract class RangedWeapon extends BaseWeapon implements Range, Ammuniti
 
     public void useAmmunition() {
         mAmmunition -= 1;
+        // TODO: handle when there is no ammunition
     }
 }
