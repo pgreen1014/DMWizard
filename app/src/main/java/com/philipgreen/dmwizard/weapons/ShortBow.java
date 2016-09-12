@@ -10,14 +10,22 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 public class ShortBow extends RangedWeapon {
     private final static String TAG = "ShortBow";
 
-    @Override
-    public int initDamageDie() {
-        return 0;
+    public ShortBow() {
+        super();
     }
 
     @Override
-    public int initDieNumber() {
+    public int damageRoll() {
         return 0;
+    }
+    @Override
+    protected int minRange() {
+        return 80;
+    }
+
+    @Override
+    protected int maxRange() {
+        return 320;
     }
 
     @Override
@@ -27,16 +35,11 @@ public class ShortBow extends RangedWeapon {
 
     @Override
     public WeaponDamageType initWeaponDamageType() {
-        return null;
+        return WeaponDamageType.PIERCING;
     }
 
     @Override
     public int initWeight() {
-        return 0;
-    }
-
-    @Override
-    public WeaponProperties[] initWeaponProperties() {
-        return new WeaponProperties[0];
+        return 2;
     }
 }

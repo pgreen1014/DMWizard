@@ -6,12 +6,10 @@ import com.philipgreen.dmwizard.data.Alignment;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
 import com.philipgreen.dmwizard.data.Skills;
-import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.data.Weapons;
-import com.philipgreen.dmwizard.dice.Dice;
+import com.philipgreen.dmwizard.utils.Dice;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,6 +97,10 @@ public class PlayerCharacter {
 
     private HashSet<Languages> mLanguages = new HashSet<>();
     private HashSet<Weapons> mWeaponProficiencies = new HashSet<>();
+
+    // Character States
+    private boolean mDead = false;
+    private boolean mUnconscious = false;
 
     // statically create and put values into ABILITY_MODIFIER_MAP
     public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
@@ -496,85 +498,37 @@ public class PlayerCharacter {
         return ABILITY_MODIFIER_MAP.get(mCharisma);
     }
 
-    private int getProficiencyBonusWithModifier(int abilityModifier) {
-        return mProficiencyBonus + abilityModifier;
+    public int getAbilityModifier(BaseStats ability) {
+        switch(ability) {
+            case STRENGTH:
+                return getStrengthModifier();
+            case DEXTERITY:
+                return getDexterityModifier();
+            case CONSTITUTION:
+                return getConstitutionModifier();
+            case INTELLIGENCE:
+                return getIntelligenceModifier();
+            case WISDOM:
+                return getWisdomModifier();
+            case CHARISMA:
+                return getCharismaModifier();
+            default:
+                Log.e(TAG, "Unhandled BaseStat: " + ability.toString());
+                return 0;
+        }
     }
-
 
     public ArrayList<Skills> getProficientSkills() {
         return mProficientSkills;
     }
 
-    //##############################
-    //         ATTACKS
-    //##############################
-
-    private int attackRoll() {
-        return Dice.rollDie(20);
-    }
-
-    // Weapon attack
-    public int attack(BaseWeapon weapon) {
-        // if weapon is ranged add dex modifier
-        if (weapon.getWeaponProperties().contains(WeaponProperties.RANGE)) {
-            return weapon.damageRoll() + mProficiencyBonus + getDexterityModifier();
-        // else weapon is a melee weapon and use str modifier
-        } else {
-            int roll = weapon.damageRoll();
-            Log.i(TAG, "roll: " + Integer.toString(roll));
-            return roll + mProficiencyBonus + getStrengthModifier();
-        }
-    }
-
-    /**
-     * Makes a throw weapon attack
-     * @param weapon being used in attack.
-     * @param abilityModifierForFinesseWeapon: modifier for weapons with WeaponProperties.FINESSE. Must take BaseStats.STRENGTH or BaseStats.DEXTERITY.
-     *                         A null value will utilize the higher modifier
-     * @return damage for thrown weapon attack
-     * @throws IllegalArgumentException if weapon does not have WeaponProperties.THROWN
-     *                                  or if versatileModifier is not of the type BaseStats.STRENGTH or BaseStats.DEXTERITY
-     */
-    public int throwWeaponAttack(BaseWeapon weapon, BaseStats abilityModifierForFinesseWeapon) throws IllegalArgumentException{
-        // Throw exception if weapon is not of type thrown
-        if (!weapon.getWeaponProperties().contains(WeaponProperties.THROWN)) {
-            throw new IllegalArgumentException(weapon.toString() + " is not of the WeaponProperties type THROWN");
-        }
-
-        // if weapon is not versatile
-        if (!weapon.getWeaponProperties().contains(WeaponProperties.FINESSE)) {
-            return rollWeaponDamage(weapon, getStrengthModifier());
-        // else weapon is versatile and can use str or dex modifier
-        } else {
-            if (abilityModifierForFinesseWeapon == null) {
-                // if weapon is versatile but null argument was applied then use greater value
-                // use Strength if higher or equal to
-                if (mStrength >= mDexterity) {
-                    return rollWeaponDamage(weapon, getStrengthModifier());
-                } else {
-                    return rollWeaponDamage(weapon, getDexterityModifier());
-                }
-            }
-            switch (abilityModifierForFinesseWeapon) {
-                case STRENGTH:
-                    return rollWeaponDamage(weapon, getStrengthModifier());
-                case DEXTERITY:
-                    return rollWeaponDamage(weapon, getDexterityModifier());
-                default:
-                    // Throw exception if modifier is being supplied and is not strength or dexterity
-                    throw new IllegalArgumentException("finesseModifier must be of the type STRENGTH or DEXTERITY");
-            }
-        }
-        // TODO: account for enemy range
-    }
-
-    private int rollWeaponDamage(BaseWeapon weapon, int abilityModifier) {
-        return weapon.damageRoll() + mProficiencyBonus + abilityModifier;
-    }
-
     ////////////////////////////////
     //      CHARACTER ACTIONS     //
     ////////////////////////////////
+
+    public int attackRoll() {
+        return Dice.rollDie(20) + mProficiencyBonus;
+    }
 
     public int rollStrSavingThrow() {
         return Dice.rollDie(20) + getStrengthSavingThrow();
@@ -676,6 +630,19 @@ public class PlayerCharacter {
         return Dice.rollDie(20) + mSurvival;
     }
 
+    public void takeDamage(int damage) {
+        mHitPoints -= damage;
+
+        // If player takes enough damage at once to where his/her hit points are equal to 0 - Maximum hit points then that character dies
+        if (mHitPoints <= 0 - mMaxHitPoints) {
+            mDead = true;
+        } else if (mHitPoints <= 0) {
+            mUnconscious = true;
+            // Because there are no negative hit points in 5e, hit points will never be below 0
+            mHitPoints = 0;
+        }
+    }
+
     /////////////////////////////////
     //     GETTERS AND SETTERS     //
     /////////////////////////////////
@@ -730,6 +697,14 @@ public class PlayerCharacter {
 
     public void setInitiativeModifier(int initiative) {
         mInitiative = initiative;
+    }
+
+    public int getArmorClass() {
+        return mArmorClass;
+    }
+
+    public int getHitPoints() {
+        return mHitPoints;
     }
 
     //###################

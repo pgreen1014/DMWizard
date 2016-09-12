@@ -1,17 +1,9 @@
 package com.philipgreen.dmwizard.playerClasses;
 
-import android.util.Log;
-
 import com.philipgreen.dmwizard.data.ArmorProficiencies;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.data.WeaponProficiencies;
-import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.dice.Dice;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by pgreen on 8/6/16.

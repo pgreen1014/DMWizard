@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.dice;
+package com.philipgreen.dmwizard.utils;
 
 /**
  * Created by pgreen on 8/6/16.
@@ -12,14 +12,14 @@ public class Dice {
 
     /**
      * rolls the given number of the given die
-     * @param numberSidedDie: the type of die to be rolled;
+     * @param damageDie: the type of die to be rolled;
      * @param numberOfDice: how many of the given die to be rolled
      * @return the total of the dice roll
      */
-    public static int rollDice(int numberSidedDie, int numberOfDice) {
+    public static int rollDice(int numberOfDice, int damageDie) {
         int total = 0;
         for(int i = 0; i < numberOfDice; i++) {
-            total += rollDie(numberSidedDie);
+            total += rollDie(damageDie);
         }
         return total;
     }
