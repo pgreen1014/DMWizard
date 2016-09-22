@@ -4,21 +4,46 @@ import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/23/16.
+ *
+ * This is a builder class used to create a single Attack object that can be passed into BattleManager.
+ * Attacks can be created by chaining methods and finishing by calling .build() which checks for a valid build
+ * and returns the Attack object.
+ *
+ * The following methods must be called for .build() to build an Attack successfully:
+ * .setAttacker(PlayerCharacter arg)
+ * .setDefender(PlayerCharacter arg)
+ * .setAttackingWeapon(BaseWeapon arg)
+ * and one of the following .setMeleeAttack(), . setRangedAttack(), or setThrownAttack();
+ *
+ * Any additional build methods must follow the rules of DnD, for example using a Great Axe as an off-hand weapon attack
+ * will fail because it must be used with two hands.
+ *
+ *
+ *
+ * Example of using AttackBuilder to construct a thrown attack with a dagger.
+ *
+ * AttackBuilder attackBuilder = new AttackBuilder();
+ * Attack attack = attackBuilder
+ *          .setAttacker(attackingPlayerCharacter)
+ *          .setDefender(defendingPlayerCharacter)
+ *          .setAttackingWeapon(dagger)
+ *          .setThrownAttack()
+ *          .build()
  */
+
 public class AttackBuilder {
     private static final String TAG = "AttackBuilder";
 
     private BaseWeapon mAttackingWeapon;
-    private PlayerCharacter mPlayerBeingAttacked;
-    private PlayerCharacter mPlayerMakingAttack;
+    private PlayerCharacter mDefender;
+    private PlayerCharacter mAttacker;
     private BaseStats mAttackModifierStat;
     private int mPlayerDistance;
-    private boolean mIsTwoHandedAttack = false;
-    private boolean mIsOffHandWeaponAttack = false;
+    private boolean mTwoHandedAttack = false;
+    private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
 
     protected enum AttackType {
@@ -33,11 +58,11 @@ public class AttackBuilder {
         return "Attacking weapon: " + mAttackingWeapon.toString() + "\n"
                 + " Attack Modifier: " + mAttackModifierStat.toString() + "\n"
                 + " Player Distance: " + Integer.toString(mPlayerDistance) + "\n"
-                + " Is two handed attack: " + mIsTwoHandedAttack + "\n"
-                + " Is off hand weapon: " + mIsOffHandWeaponAttack + "\n"
+                + " Is two handed attack: " + mTwoHandedAttack + "\n"
+                + " Is off hand weapon: " + mOffHandWeaponAttack + "\n"
                 + " Attack Type: " + mAttackType.toString() + "\n"
-                + " Attacking Player: " + "\n" + mPlayerMakingAttack.toString() + "\n\n"
-                + " Defending Player: " + "\n" + mPlayerBeingAttacked.toString();
+                + " Attacking Player: " + "\n" + mAttacker.toString() + "\n\n"
+                + " Defending Player: " + "\n" + mDefender.toString();
     }
 
     public AttackBuilder setAttackingWeapon(BaseWeapon weapon) {
@@ -45,13 +70,13 @@ public class AttackBuilder {
         return this;
     }
 
-    public AttackBuilder setAttackTarget(PlayerCharacter playerBeingAttacked) {
-        this.mPlayerBeingAttacked = playerBeingAttacked;
+    public AttackBuilder setDefender(PlayerCharacter defender) {
+        this.mDefender = defender;
         return this;
     }
 
-    public AttackBuilder setPlayerMakingAttack(PlayerCharacter playerMakingAttack) {
-        mPlayerMakingAttack = playerMakingAttack;
+    public AttackBuilder setAttacker(PlayerCharacter attacker) {
+        mAttacker = attacker;
         return this;
     }
 
@@ -71,12 +96,12 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setTwoHandedAttack() {
-        mIsTwoHandedAttack = true;
+        mTwoHandedAttack = true;
         return this;
     }
 
     public AttackBuilder setOffHandWeaponAttack() {
-        mIsOffHandWeaponAttack = true;
+        mOffHandWeaponAttack = true;
         return this;
     }
 
@@ -91,11 +116,13 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setThrownAttack() {
-        mAttackType = AttackType.RANGED;
+        mAttackType = AttackType.THROWN;
         return this;
     }
 
-    // Checks to make sure built attack follows DnD rules then returns the Attack
+    /**
+     * Checks to make sure built attack follows DnD rules then returns the Attack
+     */
     public Attack build() throws NullPointerException, IllegalArgumentException {
         validateNecessaryFieldsAreSet();
 
@@ -121,12 +148,12 @@ public class AttackBuilder {
         return mAttackingWeapon;
     }
 
-    public PlayerCharacter getPlayerBeingAttacked() {
-        return mPlayerBeingAttacked;
+    public PlayerCharacter getDefender() {
+        return mDefender;
     }
 
-    public PlayerCharacter getPlayerMakingAttack() {
-        return mPlayerMakingAttack;
+    public PlayerCharacter getAttacker() {
+        return mAttacker;
     }
 
     public BaseStats getAttackModifierStat() {
@@ -138,11 +165,11 @@ public class AttackBuilder {
     }
 
     public boolean isTwoHandedAttack() {
-        return mIsTwoHandedAttack;
+        return mTwoHandedAttack;
     }
 
     public boolean isOffHandWeaponAttack() {
-        return mIsOffHandWeaponAttack;
+        return mOffHandWeaponAttack;
     }
 
     public AttackType getAttackType() {
@@ -152,17 +179,19 @@ public class AttackBuilder {
     ///////////////////////////////
     // ATTACK VALIDATION METHODS //
     ///////////////////////////////
-    //TODO clean up .build() by created modularized methods to check for valid build
 
     private void validateNecessaryFieldsAreSet() throws NullPointerException {
         if (mAttackingWeapon == null) {
             throw new NullPointerException("Must set attacking weapon");
         }
-        if (mPlayerBeingAttacked == null) {
+        if (mDefender == null) {
             throw new NullPointerException("Must set player being attacked");
         }
-        if (mPlayerMakingAttack == null) {
+        if (mAttacker == null) {
             throw new NullPointerException("Must set player making attack");
+        }
+        if (mAttacker == null) {
+            throw new NullPointerException("Must set AttackType: Melee, Ranged, or Thrown");
         }
     }
 
