@@ -21,8 +21,8 @@ public class Attack {
 
     protected Attack(AttackBuilder attackBuild) {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
-        mPlayerBeingAttacked = attackBuild.getPlayerBeingAttacked();
-        mPlayerMakingAttack = attackBuild.getPlayerMakingAttack();
+        mPlayerBeingAttacked = attackBuild.getDefender();
+        mPlayerMakingAttack = attackBuild.getAttacker();
         mAttackModifierStat = attackBuild.getAttackModifierStat();
         mPlayerDistance = attackBuild.getPlayerDistance();
         mIsTwoHandedAttack = attackBuild.isTwoHandedAttack();
