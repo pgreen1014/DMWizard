@@ -152,7 +152,6 @@ public class AttackBuilder {
     ///////////////////////////////
     // ATTACK VALIDATION METHODS //
     ///////////////////////////////
-    //TODO clean up .build() by created modularized methods to check for valid build
 
     private void validateNecessaryFieldsAreSet() throws NullPointerException {
         if (mAttackingWeapon == null) {
