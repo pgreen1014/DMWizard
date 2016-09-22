@@ -7,8 +7,10 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 /**
  * Created by pgreen on 8/26/16.
  *
- * Class to represent an attack. Is constructed by  using AttackBuilder
+ * The attack class represents an attack made against another player and should only
+ * be created using AttackBuilder.
  */
+
 public class Attack {
     private BaseWeapon mAttackingWeapon;
     private PlayerCharacter mPlayerBeingAttacked;
