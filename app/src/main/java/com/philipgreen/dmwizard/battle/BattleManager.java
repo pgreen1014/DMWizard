@@ -9,6 +9,8 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 
 /**
  * Created by pgreen on 8/25/16.
+ *
+ * This class is responsible for taking an attack object and executing the various kinds of attacks
  */
 public class BattleManager {
     private static final String TAG = "BattleManager";
