@@ -18,6 +18,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
  * to pass a new attack object. After an attack has been executed .clearAttack() is called so that already executed attack is not
  * accidentally executed again. A new attack will need to be passed in with .setAttack(Attack arg).
  */
+
 public class BattleManager {
     private static final String TAG = "BattleManager";
     private boolean mAttackSuccessful;
@@ -72,18 +73,6 @@ public class BattleManager {
             damage += executeThrowAttack(attack);
         }
 
-        // Log results for testing TODO remove logs when tests are successful
-        Log.i(TAG, "Defender has " + Integer.toString(mDefender.getHitPoints()) + " hit points");
-
-        if (mAttackSuccessful) {
-            Log.i(TAG, "Attack hits for: " + Integer.toString(damage) + " damage");
-        } else {
-            Log.i(TAG, "Attack misses");
-        }
-
-        mDefender.takeDamage(damage);
-
-        Log.i(TAG, "Defender now has " + Integer.toString(mDefender.getHitPoints()) + " hit points, ouch!");
         clearAttack();
     }
 
