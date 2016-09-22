@@ -35,11 +35,26 @@ public class BattleSimulator extends AppCompatActivity {
         mBtnCreateCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Skills skills[] = {Skills.ANIMAL_HANDLING, Skills.ATHLETICS};
+                BasePlayerClass barbarian = new Barbarian(1, skills);
+                BaseRaceClass dwarf = new Dwarf();
+                PlayerCharacter character = new PlayerCharacter(barbarian, dwarf, 18, 16, 18, 13, 14, 17);
+
+                PlayerCharacter character2 = new PlayerCharacter(barbarian, dwarf, 18, 16, 18, 13, 14, 17);
 
                 BaseWeapon dagger = new Dagger();
-                Log.i(TAG, "Thrown: " + dagger.hasWeaponProperty(WeaponProperties.THROWN));
-                Log.i(TAG, "Versatile: " + dagger.hasWeaponProperty(WeaponProperties.VERSATILE));
 
+                AttackBuilder attackBuilder = new AttackBuilder();
+                Attack attack = attackBuilder
+                        .setMeleeAttack()
+                        .setAttackingWeapon(dagger)
+                        .setPlayerMakingAttack(character)
+                        .setAttackTarget(character2)
+                        .setAttackModifierStat(BaseStats.DEXTERITY)
+                        .build();
+
+                BattleManager bm = new BattleManager();
+                bm.executeAttack(attack);
             }
         });
     }
