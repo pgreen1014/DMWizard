@@ -7,7 +7,33 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**
  * Created by pgreen on 8/23/16.
+ *
+ * This is a builder class used to create a single Attack object that can be passed into BattleManager.
+ * Attacks can be created by chaining methods and finishing by calling .build() which checks for a valid build
+ * and returns the Attack object.
+ *
+ * The following methods must be called for .build() to build an Attack successfully:
+ * .setAttacker(PlayerCharacter arg)
+ * .setDefender(PlayerCharacter arg)
+ * .setAttackingWeapon(BaseWeapon arg)
+ * and one of the following .setMeleeAttack(), . setRangedAttack(), or setThrownAttack();
+ *
+ * Any additional build methods must follow the rules of DnD, for example using a Great Axe as an off-hand weapon attack
+ * will fail because it must be used with two hands.
+ *
+ *
+ *
+ * Example of using AttackBuilder to construct a thrown attack with a dagger.
+ *
+ * AttackBuilder attackBuilder = new AttackBuilder();
+ * Attack attack = attackBuilder
+ *          .setAttacker(attackingPlayerCharacter)
+ *          .setDefender(defendingPlayerCharacter)
+ *          .setAttackingWeapon(dagger)
+ *          .setThrownAttack()
+ *          .build()
  */
+
 public class AttackBuilder {
     private static final String TAG = "AttackBuilder";
 
@@ -90,11 +116,13 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setThrownAttack() {
-        mAttackType = AttackType.RANGED;
+        mAttackType = AttackType.THROWN;
         return this;
     }
 
-    // Checks to make sure built attack follows DnD rules then returns the Attack
+    /**
+     * Checks to make sure built attack follows DnD rules then returns the Attack
+     */
     public Attack build() throws NullPointerException, IllegalArgumentException {
         validateNecessaryFieldsAreSet();
 
@@ -161,6 +189,9 @@ public class AttackBuilder {
         }
         if (mAttacker == null) {
             throw new NullPointerException("Must set player making attack");
+        }
+        if (mAttacker == null) {
+            throw new NullPointerException("Must set AttackType: Melee, Ranged, or Thrown");
         }
     }
 
