@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.WeaponProperties;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 
 /**
@@ -20,9 +19,13 @@ public class BattleManager {
 
     public BattleManager() {}
 
+    public void setAttack(Attack attack) {
+        
+    }
+
     public void executeAttack(Attack attack) {
-        mAttacker = attack.getPlayerMakingAttack();
-        mDefender = attack.getPlayerBeingAttacked();
+        mAttacker = attack.getAttacker();
+        mDefender = attack.getDefender();
         AttackBuilder.AttackType attackType = attack.getAttackType();
 
         int damage = 0;

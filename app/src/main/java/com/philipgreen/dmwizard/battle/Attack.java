@@ -13,22 +13,22 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 public class Attack {
     private BaseWeapon mAttackingWeapon;
-    private PlayerCharacter mPlayerBeingAttacked;
-    private PlayerCharacter mPlayerMakingAttack;
+    private PlayerCharacter mDefender;
+    private PlayerCharacter mAttacker;
     private BaseStats mAttackModifierStat;
     private int mPlayerDistance;
-    private boolean mIsTwoHandedAttack;
-    private boolean mIsOffHandWeaponAttack;
+    private boolean mTwoHandedAttack;
+    private boolean mOffHandWeaponAttack;
     private AttackBuilder.AttackType mAttackType;
 
     protected Attack(AttackBuilder attackBuild) {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
-        mPlayerBeingAttacked = attackBuild.getDefender();
-        mPlayerMakingAttack = attackBuild.getAttacker();
+        mDefender = attackBuild.getDefender();
+        mAttacker = attackBuild.getAttacker();
         mAttackModifierStat = attackBuild.getAttackModifierStat();
         mPlayerDistance = attackBuild.getPlayerDistance();
-        mIsTwoHandedAttack = attackBuild.isTwoHandedAttack();
-        mIsOffHandWeaponAttack = attackBuild.isOffHandWeaponAttack();
+        mTwoHandedAttack = attackBuild.isTwoHandedAttack();
+        mOffHandWeaponAttack = attackBuild.isOffHandWeaponAttack();
         mAttackType = attackBuild.getAttackType();
     }
 
@@ -36,12 +36,12 @@ public class Attack {
         return mAttackingWeapon;
     }
 
-    public PlayerCharacter getPlayerBeingAttacked() {
-        return mPlayerBeingAttacked;
+    public PlayerCharacter getDefender() {
+        return mDefender;
     }
 
-    public PlayerCharacter getPlayerMakingAttack() {
-        return mPlayerMakingAttack;
+    public PlayerCharacter getAttacker() {
+        return mAttacker;
     }
 
     public BaseStats getAttackModifierStat() {
@@ -53,11 +53,11 @@ public class Attack {
     }
 
     public boolean isTwoHandedAttack() {
-        return mIsTwoHandedAttack;
+        return mTwoHandedAttack;
     }
 
     public boolean isOffHandWeaponAttack() {
-        return mIsOffHandWeaponAttack;
+        return mOffHandWeaponAttack;
     }
 
     public AttackBuilder.AttackType getAttackType() {
@@ -68,10 +68,10 @@ public class Attack {
         return "Attacking weapon: " + mAttackingWeapon.toString() + "\n"
                 + " Attack Modifier: " + mAttackModifierStat.toString() + "\n"
                 + " Player Distance: " + Integer.toString(mPlayerDistance) + "\n"
-                + " Is two handed attack: " + mIsTwoHandedAttack + "\n"
-                + " Is off hand weapon: " + mIsOffHandWeaponAttack + "\n"
+                + " Is two handed attack: " + mTwoHandedAttack + "\n"
+                + " Is off hand weapon: " + mOffHandWeaponAttack + "\n"
                 + " Attack Type: " + mAttackType.toString() + "\n"
-                + " Attacking Player: " + "\n" + mPlayerMakingAttack.toString() + "\n\n"
-                + " Defending Player: " + "\n" + mPlayerBeingAttacked.toString();
+                + " Attacking Player: " + "\n" + mAttacker.toString() + "\n\n"
+                + " Defending Player: " + "\n" + mDefender.toString();
     }
 }

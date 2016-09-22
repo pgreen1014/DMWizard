@@ -42,8 +42,8 @@ public class AttackBuilder {
     private PlayerCharacter mAttacker;
     private BaseStats mAttackModifierStat;
     private int mPlayerDistance;
-    private boolean mIsTwoHandedAttack = false;
-    private boolean mIsOffHandWeaponAttack = false;
+    private boolean mTwoHandedAttack = false;
+    private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
 
     protected enum AttackType {
@@ -58,8 +58,8 @@ public class AttackBuilder {
         return "Attacking weapon: " + mAttackingWeapon.toString() + "\n"
                 + " Attack Modifier: " + mAttackModifierStat.toString() + "\n"
                 + " Player Distance: " + Integer.toString(mPlayerDistance) + "\n"
-                + " Is two handed attack: " + mIsTwoHandedAttack + "\n"
-                + " Is off hand weapon: " + mIsOffHandWeaponAttack + "\n"
+                + " Is two handed attack: " + mTwoHandedAttack + "\n"
+                + " Is off hand weapon: " + mOffHandWeaponAttack + "\n"
                 + " Attack Type: " + mAttackType.toString() + "\n"
                 + " Attacking Player: " + "\n" + mAttacker.toString() + "\n\n"
                 + " Defending Player: " + "\n" + mDefender.toString();
@@ -96,12 +96,12 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setTwoHandedAttack() {
-        mIsTwoHandedAttack = true;
+        mTwoHandedAttack = true;
         return this;
     }
 
     public AttackBuilder setOffHandWeaponAttack() {
-        mIsOffHandWeaponAttack = true;
+        mOffHandWeaponAttack = true;
         return this;
     }
 
@@ -165,11 +165,11 @@ public class AttackBuilder {
     }
 
     public boolean isTwoHandedAttack() {
-        return mIsTwoHandedAttack;
+        return mTwoHandedAttack;
     }
 
     public boolean isOffHandWeaponAttack() {
-        return mIsOffHandWeaponAttack;
+        return mOffHandWeaponAttack;
     }
 
     public AttackType getAttackType() {
