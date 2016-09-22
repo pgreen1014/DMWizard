@@ -6,7 +6,9 @@ import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/25/16.
@@ -93,11 +95,9 @@ public class BattleManager {
         if (mAttackSuccessful) {
             // if weapon is versatile and is being used to make two-handed attack
             if (attack.isTwoHandedAttack() && mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE)) {
-                // TODO rewrite for new weapon interface implementation
-                /*
-                MeleeWeapon versatileWeapon = (MeleeWeapon) attack.getAttackingWeapon();
-                damage += versatileWeapon.rollTwoHandedDamage() + mAttacker.getAbilityModifier(attack.getAttackModifierStat());
-                */
+                //Cast weapon to Versatile at make versatile attack
+                Versatile versatileWeapon = (Versatile) mAttackingWeapon;
+                damage += versatileWeapon.versatileDamageRoll();
             } else {
                 damage += rollDamage(attack);
             }
