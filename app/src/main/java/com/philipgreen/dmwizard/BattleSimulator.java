@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-g
+
 
 public class BattleSimulator extends AppCompatActivity {
     private static final String TAG = "BattleSimulator";
