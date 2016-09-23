@@ -4,6 +4,7 @@ import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 
 /**
  * Created by pgreen on 8/23/16.
@@ -193,6 +194,9 @@ public class AttackBuilder {
         if (mAttacker == null) {
             throw new NullPointerException("Must set AttackType: Melee, Ranged, or Thrown");
         }
+
+        // Set attack modifier if not already set
+        determineAttackModifierStat();
     }
 
     private void validateMeleeAttack() throws IllegalArgumentException{
@@ -238,5 +242,32 @@ public class AttackBuilder {
     private boolean canUseTwoHanded() {
         return mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED)
                 || mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE);
+    }
+
+    /**
+     * Responsible for setting the correct attack modifier stat if not set. If the attack is of the type MELEE
+     * then modifier will be set to Strength. If the attack is of the type RANGE then modifier will be set to Dexterity.
+     * If the attack is of the type Thrown then modifier will be set to Strength if AttackingWeapon is MeleeWeapon
+     * otherwise it will be set to Dexterity.
+     */
+    private void determineAttackModifierStat() {
+        if (mAttackModifierStat != null) {
+            return;
+        }
+
+        if (mAttackType == AttackType.MELEE) {
+            this.mAttackModifierStat = BaseStats.STRENGTH;
+
+        } else if (mAttackType == AttackType.RANGED) {
+            this.mAttackModifierStat = BaseStats.DEXTERITY;
+
+        } else {
+            if (mAttackingWeapon instanceof MeleeWeapon) {
+                this.mAttackModifierStat = BaseStats.STRENGTH;
+            } else {
+                this.mAttackModifierStat = BaseStats.DEXTERITY;
+            }
+        }
+
     }
 }
