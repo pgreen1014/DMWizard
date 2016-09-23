@@ -70,6 +70,8 @@ public class BattleManager {
             damage += executeThrowAttack(attack);
         }
 
+        mDefender.takeDamage(damage);
+        
         clearAttack();
     }
 
