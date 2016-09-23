@@ -1,12 +1,9 @@
 package com.philipgreen.dmwizard.battle;
 
-import android.util.Log;
-
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
