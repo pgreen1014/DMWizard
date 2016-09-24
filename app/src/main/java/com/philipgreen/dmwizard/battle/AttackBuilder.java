@@ -201,8 +201,15 @@ public class AttackBuilder {
 
     private void validateMeleeAttack() throws IllegalArgumentException{
         // Cannot use Ranged weapon as melee
-        if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
-            throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
+        if (!(mAttackingWeapon instanceof MeleeWeapon)) {
+            throw new IllegalArgumentException("weapon making melee attack is not instance of MeleeWeapon");
+        }
+
+        // Cast to MeleeWeapon now that have checked that it is a MeleeWeapon
+        MeleeWeapon meleeWeapon = (MeleeWeapon) mAttackingWeapon;
+        // Check that melee weapon is in range
+        if (!isAttackInRange(meleeWeapon.getMinRange(), meleeWeapon.getMaxRange())) {
+            throw new IllegalArgumentException("Melee Attack is not within range");
         }
 
         // if using Dexterity and is not a Finesse Weapon (Modifier can only be set to Dex or Str)
@@ -270,4 +277,27 @@ public class AttackBuilder {
         }
 
     }
+
+    /**
+     * Used to determine whether the defending player is within range of the attacking player.
+     * Because minRange and maxRange is not currently set in weapons.abstractWeapons.BaseWeapon.java,
+     * mAttackingWeapon must be cast to either MeleeWeapon, RangedWeapon or Throwable in order to get the appropriate
+     * range. This kind of casting is dangerous and should only be done after checking that mAttackingWeapon is an
+     * instance of the class being cast to. This is bad design and needs to be refactored so that all weapon have access
+     * to the appropriate range through BaseWeapon.
+     *
+     * Validating melee weapon range will be done within this class and will not be allowed if out of range.
+     * Handling Ranged and thrown attacks will be done within the BattleManager class because DnD rules allow for
+     * attacks out of range at a disadvantage.
+     *
+     * // TODO refactor weapon design so that all weapons have access to range through BaseWEapon
+     *
+     * @param minRange minimum weapon range
+     * @param maxRange maximum weapon range
+     * @return true is mPlayerDistance is between minRange and maxRange
+     */
+    protected boolean isAttackInRange(int minRange, int maxRange) {
+        return mPlayerDistance >= minRange && mPlayerDistance <= maxRange;
+    }
+
 }
