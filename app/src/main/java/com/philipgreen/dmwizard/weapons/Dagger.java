@@ -42,7 +42,7 @@ public class Dagger extends MeleeWeapon implements Throwable, Light, Finesse {
     }
 
     @Override
-    public int minThrownRange() {
+    public int normalThrownRange() {
         return 20;
     }
 

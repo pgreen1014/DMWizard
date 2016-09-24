@@ -208,7 +208,7 @@ public class AttackBuilder {
         // Cast to MeleeWeapon now that have checked that it is a MeleeWeapon
         MeleeWeapon meleeWeapon = (MeleeWeapon) mAttackingWeapon;
         // Check that melee weapon is in range
-        if (!isAttackInRange(meleeWeapon.getMinRange(), meleeWeapon.getMaxRange())) {
+        if (isMeleeAttackInRange(meleeWeapon.getRange())) {
             throw new IllegalArgumentException("Melee Attack is not within range");
         }
 
@@ -279,25 +279,32 @@ public class AttackBuilder {
     }
 
     /**
-     * Used to determine whether the defending player is within range of the attacking player.
-     * Because minRange and maxRange is not currently set in weapons.abstractWeapons.BaseWeapon.java,
-     * mAttackingWeapon must be cast to either MeleeWeapon, RangedWeapon or Throwable in order to get the appropriate
+     * Used to determine whether the defending player is within max range of a ranged weapon. If attack is beyond
+     * the max range then the build will fail. Because maxRange is not currently set in weapons.abstractWeapons.BaseWeapon.java,
+     * mAttackingWeapon must be cast to either RangedWeapon or Throwable in order to get the appropriate
      * range. This kind of casting is dangerous and should only be done after checking that mAttackingWeapon is an
      * instance of the class being cast to. This is bad design and needs to be refactored so that all weapon have access
      * to the appropriate range through BaseWeapon.
      *
-     * Validating melee weapon range will be done within this class and will not be allowed if out of range.
-     * Handling Ranged and thrown attacks will be done within the BattleManager class because DnD rules allow for
-     * attacks out of range at a disadvantage.
+     * // TODO refactor weapon design so that all weapons have access to range through BaseWeapon
      *
-     * // TODO refactor weapon design so that all weapons have access to range through BaseWEapon
-     *
-     * @param minRange minimum weapon range
      * @param maxRange maximum weapon range
-     * @return true is mPlayerDistance is between minRange and maxRange
+     * @return true if mPlayerDistance is between normalRange and maxRange; else return false
      */
-    protected boolean isAttackInRange(int minRange, int maxRange) {
-        return mPlayerDistance >= minRange && mPlayerDistance <= maxRange;
+    protected boolean isRangedAttackInRange(int maxRange) {
+        return mPlayerDistance <= maxRange;
+    }
+
+    /**
+     * Used to determine whether the defending player is within range of an attacking player making a Melee attack.
+     * Due to current weapon design, mAttackingWeapon must be cast to MeleeWeapon for access to weapon range. This kind of
+     * casting is dangerous and should only be done after validating that weapon is a MeleeWeapon.
+     *
+     * @param range range of melee weapon
+     * @return true if mPlayerDistance is within range else return false
+     */
+    protected boolean isMeleeAttackInRange(int range) {
+        return mPlayerDistance <= range;
     }
 
 }

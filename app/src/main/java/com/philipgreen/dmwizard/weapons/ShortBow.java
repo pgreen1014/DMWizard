@@ -18,8 +18,9 @@ public class ShortBow extends RangedWeapon {
     public int damageRoll() {
         return 0;
     }
+
     @Override
-    protected int minRange() {
+    protected int normalRange() {
         return 80;
     }
 

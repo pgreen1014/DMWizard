@@ -1,7 +1,5 @@
 package com.philipgreen.dmwizard.weapons.abstractWeapons;
 
-import com.philipgreen.dmwizard.data.WeaponDamageType;
-import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Reach;
 
 /**
@@ -9,8 +7,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Reach;
  */
 public abstract class MeleeWeapon extends BaseWeapon {
     private static final String TAG = "MeleeWeapon";
-    private int mMinRange = 0;
-    private int mMaxRange;
+    private int mRange;
 
     protected MeleeWeapon() {
         super();
@@ -19,18 +16,14 @@ public abstract class MeleeWeapon extends BaseWeapon {
 
     public void initMaxRange() {
         if (this instanceof Reach) {
-            mMaxRange = 10;
+            mRange = 10;
         } else {
-            mMaxRange = 5;
+            mRange = 5;
         }
     }
 
-    public int getMinRange() {
-        return mMinRange;
-    }
-
-    public int getMaxRange() {
-        return mMaxRange;
+    public int getRange() {
+        return mRange;
     }
 
 
