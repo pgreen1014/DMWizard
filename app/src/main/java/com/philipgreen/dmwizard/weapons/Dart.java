@@ -39,7 +39,7 @@ public class Dart extends BaseWeapon implements Throwable, Finesse{
     }
 
     @Override
-    public int minThrownRange() {
+    public int normalThrownRange() {
         return 60;
     }
 
