@@ -279,8 +279,8 @@ public class AttackBuilder {
     }
 
     /**
-     * Used to determine whether the defending player is within range of an attacking player making a Ranged or Thrown attack.
-     * Because minRange and maxRange is not currently set in weapons.abstractWeapons.BaseWeapon.java,
+     * Used to determine whether the defending player is within max range of a ranged weapon. If attack is beyond
+     * the max range then the build will fail. Because maxRange is not currently set in weapons.abstractWeapons.BaseWeapon.java,
      * mAttackingWeapon must be cast to either RangedWeapon or Throwable in order to get the appropriate
      * range. This kind of casting is dangerous and should only be done after checking that mAttackingWeapon is an
      * instance of the class being cast to. This is bad design and needs to be refactored so that all weapon have access
@@ -288,12 +288,11 @@ public class AttackBuilder {
      *
      * // TODO refactor weapon design so that all weapons have access to range through BaseWeapon
      *
-     * @param minRange minimum weapon range
      * @param maxRange maximum weapon range
-     * @return true if mPlayerDistance is between minRange and maxRange
+     * @return true if mPlayerDistance is between normalRange and maxRange; else return false
      */
-    protected boolean isRangedAttackInRange(int minRange, int maxRange) {
-        return mPlayerDistance >= minRange && mPlayerDistance <= maxRange;
+    protected boolean isRangedAttackInRange(int maxRange) {
+        return mPlayerDistance <= maxRange;
     }
 
     /**
@@ -302,7 +301,7 @@ public class AttackBuilder {
      * casting is dangerous and should only be done after validating that weapon is a MeleeWeapon.
      *
      * @param range range of melee weapon
-     * @return true if mPlayerDistance is within range
+     * @return true if mPlayerDistance is within range else return false
      */
     protected boolean isMeleeAttackInRange(int range) {
         return mPlayerDistance <= range;

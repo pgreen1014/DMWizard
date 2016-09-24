@@ -8,14 +8,14 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Range;
  */
 public abstract class RangedWeapon extends BaseWeapon implements Range, Ammunition{
     private int mAmmunition;
-    private int mMinRangeInFeet = minRange();
-    private int mMaxRangeInFeet = maxRange();
+    private int mNormalRange = normalRange();
+    private int mMaxRange = maxRange();
 
     public RangedWeapon() {
         super();
     }
 
-    protected abstract int minRange();
+    protected abstract int normalRange();
     protected abstract int maxRange();
 
     public int getAmmunition() {
@@ -28,6 +28,14 @@ public abstract class RangedWeapon extends BaseWeapon implements Range, Ammuniti
 
     public void addAmmunition(int ammunitionAmountBeingAdded) {
         mAmmunition += mAmmunition;
+    }
+
+    public int getNormalRange() {
+        return mNormalRange;
+    }
+
+    public int getMaxRange() {
+        return mMaxRange;
     }
 
     public void useAmmunition() {
