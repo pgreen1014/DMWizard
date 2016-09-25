@@ -21,7 +21,7 @@ public class Attack {
     private boolean mOffHandWeaponAttack;
     private AttackBuilder.AttackType mAttackType;
 
-    protected Attack(AttackBuilder attackBuild) {
+    Attack(AttackBuilder attackBuild) {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
         mDefender = attackBuild.getDefender();
         mAttacker = attackBuild.getAttacker();
