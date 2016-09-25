@@ -3,6 +3,7 @@ package com.philipgreen.dmwizard.utils;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 
 /**
  * Created by pgreen on 9/25/16.
@@ -11,18 +12,27 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
  */
 
 public class SafeWeaponCaster {
+    private static final String EXCEPTION_MESSAGE = "weapon is not instance of ";
 
+    // TODO refactor to castToMeleeWeapon for specificity
     public static MeleeWeapon castToMelee(BaseWeapon baseWeapon) {
         if(!(baseWeapon instanceof MeleeWeapon)) {
-            throw new ClassCastException("weapon is not instance of MeleeWeapon");
+            throw new ClassCastException(EXCEPTION_MESSAGE + "MeleeWeapon");
         }
         return (MeleeWeapon) baseWeapon;
     }
 
     public static RangedWeapon castToRangedWeapon(BaseWeapon baseWeapon) {
         if(!(baseWeapon instanceof RangedWeapon)) {
-            throw new ClassCastException("weapon is not instance of RangedWeapon");
+            throw new ClassCastException(EXCEPTION_MESSAGE + "RangedWeapon");
         }
         return (RangedWeapon) baseWeapon;
+    }
+
+    public static Throwable castToThrowable(BaseWeapon baseWeapon) {
+        if(!(baseWeapon instanceof Throwable)) {
+            throw new ClassCastException(EXCEPTION_MESSAGE + "Throwable");
+        }
+        return (Throwable) baseWeapon;
     }
 }
