@@ -3,6 +3,7 @@ package com.philipgreen.dmwizard.battle;
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 
@@ -205,8 +206,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("weapon making melee attack is not instance of MeleeWeapon");
         }
 
-        // Cast to MeleeWeapon now that have checked that it is a MeleeWeapon
-        MeleeWeapon meleeWeapon = (MeleeWeapon) mAttackingWeapon;
+        MeleeWeapon meleeWeapon = SafeWeaponCaster.castToMelee(mAttackingWeapon);
         // Check that melee weapon is in range
         if (isMeleeAttackInRange(meleeWeapon.getRange())) {
             throw new IllegalArgumentException("Melee Attack is not within range");
