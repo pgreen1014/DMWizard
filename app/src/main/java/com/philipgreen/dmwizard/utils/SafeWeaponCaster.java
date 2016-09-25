@@ -4,6 +4,7 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 9/25/16.
@@ -33,5 +34,12 @@ public class SafeWeaponCaster {
             throw new ClassCastException(EXCEPTION_MESSAGE + "Throwable");
         }
         return (Throwable) baseWeapon;
+    }
+
+    public static Versatile castToVersatile(BaseWeapon baseWeapon) {
+        if(!(baseWeapon instanceof Versatile)) {
+            throw new ClassCastException(EXCEPTION_MESSAGE + "Versatile");
+        }
+        return (Versatile) baseWeapon;
     }
 }
