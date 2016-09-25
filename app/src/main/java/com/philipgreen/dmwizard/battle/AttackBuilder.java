@@ -286,8 +286,6 @@ public class AttackBuilder {
      * instance of the class being cast to. This is bad design and needs to be refactored so that all weapon have access
      * to the appropriate range through BaseWeapon.
      *
-     * // TODO refactor weapon design so that all weapons have access to range through BaseWeapon
-     *
      * @param maxRange maximum weapon range
      * @return true if mPlayerDistance is between normalRange and maxRange; else return false
      */
