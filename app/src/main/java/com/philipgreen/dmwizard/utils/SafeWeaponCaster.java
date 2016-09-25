@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.utils.cast;
+package com.philipgreen.dmwizard.utils;
 
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
