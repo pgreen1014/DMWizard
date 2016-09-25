@@ -208,7 +208,7 @@ public class AttackBuilder {
 
         MeleeWeapon meleeWeapon = SafeWeaponCaster.castToMelee(mAttackingWeapon);
         // Check that melee weapon is in range
-        if (isMeleeAttackInRange(meleeWeapon.getRange())) {
+        if (!isMeleeAttackInRange(meleeWeapon.getRange())) {
             throw new IllegalArgumentException("Melee Attack is not within range");
         }
 
