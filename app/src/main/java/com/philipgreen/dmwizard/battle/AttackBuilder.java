@@ -7,6 +7,7 @@ import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 
 /**
  * Created by pgreen on 8/23/16.
@@ -250,6 +251,11 @@ public class AttackBuilder {
         if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
+
+        Throwable throwableWeapon = SafeWeaponCaster.castToThrowable(mAttackingWeapon);
+        if (!isAttackInRange(throwableWeapon.maxThrownRange())) {
+            throw new IllegalArgumentException("weapon out of range");
+        }
     }
 
     private boolean canUseTwoHanded() {
@@ -299,7 +305,7 @@ public class AttackBuilder {
      * @param range maximum weapon range || range
      * @return true if mPlayerDistance is between normalRange and maxRange; else return false
      */
-    protected boolean isAttackInRange(int range) {
+    private boolean isAttackInRange(int range) {
         return mPlayerDistance <= range;
     }
 
