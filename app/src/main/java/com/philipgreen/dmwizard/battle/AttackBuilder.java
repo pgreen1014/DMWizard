@@ -6,6 +6,7 @@ import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 
 /**
  * Created by pgreen on 8/23/16.
@@ -232,6 +233,11 @@ public class AttackBuilder {
         // Make sure attacking weapon has ranged property
         if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
             throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
+        }
+
+        RangedWeapon rangedWeapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
+        if (!isRangedAttackInRange(rangedWeapon.getMaxRange())) {
+            throw new IllegalArgumentException("Ranged attack is not within max range of defender");
         }
 
         // If using strength modifier and attacking weapon does not have Finesse property
