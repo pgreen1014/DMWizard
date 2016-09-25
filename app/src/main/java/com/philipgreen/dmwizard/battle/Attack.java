@@ -1,8 +1,13 @@
 package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollVersatile;
 import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/26/16.
@@ -20,6 +25,7 @@ public class Attack {
     private boolean mTwoHandedAttack;
     private boolean mOffHandWeaponAttack;
     private AttackBuilder.AttackType mAttackType;
+    private DamageRollBehavior mDamageRollBehavior;
 
     Attack(AttackBuilder attackBuild) {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
@@ -73,5 +79,13 @@ public class Attack {
                 + " Attack Type: " + mAttackType.toString() + "\n"
                 + " Attacking Player: " + "\n" + mAttacker.toString() + "\n\n"
                 + " Defending Player: " + "\n" + mDefender.toString();
+    }
+
+    private void setDamageRollBehavior() {
+        if (mTwoHandedAttack && (mAttackingWeapon instanceof Versatile)) {
+            mDamageRollBehavior = new DamageRollVersatile(SafeWeaponCaster.castToVersatile(mAttackingWeapon));
+        } else {
+            mDamageRollBehavior = new DamageRollRegular(mAttackingWeapon);
+        }
     }
 }
