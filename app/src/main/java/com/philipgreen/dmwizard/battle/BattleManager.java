@@ -56,17 +56,13 @@ public class BattleManager {
     }
 
     public void executeAttack(Attack attack) {
-        mAttacker = attack.getAttacker();
-        mDefender = attack.getDefender();
-        AttackBuilder.AttackType attackType = attack.getAttackType();
-
         int damage = 0;
 
-        if (attackType == AttackBuilder.AttackType.MELEE) {
+        if (mAttackType == AttackBuilder.AttackType.MELEE) {
             damage += executeMeleeAttack(attack);
-        } else if (attackType == AttackBuilder.AttackType.RANGED) {
+        } else if (mAttackType == AttackBuilder.AttackType.RANGED) {
             damage += executeRangedAttack(attack);
-        } else if (attackType == AttackBuilder.AttackType.THROWN) {
+        } else if (mAttackType == AttackBuilder.AttackType.THROWN) {
             damage += executeThrowAttack(attack);
         }
 
