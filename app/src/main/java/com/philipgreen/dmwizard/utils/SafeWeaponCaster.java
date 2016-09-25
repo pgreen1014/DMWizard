@@ -14,8 +14,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
 public class SafeWeaponCaster {
     private static final String EXCEPTION_MESSAGE = "weapon is not instance of ";
 
-    // TODO refactor to castToMeleeWeapon for specificity
-    public static MeleeWeapon castToMelee(BaseWeapon baseWeapon) {
+    public static MeleeWeapon castToMeleeWeapon(BaseWeapon baseWeapon) {
         if(!(baseWeapon instanceof MeleeWeapon)) {
             throw new ClassCastException(EXCEPTION_MESSAGE + "MeleeWeapon");
         }

@@ -208,7 +208,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("weapon making melee attack is not instance of MeleeWeapon");
         }
 
-        MeleeWeapon meleeWeapon = SafeWeaponCaster.castToMelee(mAttackingWeapon);
+        MeleeWeapon meleeWeapon = SafeWeaponCaster.castToMeleeWeapon(mAttackingWeapon);
         // Check that melee weapon is in range
         if (!isAttackInRange(meleeWeapon.getRange())) {
             throw new IllegalArgumentException("Melee Attack is not within range");
