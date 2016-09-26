@@ -2,12 +2,8 @@ package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
-import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
-import com.philipgreen.dmwizard.battle.damageRolls.DamageRollVersatile;
 import com.philipgreen.dmwizard.data.BaseStats;
-import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/26/16.
@@ -82,7 +78,7 @@ public class Attack {
                 + " Defending Player: " + "\n" + mDefender.toString();
     }
 
-    public int damageRoll() {
-        return mDamageRollBehavior.damageRoll();
+    public int rollDamage() {
+        return mDamageRollBehavior.rollDamage();
     }
 }

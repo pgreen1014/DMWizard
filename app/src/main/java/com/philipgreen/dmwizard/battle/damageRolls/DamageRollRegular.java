@@ -16,7 +16,7 @@ public class DamageRollRegular implements DamageRollBehavior {
     }
 
     @Override
-    public int damageRoll() {
+    public int rollDamage() {
         return mBaseWeapon.damageRoll();
     }
 }

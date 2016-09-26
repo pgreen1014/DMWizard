@@ -7,5 +7,5 @@ package com.philipgreen.dmwizard.battle.damageRolls;
  */
 
 public interface DamageRollBehavior {
-    public int damageRoll();
+    public int rollDamage();
 }

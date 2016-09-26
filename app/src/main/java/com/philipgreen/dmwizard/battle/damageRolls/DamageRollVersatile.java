@@ -16,7 +16,7 @@ public class DamageRollVersatile implements DamageRollBehavior {
     }
 
     @Override
-    public int damageRoll() {
+    public int rollDamage() {
         return mWeapon.versatileDamageRoll();
     }
 }
