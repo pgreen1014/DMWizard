@@ -20,7 +20,6 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 public class BattleManager {
     private static final String TAG = "BattleManager";
-    private boolean mAttackSuccessful;
     private Attack mAttack;
 
     private BaseWeapon mAttackingWeapon;
@@ -78,10 +77,9 @@ public class BattleManager {
     private int executeMeleeAttack() {
         // Melee attack rolls should use strength modifier
         // roll for attack to hit
-        rollAttack();
         int damage = 0;
 
-        if (mAttackSuccessful) {
+        if (rollAttack()) {
             damage = mAttack.rollDamage();
         }
 
@@ -92,11 +90,10 @@ public class BattleManager {
         // Use ammunition
         RangedWeapon weapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
         weapon.useAmmunition();
-        
-        rollAttack();
+
         int damage = 0;
 
-        if (mAttackSuccessful) {
+        if (rollAttack()) {
             damage += rollDamage();
         }
         return damage;
@@ -105,16 +102,19 @@ public class BattleManager {
     private int executeThrowAttack() {
         int damage = 0;
 
-        rollAttack();
-        if (mAttackSuccessful) {
+        if (rollAttack()) {
             damage += rollDamage();
         }
         return damage;
     }
 
-    private void rollAttack() {
+    /**
+     * Makes an attack roll to see if attack will hit the defender
+     * @return true if attack is a hit; else return false;
+     */
+    private boolean rollAttack() {
         int attackRoll = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
-        mAttackSuccessful = attackRoll >= mDefender.getArmorClass();
+        return attackRoll >= mDefender.getArmorClass();
     }
 
     private int rollDamage() {
