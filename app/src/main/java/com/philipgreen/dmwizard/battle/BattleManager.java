@@ -1,6 +1,7 @@
 package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
@@ -19,6 +20,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 public class BattleManager {
     private static final String TAG = "BattleManager";
     private boolean mAttackSuccessful;
+    private Attack mAttack;
 
     private BaseWeapon mAttackingWeapon;
     private PlayerCharacter mDefender;
@@ -34,6 +36,7 @@ public class BattleManager {
     }
 
     public void setAttack(Attack attack) {
+        mAttack = attack;
         mAttackingWeapon = attack.getAttackingWeapon();
         mDefender = attack.getDefender();
         mAttacker = attack.getAttacker();
@@ -73,18 +76,12 @@ public class BattleManager {
 
     private int executeMeleeAttack(Attack attack) {
         // Melee attack rolls should use strength modifier
-        rollAttack(mAttacker.getStrengthModifier());
+        // roll for attack to hit
+        rollAttack(mAttacker.getAbilityModifier(mAttackModifierStat));
         int damage = 0;
 
         if (mAttackSuccessful) {
-            // if weapon is versatile and is being used to make two-handed attack
-            if (attack.isTwoHandedAttack() && mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE)) {
-                //Cast weapon to Versatile at make versatile attack
-                Versatile versatileWeapon = (Versatile) mAttackingWeapon;
-                damage += versatileWeapon.versatileDamageRoll();
-            } else {
-                damage += rollDamage(attack);
-            }
+            damage = mAttack.rollDamage();
         }
 
         return damage;
