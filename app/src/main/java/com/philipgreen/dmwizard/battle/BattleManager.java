@@ -2,9 +2,6 @@ package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
-import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
-import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 
 /**
  * Created by pgreen on 8/25/16.
@@ -19,11 +16,9 @@ public class BattleManager {
     private static final String TAG = "BattleManager";
     private Attack mAttack;
 
-    private BaseWeapon mAttackingWeapon;
     private PlayerCharacter mDefender;
     private PlayerCharacter mAttacker;
     private BaseStats mAttackModifierStat;
-    private AttackBuilder.AttackType mAttackType;
 
     public BattleManager(Attack attack) {
         setAttack(attack);
@@ -31,69 +26,27 @@ public class BattleManager {
 
     public void setAttack(Attack attack) {
         mAttack = attack;
-        mAttackingWeapon = attack.getAttackingWeapon();
         mDefender = attack.getDefender();
         mAttacker = attack.getAttacker();
         mAttackModifierStat = attack.getAttackModifierStat();
-        mAttackType = attack.getAttackType();
     }
 
     private void clearAttack() {
-        mAttackingWeapon = null;
         mDefender = null;
         mAttacker = null;
         mAttackModifierStat = null;
-        mAttackType = null;
     }
 
     public void executeAttack() {
-        int damage = 0;
-
-        if (mAttackType == AttackBuilder.AttackType.MELEE) {
-            damage += executeMeleeAttack();
-        } else if (mAttackType == AttackBuilder.AttackType.RANGED) {
-            damage += executeRangedAttack();
-        } else if (mAttackType == AttackBuilder.AttackType.THROWN) {
-            damage += executeThrowAttack();
-        }
-
-        mDefender.takeDamage(damage);
-        
-        clearAttack();
-    }
-
-    private int executeMeleeAttack() {
-        // Melee attack rolls should use strength modifier
-        // roll for attack to hit
         int damage = 0;
 
         if (rollAttack()) {
             damage = mAttack.rollDamage();
         }
 
-        return damage;
-    }
-
-    private int executeRangedAttack() {
-        // Use ammunition
-        RangedWeapon weapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
-        weapon.useAmmunition();
-
-        int damage = 0;
-
-        if (rollAttack()) {
-            damage += rollDamage();
-        }
-        return damage;
-    }
-
-    private int executeThrowAttack() {
-        int damage = 0;
-
-        if (rollAttack()) {
-            damage += rollDamage();
-        }
-        return damage;
+        mDefender.takeDamage(damage);
+        
+        clearAttack();
     }
 
     /**
