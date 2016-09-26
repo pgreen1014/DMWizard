@@ -131,6 +131,16 @@ public class AttackBuilder {
         return this;
     }
 
+    public AttackBuilder setAdvantage() {
+        mAdvantage = true;
+        return this;
+    }
+
+    public AttackBuilder setDisadvantage() {
+        mDisadvantage = true;
+        return this;
+    }
+
     /**
      * Checks to make sure built attack follows DnD rules then returns the Attack
      */
@@ -191,6 +201,14 @@ public class AttackBuilder {
 
     public DamageRollBehavior getDamageRollBehavior() {
         return mDamageRollBehavior;
+    }
+
+    public boolean isAdvantage() {
+        return mAdvantage;
+    }
+
+    public boolean isDisadvantage() {
+        return mDisadvantage;
     }
 
     ///////////////////////////////
