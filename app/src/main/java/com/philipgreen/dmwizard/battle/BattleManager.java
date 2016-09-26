@@ -92,7 +92,7 @@ public class BattleManager {
         // Use ammunition
         RangedWeapon weapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
         weapon.useAmmunition();
-        // Ranged attack rolls should use dexterity modifier
+        
         rollAttack();
         int damage = 0;
 
@@ -104,18 +104,10 @@ public class BattleManager {
 
     private int executeThrowAttack() {
         int damage = 0;
-        // if attacking weapon is ranged
-        if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
-            rollAttack();
-            if (mAttackSuccessful) {
-                damage += rollDamage();
-            }
-        // Else attacking weapon is melee
-        } else {
-            rollAttack();
-            if (mAttackSuccessful) {
-                damage += rollDamage();
-            }
+
+        rollAttack();
+        if (mAttackSuccessful) {
+            damage += rollDamage();
         }
         return damage;
     }
