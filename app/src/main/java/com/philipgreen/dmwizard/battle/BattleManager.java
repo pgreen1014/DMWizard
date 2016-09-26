@@ -23,9 +23,6 @@ public class BattleManager {
     private PlayerCharacter mDefender;
     private PlayerCharacter mAttacker;
     private BaseStats mAttackModifierStat;
-    private int mPlayerDistance;
-    private boolean mTwoHandedAttack;
-    private boolean mOffHandWeaponAttack;
     private AttackBuilder.AttackType mAttackType;
 
     public BattleManager(Attack attack) {
@@ -38,9 +35,6 @@ public class BattleManager {
         mDefender = attack.getDefender();
         mAttacker = attack.getAttacker();
         mAttackModifierStat = attack.getAttackModifierStat();
-        mPlayerDistance = attack.getPlayerDistance();
-        mTwoHandedAttack = attack.isTwoHandedAttack();
-        mOffHandWeaponAttack = attack.isOffHandWeaponAttack();
         mAttackType = attack.getAttackType();
     }
 
@@ -49,9 +43,6 @@ public class BattleManager {
         mDefender = null;
         mAttacker = null;
         mAttackModifierStat = null;
-        mPlayerDistance = 0;
-        mTwoHandedAttack = false;
-        mOffHandWeaponAttack = false;
         mAttackType = null;
     }
 
