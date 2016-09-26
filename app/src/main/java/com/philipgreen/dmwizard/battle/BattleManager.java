@@ -55,7 +55,7 @@ public class BattleManager {
         mAttackType = null;
     }
 
-    public void executeAttack(Attack attack) {
+    public void executeAttack() {
         int damage = 0;
 
         if (mAttackType == AttackBuilder.AttackType.MELEE) {
