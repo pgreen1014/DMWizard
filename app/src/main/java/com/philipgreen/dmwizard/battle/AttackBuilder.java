@@ -1,6 +1,9 @@
 package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollVersatile;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
@@ -8,6 +11,7 @@ import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/23/16.
@@ -49,6 +53,7 @@ public class AttackBuilder {
     private boolean mTwoHandedAttack = false;
     private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
+    private DamageRollBehavior mDamageRollBehavior;
 
     protected enum AttackType {
         MELEE, RANGED, THROWN
@@ -140,6 +145,8 @@ public class AttackBuilder {
             throw new NullPointerException("Attack type not set");
         }
 
+        setDamageRollBehavior();
+
         return new Attack(this);
     }
 
@@ -178,6 +185,10 @@ public class AttackBuilder {
 
     public AttackType getAttackType() {
         return mAttackType;
+    }
+
+    public DamageRollBehavior getDamageRollBehavior() {
+        return mDamageRollBehavior;
     }
 
     ///////////////////////////////
@@ -307,6 +318,17 @@ public class AttackBuilder {
      */
     private boolean isAttackInRange(int range) {
         return mPlayerDistance <= range;
+    }
+
+    private void setDamageRollBehavior() {
+        // If this is a versatile weapon being used with two hands then use versatile damage roll
+        if (mTwoHandedAttack && (mAttackingWeapon instanceof Versatile)) {
+            Versatile versatileWeapon = SafeWeaponCaster.castToVersatile(mAttackingWeapon);
+            mDamageRollBehavior = new DamageRollVersatile(versatileWeapon);
+        // else use regular damage roll
+        } else {
+            mDamageRollBehavior = new DamageRollRegular(mAttackingWeapon);
+        }
     }
 
 }

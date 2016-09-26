@@ -36,6 +36,7 @@ public class Attack {
         mTwoHandedAttack = attackBuild.isTwoHandedAttack();
         mOffHandWeaponAttack = attackBuild.isOffHandWeaponAttack();
         mAttackType = attackBuild.getAttackType();
+        mDamageRollBehavior = attackBuild.getDamageRollBehavior();
     }
 
     public BaseWeapon getAttackingWeapon() {
@@ -81,11 +82,7 @@ public class Attack {
                 + " Defending Player: " + "\n" + mDefender.toString();
     }
 
-    private void setDamageRollBehavior() {
-        if (mTwoHandedAttack && (mAttackingWeapon instanceof Versatile)) {
-            mDamageRollBehavior = new DamageRollVersatile(SafeWeaponCaster.castToVersatile(mAttackingWeapon));
-        } else {
-            mDamageRollBehavior = new DamageRollRegular(mAttackingWeapon);
-        }
+    public int damageRoll() {
+        return mDamageRollBehavior.damageRoll();
     }
 }
