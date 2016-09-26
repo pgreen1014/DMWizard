@@ -86,8 +86,4 @@ public class BattleManager {
         }
     }
 
-    private int rollDamage() {
-        return mAttack.rollDamage() + mAttacker.getAbilityModifier(mAttackModifierStat);
-    }
-
 }
