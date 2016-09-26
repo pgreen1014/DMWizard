@@ -22,6 +22,8 @@ public class Attack {
     private boolean mOffHandWeaponAttack;
     private AttackBuilder.AttackType mAttackType;
     private DamageRollBehavior mDamageRollBehavior;
+    private boolean mAdvantage;
+    private boolean mDisadvantage;
 
     Attack(AttackBuilder attackBuild) {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
@@ -33,6 +35,8 @@ public class Attack {
         mOffHandWeaponAttack = attackBuild.isOffHandWeaponAttack();
         mAttackType = attackBuild.getAttackType();
         mDamageRollBehavior = attackBuild.getDamageRollBehavior();
+        mAdvantage = attackBuild.isAdvantage();
+        mDisadvantage = attackBuild.isDisadvantage();
     }
 
     public BaseWeapon getAttackingWeapon() {
@@ -65,6 +69,14 @@ public class Attack {
 
     public AttackBuilder.AttackType getAttackType() {
         return mAttackType;
+    }
+
+    public boolean isAdvantage() {
+        return mAdvantage;
+    }
+
+    public boolean isDisadvantage() {
+        return mDisadvantage;
     }
 
     public String toString() {
