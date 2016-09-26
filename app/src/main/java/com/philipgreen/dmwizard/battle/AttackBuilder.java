@@ -54,6 +54,8 @@ public class AttackBuilder {
     private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
     private DamageRollBehavior mDamageRollBehavior;
+    private boolean mAdvantage = false;
+    private boolean mDisadvantage = false;
 
     protected enum AttackType {
         MELEE, RANGED, THROWN
@@ -221,7 +223,7 @@ public class AttackBuilder {
 
         MeleeWeapon meleeWeapon = SafeWeaponCaster.castToMeleeWeapon(mAttackingWeapon);
         // Check that melee weapon is in range
-        if (!isAttackInRange(meleeWeapon.getRange())) {
+        if (!validateMeleeRange(meleeWeapon.getRange())) {
             throw new IllegalArgumentException("Melee Attack is not within range");
         }
 
@@ -247,10 +249,9 @@ public class AttackBuilder {
             throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
         }
 
+        // validate weapon is in range
         RangedWeapon rangedWeapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
-        if (!isAttackInRange(rangedWeapon.getMaxRange())) {
-            throw new IllegalArgumentException("Ranged attack is not within max range of defender");
-        }
+        validateRange(rangedWeapon);
 
         // If using strength modifier and attacking weapon does not have Finesse property
         if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
@@ -263,9 +264,48 @@ public class AttackBuilder {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
 
+        // validate weapon is in range
         Throwable throwableWeapon = SafeWeaponCaster.castToThrowable(mAttackingWeapon);
-        if (!isAttackInRange(throwableWeapon.maxThrownRange())) {
+        validateThrownRange(throwableWeapon);
+    }
+
+    private boolean validateMeleeRange(int range) {
+        return mPlayerDistance <= range;
+    }
+
+    /**
+     * Validates that Thrown weapon is in range. If the distance is greater than weapon's max range then IllegalArgumentException is thrown.
+     * If distance is greater than normal range or in close combat (5ft.) then mDisadvantage is set to true. mAttackingWeapon needs to be
+     * cast to a Throwable, but since this is dangerous verify that mAttackingWeapon is an instance of Throwable with SafeWeaponCaster.
+     * Because this is similar to validateRange(), refactoring should be done to limit code reuse.
+     *
+     * @param weapon weapon making attack
+     */
+    private void validateThrownRange(Throwable weapon) {
+        // throw exception if out of max range
+        if (mPlayerDistance > weapon.maxThrownRange()) {
             throw new IllegalArgumentException("weapon out of range");
+        // set disadvantage if outside normal range or within melee range
+        } else if (mPlayerDistance > weapon.normalThrownRange() || mPlayerDistance == 5) {
+            mDisadvantage = true;
+        }
+    }
+
+    /**
+     * Validates that Ranged weapon is in range. If the distance is greater than weapon's max range then IllegalArgumentException is thrown.
+     * If distance is greater than normal range or in close combat (5ft.) then mDisadvantage is set to true. mAttackingWeapon needs to be
+     * cast to a RangedWeapon, but since this is dangerous verify that mAttackingWeapon is an instance of RangedWeapon with SafeWeaponCaster.
+     * because this is similar to validateThrownRange, refactoring should be done to limit code reuse.
+     *
+     * @param weapon weapon making attack
+     */
+    private void validateRange(RangedWeapon weapon) {
+        // throw exception if out of max range
+        if (mPlayerDistance > weapon.getMaxRange()) {
+            throw new IllegalArgumentException("weapon out of range");
+        // set disadvantage if outside normal range or within melee range
+        } else if (mPlayerDistance > weapon.getNormalRange() || mPlayerDistance == 5) {
+            mDisadvantage = true;
         }
     }
 
@@ -299,25 +339,6 @@ public class AttackBuilder {
             }
         }
 
-    }
-
-    /**
-     * Used to determine whether the defending player is within range of a weapon. If attack is beyond
-     * the range then the build will fail. Because range is not currently set in weapons.abstractWeapons.BaseWeapon.java,
-     * mAttackingWeapon must be cast to either MeleeWeapon, RangedWeapon or Throwable in order to get the appropriate
-     * range. This kind of casting is dangerous and should only be done after checking that mAttackingWeapon is an
-     * instance of the class being cast to. This is bad design and needs to be refactored so that all weapon have access
-     * to the appropriate range through BaseWeapon.
-     *
-     * For safe casting use utils.SafeWeaponCaster.java
-     *
-     * If checking range of a Ranged or Throwable weapon, be sure to use the Maximum Range
-     *
-     * @param range maximum weapon range || range
-     * @return true if mPlayerDistance is between normalRange and maxRange; else return false
-     */
-    private boolean isAttackInRange(int range) {
-        return mPlayerDistance <= range;
     }
 
     private void setDamageRollBehavior() {
