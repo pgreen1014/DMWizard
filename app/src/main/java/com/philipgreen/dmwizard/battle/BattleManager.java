@@ -110,8 +110,36 @@ public class BattleManager {
      * @return true if attack is a hit; else return false;
      */
     private boolean rollAttack() {
-        int attackRoll = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
-        return attackRoll >= mDefender.getArmorClass();
+        if (mAttack.isDisadvantage()) {
+            return rollDisadvantage() >= mDefender.getArmorClass();
+        } else if(mAttack.isAdvantage()) {
+            return rollAdvantage() >= mDefender.getArmorClass();
+        } else {
+            int attackRoll = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
+            return attackRoll >= mDefender.getArmorClass();
+        }
+    }
+
+    private int rollDisadvantage() {
+        int attackRoll1 = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
+        int attackRoll2 = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
+
+        if (attackRoll1 < attackRoll2) {
+            return attackRoll1;
+        } else {
+            return attackRoll2;
+        }
+    }
+
+    private int rollAdvantage() {
+        int attackRoll1 = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
+        int attackRoll2 = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
+
+        if (attackRoll1 > attackRoll2) {
+            return attackRoll1;
+        } else {
+            return attackRoll2;
+        }
     }
 
     private int rollDamage() {
