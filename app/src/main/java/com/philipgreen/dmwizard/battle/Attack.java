@@ -39,19 +39,19 @@ public class Attack {
         mDisadvantage = attackBuild.isDisadvantage();
     }
 
-    public BaseWeapon getAttackingWeapon() {
+    BaseWeapon getAttackingWeapon() {
         return mAttackingWeapon;
     }
 
-    public PlayerCharacter getDefender() {
+    PlayerCharacter getDefender() {
         return mDefender;
     }
 
-    public PlayerCharacter getAttacker() {
+    PlayerCharacter getAttacker() {
         return mAttacker;
     }
 
-    public BaseStats getAttackModifierStat() {
+    BaseStats getAttackModifierStat() {
         return mAttackModifierStat;
     }
 
@@ -67,15 +67,15 @@ public class Attack {
         return mOffHandWeaponAttack;
     }
 
-    public AttackBuilder.AttackType getAttackType() {
+    AttackBuilder.AttackType getAttackType() {
         return mAttackType;
     }
 
-    public boolean isAdvantage() {
+    boolean isAdvantage() {
         return mAdvantage;
     }
 
-    public boolean isDisadvantage() {
+    boolean isDisadvantage() {
         return mDisadvantage;
     }
 
@@ -90,7 +90,7 @@ public class Attack {
                 + " Defending Player: " + "\n" + mDefender.toString();
     }
 
-    public int rollDamage() {
+    int rollDamage() {
         return mDamageRollBehavior.rollDamage();
     }
 }
