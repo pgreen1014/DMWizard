@@ -62,7 +62,7 @@ public class BattleManager {
         int damage = 0;
 
         if (mAttackType == AttackBuilder.AttackType.MELEE) {
-            damage += executeMeleeAttack(attack);
+            damage += executeMeleeAttack();
         } else if (mAttackType == AttackBuilder.AttackType.RANGED) {
             damage += executeRangedAttack(attack);
         } else if (mAttackType == AttackBuilder.AttackType.THROWN) {
@@ -74,10 +74,10 @@ public class BattleManager {
         clearAttack();
     }
 
-    private int executeMeleeAttack(Attack attack) {
+    private int executeMeleeAttack() {
         // Melee attack rolls should use strength modifier
         // roll for attack to hit
-        rollAttack(mAttacker.getAbilityModifier(mAttackModifierStat));
+        rollAttack();
         int damage = 0;
 
         if (mAttackSuccessful) {
@@ -92,11 +92,11 @@ public class BattleManager {
         RangedWeapon weapon = (RangedWeapon) attack.getAttackingWeapon();
         weapon.useAmmunition();
         // Ranged attack rolls should use dexterity modifier
-        rollAttack(mAttacker.getDexterityModifier());
+        rollAttack();
         int damage = 0;
 
         if (mAttackSuccessful) {
-            damage += rollDamage(attack);
+            damage += rollDamage();
         }
         return damage;
     }
@@ -105,27 +105,27 @@ public class BattleManager {
         int damage = 0;
         // if attacking weapon is ranged
         if (attack.getAttackingWeapon().hasWeaponProperty(WeaponProperties.RANGE)) {
-            rollAttack(mAttacker.getDexterityModifier());
+            rollAttack();
             if (mAttackSuccessful) {
-                damage += rollDamage(attack);
+                damage += rollDamage();
             }
         // Else attacking weapon is melee
         } else {
-            rollAttack(mAttacker.getStrengthModifier());
+            rollAttack();
             if (mAttackSuccessful) {
-                damage += rollDamage(attack);
+                damage += rollDamage();
             }
         }
         return damage;
     }
 
-    private void rollAttack(int attackModifier) {
-        int attackRoll = mAttacker.attackRoll() + attackModifier;
+    private void rollAttack() {
+        int attackRoll = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
         mAttackSuccessful = attackRoll >= mDefender.getArmorClass();
     }
 
-    private int rollDamage(Attack attack) {
-        return attack.getAttackingWeapon().damageRoll() + mAttacker.getAbilityModifier(attack.getAttackModifierStat());
+    private int rollDamage() {
+        return mAttack.rollDamage() + mAttacker.getAbilityModifier(mAttackModifierStat);
     }
 
 }
