@@ -4,6 +4,7 @@ import com.philipgreen.dmwizard.PlayerCharacter;
 import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
@@ -64,9 +65,9 @@ public class BattleManager {
         if (mAttackType == AttackBuilder.AttackType.MELEE) {
             damage += executeMeleeAttack();
         } else if (mAttackType == AttackBuilder.AttackType.RANGED) {
-            damage += executeRangedAttack(attack);
+            damage += executeRangedAttack();
         } else if (mAttackType == AttackBuilder.AttackType.THROWN) {
-            damage += executeThrowAttack(attack);
+            damage += executeThrowAttack();
         }
 
         mDefender.takeDamage(damage);
@@ -87,9 +88,9 @@ public class BattleManager {
         return damage;
     }
 
-    private int executeRangedAttack(Attack attack) {
+    private int executeRangedAttack() {
         // Use ammunition
-        RangedWeapon weapon = (RangedWeapon) attack.getAttackingWeapon();
+        RangedWeapon weapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
         weapon.useAmmunition();
         // Ranged attack rolls should use dexterity modifier
         rollAttack();
@@ -101,10 +102,10 @@ public class BattleManager {
         return damage;
     }
 
-    private int executeThrowAttack(Attack attack) {
+    private int executeThrowAttack() {
         int damage = 0;
         // if attacking weapon is ranged
-        if (attack.getAttackingWeapon().hasWeaponProperty(WeaponProperties.RANGE)) {
+        if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
             rollAttack();
             if (mAttackSuccessful) {
                 damage += rollDamage();
