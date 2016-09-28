@@ -1,9 +1,17 @@
 package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollVersatile;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
+import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
  * Created by pgreen on 8/23/16.
@@ -45,6 +53,9 @@ public class AttackBuilder {
     private boolean mTwoHandedAttack = false;
     private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
+    private DamageRollBehavior mDamageRollBehavior;
+    private boolean mAdvantage = false;
+    private boolean mDisadvantage = false;
 
     protected enum AttackType {
         MELEE, RANGED, THROWN
@@ -120,6 +131,16 @@ public class AttackBuilder {
         return this;
     }
 
+    public AttackBuilder setAdvantage() {
+        mAdvantage = true;
+        return this;
+    }
+
+    public AttackBuilder setDisadvantage() {
+        mDisadvantage = true;
+        return this;
+    }
+
     /**
      * Checks to make sure built attack follows DnD rules then returns the Attack
      */
@@ -135,6 +156,8 @@ public class AttackBuilder {
         } else {
             throw new NullPointerException("Attack type not set");
         }
+
+        setDamageRollBehavior();
 
         return new Attack(this);
     }
@@ -176,6 +199,18 @@ public class AttackBuilder {
         return mAttackType;
     }
 
+    public DamageRollBehavior getDamageRollBehavior() {
+        return mDamageRollBehavior;
+    }
+
+    public boolean isAdvantage() {
+        return mAdvantage;
+    }
+
+    public boolean isDisadvantage() {
+        return mDisadvantage;
+    }
+
     ///////////////////////////////
     // ATTACK VALIDATION METHODS //
     ///////////////////////////////
@@ -193,12 +228,21 @@ public class AttackBuilder {
         if (mAttacker == null) {
             throw new NullPointerException("Must set AttackType: Melee, Ranged, or Thrown");
         }
+
+        // Set attack modifier if not already set
+        determineAttackModifierStat();
     }
 
     private void validateMeleeAttack() throws IllegalArgumentException{
         // Cannot use Ranged weapon as melee
-        if (mAttackingWeapon.hasWeaponProperty(WeaponProperties.RANGE)) {
-            throw new IllegalArgumentException("Cannot make melee attack with ranged weapon");
+        if (!(mAttackingWeapon instanceof MeleeWeapon)) {
+            throw new IllegalArgumentException("weapon making melee attack is not instance of MeleeWeapon");
+        }
+
+        MeleeWeapon meleeWeapon = SafeWeaponCaster.castToMeleeWeapon(mAttackingWeapon);
+        // Check that melee weapon is in range
+        if (!validateMeleeRange(meleeWeapon.getRange())) {
+            throw new IllegalArgumentException("Melee Attack is not within range");
         }
 
         // if using Dexterity and is not a Finesse Weapon (Modifier can only be set to Dex or Str)
@@ -223,6 +267,10 @@ public class AttackBuilder {
             throw new IllegalArgumentException("Cannot make ranged attack with melee weapon");
         }
 
+        // validate weapon is in range
+        RangedWeapon rangedWeapon = SafeWeaponCaster.castToRangedWeapon(mAttackingWeapon);
+        validateRange(rangedWeapon);
+
         // If using strength modifier and attacking weapon does not have Finesse property
         if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
             throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
@@ -233,10 +281,93 @@ public class AttackBuilder {
         if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
         }
+
+        // validate weapon is in range
+        Throwable throwableWeapon = SafeWeaponCaster.castToThrowable(mAttackingWeapon);
+        validateThrownRange(throwableWeapon);
+    }
+
+    private boolean validateMeleeRange(int range) {
+        return mPlayerDistance <= range;
+    }
+
+    /**
+     * Validates that Thrown weapon is in range. If the distance is greater than weapon's max range then IllegalArgumentException is thrown.
+     * If distance is greater than normal range or in close combat (5ft.) then mDisadvantage is set to true. mAttackingWeapon needs to be
+     * cast to a Throwable, but since this is dangerous verify that mAttackingWeapon is an instance of Throwable with SafeWeaponCaster.
+     * Because this is similar to validateRange(), refactoring should be done to limit code reuse.
+     *
+     * @param weapon weapon making attack
+     */
+    private void validateThrownRange(Throwable weapon) {
+        // throw exception if out of max range
+        if (mPlayerDistance > weapon.maxThrownRange()) {
+            throw new IllegalArgumentException("weapon out of range");
+        // set disadvantage if outside normal range or within melee range
+        } else if (mPlayerDistance > weapon.normalThrownRange() || mPlayerDistance == 5) {
+            mDisadvantage = true;
+        }
+    }
+
+    /**
+     * Validates that Ranged weapon is in range. If the distance is greater than weapon's max range then IllegalArgumentException is thrown.
+     * If distance is greater than normal range or in close combat (5ft.) then mDisadvantage is set to true. mAttackingWeapon needs to be
+     * cast to a RangedWeapon, but since this is dangerous verify that mAttackingWeapon is an instance of RangedWeapon with SafeWeaponCaster.
+     * because this is similar to validateThrownRange, refactoring should be done to limit code reuse.
+     *
+     * @param weapon weapon making attack
+     */
+    private void validateRange(RangedWeapon weapon) {
+        // throw exception if out of max range
+        if (mPlayerDistance > weapon.getMaxRange()) {
+            throw new IllegalArgumentException("weapon out of range");
+        // set disadvantage if outside normal range or within melee range
+        } else if (mPlayerDistance > weapon.getNormalRange() || mPlayerDistance == 5) {
+            mDisadvantage = true;
+        }
     }
 
     private boolean canUseTwoHanded() {
         return mAttackingWeapon.hasWeaponProperty(WeaponProperties.TWO_HANDED)
                 || mAttackingWeapon.hasWeaponProperty(WeaponProperties.VERSATILE);
     }
+
+    /**
+     * Responsible for setting the correct attack modifier stat if not set. If the attack is of the type MELEE
+     * then modifier will be set to Strength. If the attack is of the type RANGE then modifier will be set to Dexterity.
+     * If the attack is of the type Thrown then modifier will be set to Strength if AttackingWeapon is MeleeWeapon
+     * otherwise it will be set to Dexterity.
+     */
+    private void determineAttackModifierStat() {
+        if (mAttackModifierStat != null) {
+            return;
+        }
+
+        if (mAttackType == AttackType.MELEE) {
+            this.mAttackModifierStat = BaseStats.STRENGTH;
+
+        } else if (mAttackType == AttackType.RANGED) {
+            this.mAttackModifierStat = BaseStats.DEXTERITY;
+
+        } else {
+            if (mAttackingWeapon instanceof MeleeWeapon) {
+                this.mAttackModifierStat = BaseStats.STRENGTH;
+            } else {
+                this.mAttackModifierStat = BaseStats.DEXTERITY;
+            }
+        }
+
+    }
+
+    private void setDamageRollBehavior() {
+        // If this is a versatile weapon being used with two hands then use versatile damage roll
+        if (mTwoHandedAttack && (mAttackingWeapon instanceof Versatile)) {
+            Versatile versatileWeapon = SafeWeaponCaster.castToVersatile(mAttackingWeapon);
+            mDamageRollBehavior = new DamageRollVersatile(versatileWeapon);
+        // else use regular damage roll
+        } else {
+            mDamageRollBehavior = new DamageRollRegular(mAttackingWeapon);
+        }
+    }
+
 }

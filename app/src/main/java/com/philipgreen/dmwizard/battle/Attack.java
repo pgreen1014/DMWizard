@@ -1,6 +1,7 @@
 package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.PlayerCharacter;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
@@ -20,8 +21,11 @@ public class Attack {
     private boolean mTwoHandedAttack;
     private boolean mOffHandWeaponAttack;
     private AttackBuilder.AttackType mAttackType;
+    private DamageRollBehavior mDamageRollBehavior;
+    private boolean mAdvantage;
+    private boolean mDisadvantage;
 
-    protected Attack(AttackBuilder attackBuild) {
+    Attack(AttackBuilder attackBuild) {
         mAttackingWeapon = attackBuild.getAttackingWeapon();
         mDefender = attackBuild.getDefender();
         mAttacker = attackBuild.getAttacker();
@@ -30,21 +34,24 @@ public class Attack {
         mTwoHandedAttack = attackBuild.isTwoHandedAttack();
         mOffHandWeaponAttack = attackBuild.isOffHandWeaponAttack();
         mAttackType = attackBuild.getAttackType();
+        mDamageRollBehavior = attackBuild.getDamageRollBehavior();
+        mAdvantage = attackBuild.isAdvantage();
+        mDisadvantage = attackBuild.isDisadvantage();
     }
 
-    public BaseWeapon getAttackingWeapon() {
+    BaseWeapon getAttackingWeapon() {
         return mAttackingWeapon;
     }
 
-    public PlayerCharacter getDefender() {
+    PlayerCharacter getDefender() {
         return mDefender;
     }
 
-    public PlayerCharacter getAttacker() {
+    PlayerCharacter getAttacker() {
         return mAttacker;
     }
 
-    public BaseStats getAttackModifierStat() {
+    BaseStats getAttackModifierStat() {
         return mAttackModifierStat;
     }
 
@@ -60,8 +67,16 @@ public class Attack {
         return mOffHandWeaponAttack;
     }
 
-    public AttackBuilder.AttackType getAttackType() {
+    AttackBuilder.AttackType getAttackType() {
         return mAttackType;
+    }
+
+    boolean isAdvantage() {
+        return mAdvantage;
+    }
+
+    boolean isDisadvantage() {
+        return mDisadvantage;
     }
 
     public String toString() {
@@ -73,5 +88,9 @@ public class Attack {
                 + " Attack Type: " + mAttackType.toString() + "\n"
                 + " Attacking Player: " + "\n" + mAttacker.toString() + "\n\n"
                 + " Defending Player: " + "\n" + mDefender.toString();
+    }
+
+    int rollDamage() {
+        return mDamageRollBehavior.rollDamage();
     }
 }
