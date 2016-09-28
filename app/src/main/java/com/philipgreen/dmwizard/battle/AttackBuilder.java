@@ -91,13 +91,13 @@ public class AttackBuilder {
         return this;
     }
 
-    // Only necessary for weapons with WeaponProperties.Finesse
-    public AttackBuilder setAttackModifierStat(BaseStats attackModifier) throws IllegalArgumentException {
-        if (attackModifier == BaseStats.STRENGTH || attackModifier == BaseStats.DEXTERITY) {
-            this.mAttackModifierStat = attackModifier;
-        } else {
-            throw new IllegalArgumentException("Attack Modifier can only be of the type BaseStats.Strength or BaseStats.Dexterity");
-        }
+    public AttackBuilder setAttackModifierStrength() {
+        this.mAttackModifierStat = BaseStats.STRENGTH;
+        return this;
+    }
+
+    public AttackBuilder setAttackModifierDexterity() {
+        this.mAttackModifierStat = BaseStats.DEXTERITY;
         return this;
     }
 
