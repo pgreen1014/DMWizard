@@ -20,6 +20,8 @@ public class BattleManager {
     private PlayerCharacter mAttacker;
     private BaseStats mAttackModifierStat;
 
+    private boolean mLastExecutedAttackHit;
+
     public BattleManager(Attack attack) {
         setAttack(attack);
     }
@@ -55,12 +57,12 @@ public class BattleManager {
      */
     private boolean rollAttack() {
         if (mAttack.isDisadvantage()) {
-            return rollDisadvantage() >= mDefender.getArmorClass();
+            return mLastExecutedAttackHit = rollDisadvantage() >= mDefender.getArmorClass();
         } else if(mAttack.isAdvantage()) {
-            return rollAdvantage() >= mDefender.getArmorClass();
+            return mLastExecutedAttackHit = rollAdvantage() >= mDefender.getArmorClass();
         } else {
             int attackRoll = mAttacker.attackRoll() + mAttacker.getAbilityModifier(mAttackModifierStat);
-            return attackRoll >= mDefender.getArmorClass();
+            return mLastExecutedAttackHit = attackRoll >= mDefender.getArmorClass();
         }
     }
 
@@ -84,6 +86,10 @@ public class BattleManager {
         } else {
             return attackRoll2;
         }
+    }
+
+    public boolean isLastExecutedAttackHit() {
+        return mLastExecutedAttackHit;
     }
 
 }
