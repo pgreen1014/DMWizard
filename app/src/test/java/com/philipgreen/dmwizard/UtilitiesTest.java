@@ -17,7 +17,7 @@ public class UtilitiesTest {
     public void rollDieTest() throws Exception {
         for(int i = 0; i <= 99; i++) {
             int rollResult = Dice.rollDie(20);
-            assertTrue(rollResult >= 0 && rollResult <= 20);
+            assertTrue(rollResult >= 1 && rollResult <= 20);
         }
     }
 
@@ -27,7 +27,7 @@ public class UtilitiesTest {
     public void rollDiceTest() throws Exception {
         for(int i = 0; i <= 99; i++) {
             int rollResult = Dice.rollDice(2, 6);
-            assertTrue(rollResult >= 0 && rollResult <= 12);
+            assertTrue(rollResult >= 1 && rollResult <= 12);
         }
     }
 
