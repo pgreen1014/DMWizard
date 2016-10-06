@@ -67,7 +67,7 @@ public class Attack {
         return mOffHandWeaponAttack;
     }
 
-    AttackBuilder.AttackType getAttackType() {
+    public AttackBuilder.AttackType getAttackType() {
         return mAttackType;
     }
 
@@ -77,6 +77,10 @@ public class Attack {
 
     boolean isDisadvantage() {
         return mDisadvantage;
+    }
+
+    public DamageRollBehavior getDamageRollBehavior() {
+        return mDamageRollBehavior;
     }
 
     public String toString() {

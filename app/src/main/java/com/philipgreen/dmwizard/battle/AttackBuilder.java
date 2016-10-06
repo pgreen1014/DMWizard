@@ -61,6 +61,18 @@ public class AttackBuilder {
         MELEE, RANGED, THROWN
     }
 
+    public static AttackType getAttackTypeMelee() {
+        return AttackType.MELEE;
+    }
+
+    public static AttackType getAttackTypeRanged() {
+        return AttackType.RANGED;
+    }
+
+    public static AttackType getAttackTypeThrown() {
+        return AttackType.THROWN;
+    }
+
     public AttackBuilder() {
 
     }
