@@ -3,6 +3,8 @@ package com.philipgreen.dmwizard;
 import com.philipgreen.dmwizard.battle.Attack;
 import com.philipgreen.dmwizard.battle.AttackBuilder;
 import com.philipgreen.dmwizard.battle.BattleManager;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
@@ -41,6 +43,8 @@ public class BattleTest {
     @Test
     public void testMeleeDaggerAttack() {
         int defenderStartingHealth = mDefendingCharacter.getHitPoints();
+        // verify dagger is using melee attack
+        assertTrue(mDaggerAttack.getAttackType() == AttackBuilder.getAttackTypeMelee());
 
         BattleManager bm = new BattleManager(mDaggerAttack);
         bm.executeAttack();
