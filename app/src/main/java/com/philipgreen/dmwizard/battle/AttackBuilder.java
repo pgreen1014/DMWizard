@@ -287,11 +287,17 @@ public class AttackBuilder {
         if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
             throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
         }
+
+        //TODO consider how to handled two handed since ranged weapons require two hands
     }
 
     private void validateThrownAttack() throws IllegalArgumentException {
         if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
+        }
+
+        if (isTwoHandedAttack()) {
+            throw new IllegalArgumentException("Cannot make two handed attack with weapon being thrown");
         }
 
         // validate weapon is in range
