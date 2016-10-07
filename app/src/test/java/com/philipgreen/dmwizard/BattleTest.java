@@ -3,8 +3,6 @@ package com.philipgreen.dmwizard;
 import com.philipgreen.dmwizard.battle.Attack;
 import com.philipgreen.dmwizard.battle.AttackBuilder;
 import com.philipgreen.dmwizard.battle.BattleManager;
-import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
-import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
@@ -21,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class BattleTest {
     private PlayerCharacter mAttackingCharacter;
     private PlayerCharacter mDefendingCharacter;
-    private Attack mDaggerAttack;
+    private Attack mDaggerMeleeAttack;
 
     @Before
     public void initialize() {
@@ -32,7 +30,7 @@ public class BattleTest {
         Dagger dagger = new Dagger();
 
         AttackBuilder attackBuilder = new AttackBuilder();
-        mDaggerAttack = attackBuilder
+        mDaggerMeleeAttack = attackBuilder
                 .setAttacker(mAttackingCharacter)
                 .setDefender(mDefendingCharacter)
                 .setAttackingWeapon(dagger)
@@ -44,9 +42,9 @@ public class BattleTest {
     public void testMeleeDaggerAttack() {
         int defenderStartingHealth = mDefendingCharacter.getHitPoints();
         // verify dagger is using melee attack
-        assertTrue(mDaggerAttack.getAttackType() == AttackBuilder.getAttackTypeMelee());
+        assertTrue(mDaggerMeleeAttack.getAttackType() == AttackBuilder.getAttackTypeMelee());
 
-        BattleManager bm = new BattleManager(mDaggerAttack);
+        BattleManager bm = new BattleManager(mDaggerMeleeAttack);
         bm.executeAttack();
 
         if (bm.isLastExecutedAttackHit()) {
