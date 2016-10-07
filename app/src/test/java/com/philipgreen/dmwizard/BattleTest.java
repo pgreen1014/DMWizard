@@ -9,6 +9,7 @@ import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
@@ -19,7 +20,9 @@ import static org.junit.Assert.assertTrue;
 public class BattleTest {
     private PlayerCharacter mAttackingCharacter;
     private PlayerCharacter mDefendingCharacter;
+    private int mDefenderStartingHealth;
     private Attack mDaggerMeleeAttack;
+    private Attack mDaggerThrownAttack;
 
     @Before
     public void initialize() {
@@ -27,6 +30,7 @@ public class BattleTest {
         Dwarf dwarf = new Dwarf();
         mAttackingCharacter = new PlayerCharacter(barb, dwarf, 18, 15, 16, 13, 12, 14);
         mDefendingCharacter = new PlayerCharacter(barb, dwarf, 18, 15, 14, 12, 14, 18);
+        mDefenderStartingHealth = mDefendingCharacter.getHitPoints();
         Dagger dagger = new Dagger();
 
         AttackBuilder attackBuilder = new AttackBuilder();
@@ -36,11 +40,17 @@ public class BattleTest {
                 .setAttackingWeapon(dagger)
                 .setMeleeAttack()
                 .build();
+
+        mDaggerThrownAttack = attackBuilder
+                .setAttacker(mAttackingCharacter)
+                .setDefender(mDefendingCharacter)
+                .setAttackingWeapon(dagger)
+                .setThrownAttack()
+                .build();
     }
 
     @Test
     public void testMeleeDaggerAttack() {
-        int defenderStartingHealth = mDefendingCharacter.getHitPoints();
         // verify dagger is using melee attack
         assertTrue(mDaggerMeleeAttack.getAttackType() == AttackBuilder.getAttackTypeMelee());
 
@@ -49,10 +59,24 @@ public class BattleTest {
 
         if (bm.isLastExecutedAttackHit()) {
             // If attack hit, defender should have less hit points than before attack
-            assertTrue(mDefendingCharacter.getHitPoints() < defenderStartingHealth);
+            assertTrue(mDefendingCharacter.getHitPoints() < mDefenderStartingHealth);
         } else {
             // If attack missed, defender should have the same hit points as before attack
-            assertTrue(mDefendingCharacter.getHitPoints() == defenderStartingHealth);
+            assertTrue(mDefendingCharacter.getHitPoints() == mDefenderStartingHealth);
+        }
+    }
+
+    @Test
+    public void testThrownDaggerAttack() {
+        assertTrue(mDaggerThrownAttack.getAttackType() == AttackBuilder.getAttackTypeThrown());
+
+        BattleManager bm = new BattleManager(mDaggerThrownAttack);
+        bm.executeAttack();
+
+        if (bm.isLastExecutedAttackHit()) {
+            assertTrue(mDefendingCharacter.getHitPoints() < mDefenderStartingHealth);
+        } else {
+            assertTrue(mDefendingCharacter.getHitPoints() == mDefenderStartingHealth);
         }
     }
 }
