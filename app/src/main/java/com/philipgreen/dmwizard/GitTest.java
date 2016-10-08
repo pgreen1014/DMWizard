@@ -5,4 +5,5 @@ package com.philipgreen.dmwizard;
  */
 
 public class GitTest {
+    // adding some code
 }
