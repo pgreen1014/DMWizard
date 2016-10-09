@@ -101,7 +101,7 @@ public class AttackBuilderTest {
                 .setDefender(mDefender)
                 .setAttackingWeapon(new Dagger())
                 .setMeleeAttack();
-        
+
         mAttackBuilder.setPlayerDistance(5);
         assertTrue("melee attack should hit at 5 ft distance", testBuild(mAttackBuilder));
 
@@ -151,12 +151,15 @@ public class AttackBuilderTest {
         assertTrue("Melee dagger attack should pass", testBuild(mAttackBuilder));
 
         // test thrown attack
-        mAttackBuilder.setThrownAttack();
+        mAttackBuilder
+                .setThrownAttack()
+                .setPlayerDistance(15);
         assertTrue("Thrown dagger attack should pass", testBuild(mAttackBuilder));
 
         // Test two handed attacks
         mAttackBuilder
                 .setMeleeAttack()
+                .setPlayerDistance(5)
                 .setTwoHandedAttack();
         assertFalse("Cannot use dagger as melee && two handed", testBuild(mAttackBuilder));
         mAttackBuilder
