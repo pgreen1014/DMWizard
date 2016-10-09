@@ -100,9 +100,9 @@ public class AttackBuilderTest {
                 .setAttacker(mAttacker)
                 .setDefender(mDefender)
                 .setAttackingWeapon(new Dagger())
-                .setMeleeAttack()
-                .setPlayerDistance(5);
-
+                .setMeleeAttack();
+        
+        mAttackBuilder.setPlayerDistance(5);
         assertTrue("melee attack should hit at 5 ft distance", testBuild(mAttackBuilder));
 
         mAttackBuilder.setPlayerDistance(15);
@@ -118,8 +118,11 @@ public class AttackBuilderTest {
                 .setAttacker(mAttacker)
                 .setDefender(mDefender)
                 .setAttackingWeapon(new Dagger())
-                .setThrownAttack()
-                .setPlayerDistance(20);
+                .setThrownAttack();
+
+        assertFalse("distance must be set for thrown attack", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(20);
 
         assertTrue("thrown dagger should hit at 20 foot range", testBuild(mAttackBuilder));
 
