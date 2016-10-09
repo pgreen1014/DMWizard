@@ -123,6 +123,11 @@ public class AttackBuilder {
         return this;
     }
 
+    public AttackBuilder setTwoHandedAttack(boolean bool) {
+        mTwoHandedAttack = false;
+        return this;
+    }
+
     public AttackBuilder setOffHandWeaponAttack() {
         mOffHandWeaponAttack = true;
         return this;
