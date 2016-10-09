@@ -109,6 +109,15 @@ public class AttackBuilderTest {
                 .setThrownAttack()
                 .setTwoHandedAttack();
         assertFalse("Cannot use dagger as Thrown && two handed", testBuild(mAttackBuilder));
+
+        mAttackBuilder
+                .setMeleeAttack()
+                .setTwoHandedAttack(false)
+                .setAttackModifierStrength();
+        assertTrue("dagger is finesse weapon and can use strength", testBuild(mAttackBuilder));
+        mAttackBuilder
+                .setAttackModifierDexterity();
+        assertTrue("dagger is finesse weapon and can use dexterity", testBuild(mAttackBuilder));
     }
 
     private boolean testBuild(AttackBuilder builder) {
