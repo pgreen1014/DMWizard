@@ -83,6 +83,57 @@ public class AttackBuilderTest {
     }
 
     @Test
+    public void testUsingNonRangedWeaponAsRanged() {
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setAttackingWeapon(new Dagger())
+                .setRangedAttack()
+                .setPlayerDistance(20);
+
+        assertFalse("cannot use dagger as ranged weapon", testBuild(mAttackBuilder));
+    }
+
+    @Test
+    public void testMeleeDistance() {
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setAttackingWeapon(new Dagger())
+                .setMeleeAttack()
+                .setPlayerDistance(5);
+
+        assertTrue("melee attack should hit at 5 ft distance", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(15);
+        assertFalse("melee attack should not work at 15 ft distance", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(10);
+        assertFalse("melee attack should not work at 10 ft distance unless reach weapon", testBuild(mAttackBuilder));
+    }
+
+    @Test
+    public void testThrownDistance() {
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setAttackingWeapon(new Dagger())
+                .setThrownAttack()
+                .setPlayerDistance(20);
+
+        assertTrue("thrown dagger should hit at 20 foot range", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(60);
+        assertTrue("thrown dagger should hit with disadvantage at 60 ft range", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(65);
+        assertFalse("thrown dagger should not work at 65 ft range", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(5);
+        assertTrue("thrown dagger should work at disadvantage at close range", testBuild(mAttackBuilder));
+    }
+
+    @Test
     public void daggerTest() {
         Dagger dagger = new Dagger();
 
