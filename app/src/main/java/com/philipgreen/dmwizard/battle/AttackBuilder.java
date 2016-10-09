@@ -296,9 +296,13 @@ public class AttackBuilder {
         //TODO consider how to handled two handed since ranged weapons require two hands
     }
 
-    private void validateThrownAttack() throws IllegalArgumentException {
+    private void validateThrownAttack() throws IllegalArgumentException, NullPointerException {
         if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
+        }
+
+        if (mPlayerDistance == 0) {
+            throw new NullPointerException("Thrown attack require player distance to be set");
         }
 
         if (isTwoHandedAttack()) {
