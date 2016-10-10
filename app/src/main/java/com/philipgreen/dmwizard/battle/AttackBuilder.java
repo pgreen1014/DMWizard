@@ -24,6 +24,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
  * .setAttacker(PlayerCharacter arg)
  * .setDefender(PlayerCharacter arg)
  * .setAttackingWeapon(BaseWeapon arg)
+ * .setPlayerDistance(int distance)
  * and one of the following .setMeleeAttack(), . setRangedAttack(), or setThrownAttack();
  *
  * Any additional build methods must follow the rules of DnD, for example using a Great Axe as an off-hand weapon attack
@@ -39,6 +40,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
  *          .setDefender(defendingPlayerCharacter)
  *          .setAttackingWeapon(dagger)
  *          .setThrownAttack()
+ *          .setPlayerDistance(5)
  *          .build()
  */
 
