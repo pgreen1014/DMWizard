@@ -315,7 +315,13 @@ public class AttackBuilder {
     }
 
     private boolean validateMeleeRange(int range) {
-        return mPlayerDistance <= range;
+        if (mPlayerDistance == 0) {
+            return false;
+        }
+        else {
+            return mPlayerDistance <= range;
+        }
+
     }
 
     /**
