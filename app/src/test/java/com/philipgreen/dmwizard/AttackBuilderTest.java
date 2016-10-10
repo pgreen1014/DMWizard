@@ -37,7 +37,8 @@ public class AttackBuilderTest {
             .setMeleeAttack()
             .setAttackingWeapon(new Dagger())
             .setAttacker(mAttacker)
-            .setDefender(mDefender);
+            .setDefender(mDefender)
+            .setPlayerDistance(5);
 
         assertTrue(testBuild(mAttackBuilder));
     }
@@ -147,7 +148,9 @@ public class AttackBuilderTest {
                 .setAttackingWeapon(dagger);
 
         // test melee attack
-        mAttackBuilder.setMeleeAttack();
+        mAttackBuilder
+                .setMeleeAttack()
+                .setPlayerDistance(5);
         assertTrue("Melee dagger attack should pass", testBuild(mAttackBuilder));
 
         // test thrown attack

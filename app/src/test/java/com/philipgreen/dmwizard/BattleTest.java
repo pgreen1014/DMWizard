@@ -39,6 +39,7 @@ public class BattleTest {
                 .setDefender(mDefendingCharacter)
                 .setAttackingWeapon(dagger)
                 .setMeleeAttack()
+                .setPlayerDistance(5)
                 .build();
 
         mDaggerThrownAttack = attackBuilder
