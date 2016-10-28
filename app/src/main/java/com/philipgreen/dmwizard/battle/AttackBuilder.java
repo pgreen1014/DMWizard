@@ -59,7 +59,7 @@ public class AttackBuilder {
     private AdvantageState mAdvantageState;
 
     private enum AdvantageState {
-        NONE, ADVATANGE, DISADVANTAGE
+        NONE, ADVANTAGE, DISADVANTAGE
     }
 
     enum AttackType {
@@ -150,7 +150,7 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setAdvantage() {
-        mAdvantageState = AdvantageState.ADVATANGE;
+        mAdvantageState = AdvantageState.ADVANTAGE;
         return this;
     }
 
@@ -227,7 +227,7 @@ public class AttackBuilder {
     }
 
     boolean isAdvantage() {
-        return mAdvantageState == AdvantageState.ADVATANGE;
+        return mAdvantageState == AdvantageState.ADVANTAGE;
     }
 
     public boolean isDisadvantage() {
