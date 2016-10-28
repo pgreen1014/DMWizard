@@ -56,10 +56,13 @@ public class AttackBuilder {
     private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
     private DamageRollBehavior mDamageRollBehavior;
-    private boolean mAdvantage = false;
-    private boolean mDisadvantage = false;
+    private AdvantageState mAdvantageState;
 
-    protected enum AttackType {
+    private enum AdvantageState {
+        NONE, ADVATANGE, DISADVANTAGE
+    }
+
+    enum AttackType {
         MELEE, RANGED, THROWN
     }
 
@@ -73,10 +76,6 @@ public class AttackBuilder {
 
     public static AttackType getAttackTypeThrown() {
         return AttackType.THROWN;
-    }
-
-    public AttackBuilder() {
-
     }
 
     public String toString() {
@@ -151,12 +150,17 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setAdvantage() {
-        mAdvantage = true;
+        mAdvantageState = AdvantageState.ADVATANGE;
         return this;
     }
 
     public AttackBuilder setDisadvantage() {
-        mDisadvantage = true;
+        mAdvantageState = AdvantageState.DISADVANTAGE;
+        return this;
+    }
+
+    public AttackBuilder clearAdvantageState() {
+        mAdvantageState = AdvantageState.NONE;
         return this;
     }
 
@@ -186,48 +190,48 @@ public class AttackBuilder {
     ///////////////
 
 
-    public BaseWeapon getAttackingWeapon() {
+    BaseWeapon getAttackingWeapon() {
         return mAttackingWeapon;
     }
 
-    public PlayerCharacter getDefender() {
+    PlayerCharacter getDefender() {
         return mDefender;
     }
 
-    public PlayerCharacter getAttacker() {
+    PlayerCharacter getAttacker() {
         return mAttacker;
     }
 
-    public BaseStats getAttackModifierStat() {
+    BaseStats getAttackModifierStat() {
         return mAttackModifierStat;
     }
 
-    public int getPlayerDistance() {
+    int getPlayerDistance() {
         return mPlayerDistance;
     }
 
-    public boolean isTwoHandedAttack() {
+    boolean isTwoHandedAttack() {
         return mTwoHandedAttack;
     }
 
-    public boolean isOffHandWeaponAttack() {
+    boolean isOffHandWeaponAttack() {
         return mOffHandWeaponAttack;
     }
 
-    public AttackType getAttackType() {
+    AttackType getAttackType() {
         return mAttackType;
     }
 
-    public DamageRollBehavior getDamageRollBehavior() {
+    DamageRollBehavior getDamageRollBehavior() {
         return mDamageRollBehavior;
     }
 
-    public boolean isAdvantage() {
-        return mAdvantage;
+    boolean isAdvantage() {
+        return mAdvantageState == AdvantageState.ADVATANGE;
     }
 
     public boolean isDisadvantage() {
-        return mDisadvantage;
+        return mAdvantageState == AdvantageState.DISADVANTAGE;
     }
 
     ///////////////////////////////
@@ -340,7 +344,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("weapon out of range");
         // set disadvantage if outside normal range or within melee range
         } else if (mPlayerDistance > weapon.normalThrownRange() || mPlayerDistance == 5) {
-            mDisadvantage = true;
+            setDisadvantage();
         }
     }
 
@@ -358,7 +362,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("weapon out of range");
         // set disadvantage if outside normal range or within melee range
         } else if (mPlayerDistance > weapon.getNormalRange() || mPlayerDistance == 5) {
-            mDisadvantage = true;
+            setDisadvantage();
         }
     }
 
