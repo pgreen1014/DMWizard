@@ -5,6 +5,7 @@ import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
+import com.philipgreen.dmwizard.weapons.ShortBow;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -178,6 +179,42 @@ public class AttackBuilderTest {
         mAttackBuilder
                 .setAttackModifierDexterity();
         assertTrue("dagger is finesse weapon and can use dexterity", testBuild(mAttackBuilder));
+    }
+
+    @Test
+    public void shortBowTest() {
+        ShortBow shortBow = new ShortBow();
+
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setAttackingWeapon(shortBow);
+
+        // test ranged attack
+        mAttackBuilder
+                .setRangedAttack()
+                .setPlayerDistance(60);
+        assertTrue(testBuild(mAttackBuilder));
+
+        // test melee ranged attack
+        mAttackBuilder
+                .setPlayerDistance(5);
+        assertTrue("Ranged weapons at melee distance should build", testBuild(mAttackBuilder));
+        assertTrue("Ranged weapons at melee distance should build with disadvantage", mAttackBuilder.isDisadvantage());
+
+        // test setting clearing advantage/disadvantage
+        mAttackBuilder
+                .clearAdvantageState();
+        assertFalse(mAttackBuilder.isDisadvantage());
+
+        mAttackBuilder
+                .setPlayerDistance(90);
+        assertTrue("Ranged weapon should build when distance less than max range", testBuild(mAttackBuilder));
+        assertTrue("Ranged weapon fired between normal range and max range should have disadvantage", mAttackBuilder.isDisadvantage());
+
+        mAttackBuilder
+                .setPlayerDistance(325);
+        assertFalse("Ranged weapon above max distance should fail", testBuild(mAttackBuilder));
     }
 
     private boolean testBuild(AttackBuilder builder) {
