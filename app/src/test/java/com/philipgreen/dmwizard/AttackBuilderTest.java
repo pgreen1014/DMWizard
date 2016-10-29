@@ -1,6 +1,8 @@
 package com.philipgreen.dmwizard;
 
+import com.philipgreen.dmwizard.battle.Attack;
 import com.philipgreen.dmwizard.battle.AttackBuilder;
+import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
@@ -21,6 +23,7 @@ public class AttackBuilderTest {
     private PlayerCharacter mAttacker;
     private PlayerCharacter mDefender;
     private AttackBuilder mAttackBuilder;
+    private Attack mAttack;
 
     @Before
     public void initialize() {
@@ -31,6 +34,8 @@ public class AttackBuilderTest {
         mAttacker = new PlayerCharacter(barb, dwarf, 18, 15, 16, 13, 12, 14);
         mDefender = new PlayerCharacter(barb, dwarf, 18, 15, 14, 12, 14, 18);
     }
+
+    //// TODO: 10/28/16 add test for Heavy weapons when small race is complete
 
     @Test
     public void basicBuildTest() {
@@ -139,6 +144,65 @@ public class AttackBuilderTest {
     }
 
     @Test
+    public void testFinesseWeapon() {
+        // test strength modifier
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setMeleeAttack()
+                .setPlayerDistance(5)
+                .setAttackingWeapon(new Dagger())
+                .setMeleeAttack()
+                .setAttackModifierStrength();
+        assertTrue("finesse weapon should be able to use strength as modifier", testBuild(mAttackBuilder));
+        assertTrue(mAttack.getAttackModifierStat() == BaseStats.STRENGTH);
+
+        // test dex modifier with same weapon
+        mAttackBuilder.setAttackModifierDexterity();
+        assertTrue("finesse weapon should be able to use dexterity as modifier", testBuild(mAttackBuilder));
+        assertTrue(mAttack.getAttackModifierStat() == BaseStats.DEXTERITY);
+    }
+
+    @Test
+    public void testRange() {
+        // test normal range
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setRangedAttack()
+                .setAttackingWeapon(new ShortBow())
+                .setPlayerDistance(80);
+        assertTrue(testBuild(mAttackBuilder));
+        assertFalse("weapon within normal range should not have disadvantage",mAttack.isDisadvantage());
+        assertFalse("weapon within normal range should not have advantage", mAttack.isAdvantage());
+
+        mAttackBuilder.setPlayerDistance(75);
+        assertTrue(testBuild(mAttackBuilder));
+        assertFalse("weapon within normal range should not have disadvantage",mAttack.isDisadvantage());
+        assertFalse("weapon within normal range should not have advantage", mAttack.isAdvantage());
+
+        // test within melee range
+        mAttackBuilder.setPlayerDistance(5);
+        assertTrue(testBuild(mAttackBuilder));
+        assertTrue("ranged weapon within melee range should have disadvantage",mAttack.isDisadvantage());
+        assertFalse("ranged weapon within melee range should not have advantage", mAttack.isAdvantage());
+
+        // test long range
+        mAttackBuilder.setPlayerDistance(85);
+        assertTrue(testBuild(mAttackBuilder));
+        assertTrue("ranged weapon within long range should have disadvantage",mAttack.isDisadvantage());
+        assertFalse("ranged weapon within long range should not have advantage", mAttack.isAdvantage());
+
+        mAttackBuilder.setPlayerDistance(320);
+        assertTrue(testBuild(mAttackBuilder));
+        assertTrue("ranged weapon within long range should have disadvantage",mAttack.isDisadvantage());
+        assertFalse("ranged weapon within long range should not have advantage", mAttack.isAdvantage());
+
+        mAttackBuilder.setPlayerDistance(325);
+        assertFalse("ranged weapon outside long range should fail", testBuild(mAttackBuilder));
+    }
+
+    @Test
     public void daggerTest() {
         Dagger dagger = new Dagger();
 
@@ -221,7 +285,7 @@ public class AttackBuilderTest {
         boolean buildSuccess = true;
 
         try {
-            builder.build();
+            mAttack = builder.build();
         } catch (IllegalArgumentException | NullPointerException e) {
             buildSuccess = false;
         }
