@@ -9,7 +9,9 @@ import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
+import com.philipgreen.dmwizard.weapons.Dart;
 import com.philipgreen.dmwizard.weapons.Glaive;
+import com.philipgreen.dmwizard.weapons.LightHammer;
 import com.philipgreen.dmwizard.weapons.Quarterstaff;
 import com.philipgreen.dmwizard.weapons.ShortBow;
 
@@ -250,6 +252,53 @@ public class AttackBuilderTest {
         mAttackBuilder.setTwoHandedAttack();
         assertTrue(testBuild(mAttackBuilder));
         assertTrue(mAttack.getDamageRollBehavior() instanceof DamageRollVersatile);
+    }
+
+    @Test
+    public void testThrownAttack() {
+        // test normal range
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setAttackingWeapon(new LightHammer())
+                .setThrownAttack()
+                .setPlayerDistance(20);
+        assertTrue(testBuild(mAttackBuilder));
+        assertFalse(mAttack.isAdvantage());
+        assertFalse(mAttack.isDisadvantage());
+        assertTrue("thrown attack modifier should be the same as its regular attack", mAttack.getAttackModifierStat() == BaseStats.STRENGTH);
+
+        // Test long range
+        mAttackBuilder.setPlayerDistance(25);
+        assertTrue(testBuild(mAttackBuilder));
+        assertFalse(mAttack.isAdvantage());
+        assertTrue("thrown attack in long range should have disadvantage", mAttack.isDisadvantage());
+
+        mAttackBuilder.setPlayerDistance(60);
+        assertTrue(testBuild(mAttackBuilder));
+        assertFalse(mAttack.isAdvantage());
+        assertTrue("thrown attack in long range should have disadvantage", mAttack.isDisadvantage());
+
+        // Test melee range
+        mAttackBuilder.setPlayerDistance(5);
+        assertTrue(testBuild(mAttackBuilder));
+        assertFalse(mAttack.isAdvantage());
+        assertTrue("thrown attack in melee range should have disadvantage", mAttack.isDisadvantage());
+
+        // Test out of range
+        mAttackBuilder.setPlayerDistance(65);
+        assertFalse("thrown attack out of range should not build", testBuild(mAttackBuilder));
+
+        // Test attack modifier with non-melee throwable which should be Dexterity
+        AttackBuilder builder = new AttackBuilder();
+        builder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setAttackingWeapon(new Dart())
+                .setThrownAttack()
+                .setPlayerDistance(20);
+        assertTrue(testBuild(builder));
+        assertTrue("thrown attack modifier should be the same as its regular attack", mAttack.getAttackModifierStat() == BaseStats.DEXTERITY);
     }
 
     @Test
