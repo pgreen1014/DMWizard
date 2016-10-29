@@ -33,12 +33,12 @@ public class LightHammer extends MeleeWeapon implements Light, Throwable{
 
     @Override
     public int maxThrownRange() {
-        return 20;
+        return 60;
     }
 
     @Override
     public int normalThrownRange() {
-        return 60;
+        return 20;
     }
 
     @Override
