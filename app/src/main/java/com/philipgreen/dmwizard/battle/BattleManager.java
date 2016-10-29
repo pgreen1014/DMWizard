@@ -1,6 +1,6 @@
 package com.philipgreen.dmwizard.battle;
 
-import com.philipgreen.dmwizard.PlayerCharacter;
+import com.philipgreen.dmwizard.player.PlayerCharacter;
 import com.philipgreen.dmwizard.data.BaseStats;
 
 /**

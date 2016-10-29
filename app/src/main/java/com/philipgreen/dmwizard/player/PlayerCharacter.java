@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard;
+package com.philipgreen.dmwizard.player;
 
 import android.util.Log;
 
