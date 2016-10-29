@@ -10,7 +10,9 @@ import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Heavy;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.TwoHanded;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
@@ -181,7 +183,7 @@ public class AttackBuilder {
         }
 
         setDamageRollBehavior();
-
+        validatePropertyBasedFieldsSet();
         return new Attack(this);
     }
 
@@ -328,6 +330,13 @@ public class AttackBuilder {
             return mPlayerDistance <= range;
         }
 
+    }
+
+    private void validatePropertyBasedFieldsSet() {
+        // Make sure TwoHanded weapon is set to two handed
+        if (mAttackingWeapon instanceof TwoHanded) {
+            mTwoHandedAttack = true;
+        }
     }
 
     /**
