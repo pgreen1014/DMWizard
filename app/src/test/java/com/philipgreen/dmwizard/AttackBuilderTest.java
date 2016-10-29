@@ -2,12 +2,15 @@ package com.philipgreen.dmwizard;
 
 import com.philipgreen.dmwizard.battle.Attack;
 import com.philipgreen.dmwizard.battle.AttackBuilder;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
+import com.philipgreen.dmwizard.battle.damageRolls.DamageRollVersatile;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
 import com.philipgreen.dmwizard.weapons.Glaive;
+import com.philipgreen.dmwizard.weapons.Quarterstaff;
 import com.philipgreen.dmwizard.weapons.ShortBow;
 
 import org.junit.Before;
@@ -231,6 +234,22 @@ public class AttackBuilderTest {
         assertTrue(testBuild(mAttackBuilder));
         assertTrue(mAttack.isTwoHandedAttack());
         //// TODO: 10/29/16 test that off hand weapon can't be set when two-handed weapon code is complete
+    }
+
+    @Test
+    public void testVersatileWeapon() {
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setMeleeAttack()
+                .setAttackingWeapon(new Quarterstaff())
+                .setPlayerDistance(5);
+        assertTrue(testBuild(mAttackBuilder));
+        assertTrue(mAttack.getDamageRollBehavior() instanceof DamageRollRegular);
+
+        mAttackBuilder.setTwoHandedAttack();
+        assertTrue(testBuild(mAttackBuilder));
+        assertTrue(mAttack.getDamageRollBehavior() instanceof DamageRollVersatile);
     }
 
     @Test
