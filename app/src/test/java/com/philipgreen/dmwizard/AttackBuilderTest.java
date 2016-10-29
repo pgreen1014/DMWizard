@@ -7,6 +7,7 @@ import com.philipgreen.dmwizard.data.Skills;
 import com.philipgreen.dmwizard.playerClasses.Barbarian;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.weapons.Dagger;
+import com.philipgreen.dmwizard.weapons.Glaive;
 import com.philipgreen.dmwizard.weapons.ShortBow;
 
 import org.junit.Before;
@@ -200,6 +201,23 @@ public class AttackBuilderTest {
 
         mAttackBuilder.setPlayerDistance(325);
         assertFalse("ranged weapon outside long range should fail", testBuild(mAttackBuilder));
+    }
+
+    @Test
+    public void testReachWeapon() {
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setMeleeAttack()
+                .setAttackingWeapon(new Glaive())
+                .setPlayerDistance(10);
+        assertTrue("Reach weapon should be able to hit within 10 feet", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(5);
+        assertTrue("Reach weapon should be able to hit within 5 feet", testBuild(mAttackBuilder));
+
+        mAttackBuilder.setPlayerDistance(15);
+        assertFalse("Reach weapon should not be able to hit above 10 feet range", testBuild(mAttackBuilder));
     }
 
     @Test
