@@ -51,7 +51,7 @@ public class Attack {
         return mAttacker;
     }
 
-    BaseStats getAttackModifierStat() {
+    public BaseStats getAttackModifierStat() {
         return mAttackModifierStat;
     }
 
@@ -71,11 +71,11 @@ public class Attack {
         return mAttackType;
     }
 
-    boolean isAdvantage() {
+    public boolean isAdvantage() {
         return mAdvantage;
     }
 
-    boolean isDisadvantage() {
+    public boolean isDisadvantage() {
         return mDisadvantage;
     }
 
