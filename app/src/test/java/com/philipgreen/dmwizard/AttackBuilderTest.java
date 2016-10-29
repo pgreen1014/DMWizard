@@ -221,6 +221,19 @@ public class AttackBuilderTest {
     }
 
     @Test
+    public void testTwoHandedWeapon() {
+        mAttackBuilder
+                .setAttacker(mAttacker)
+                .setDefender(mDefender)
+                .setMeleeAttack()
+                .setAttackingWeapon(new Glaive())
+                .setPlayerDistance(5);
+        assertTrue(testBuild(mAttackBuilder));
+        assertTrue(mAttack.isTwoHandedAttack());
+        //// TODO: 10/29/16 test that off hand weapon can't be set when two-handed weapon code is complete
+    }
+
+    @Test
     public void daggerTest() {
         Dagger dagger = new Dagger();
 
