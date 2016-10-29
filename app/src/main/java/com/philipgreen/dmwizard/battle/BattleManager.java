@@ -43,7 +43,7 @@ public class BattleManager {
         int damage = 0;
 
         if (rollAttack()) {
-            damage = mAttack.rollDamage();
+            damage = mAttack.rollDamage() + mAttacker.getAbilityModifier(mAttackModifierStat);
         }
 
         mDefender.takeDamage(damage);
