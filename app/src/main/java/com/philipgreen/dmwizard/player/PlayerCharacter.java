@@ -5,7 +5,7 @@ import android.util.Log;
 import com.philipgreen.dmwizard.data.Alignment;
 import com.philipgreen.dmwizard.data.BaseStats;
 import com.philipgreen.dmwizard.data.Languages;
-import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.player.utils.Skills;
 import com.philipgreen.dmwizard.data.Weapons;
 import com.philipgreen.dmwizard.player.utils.AbilityModifierManager;
 import com.philipgreen.dmwizard.utils.Dice;
@@ -13,8 +13,6 @@ import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 

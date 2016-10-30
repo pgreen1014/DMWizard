@@ -2,7 +2,7 @@ package com.philipgreen.dmwizard.playerClasses;
 
 import com.philipgreen.dmwizard.data.ArmorProficiencies;
 import com.philipgreen.dmwizard.data.BaseStats;
-import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.player.utils.Skills;
 import com.philipgreen.dmwizard.data.WeaponProficiencies;
 
 /**
