@@ -1,7 +1,7 @@
 package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.player.PlayerCharacter;
-import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
 
 /**
  * Created by pgreen on 8/25/16.

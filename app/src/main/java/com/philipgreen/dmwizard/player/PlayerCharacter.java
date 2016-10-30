@@ -3,7 +3,7 @@ package com.philipgreen.dmwizard.player;
 import android.util.Log;
 
 import com.philipgreen.dmwizard.data.Alignment;
-import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
 import com.philipgreen.dmwizard.player.utils.Languages;
 import com.philipgreen.dmwizard.player.utils.Skills;
 import com.philipgreen.dmwizard.data.Weapons;

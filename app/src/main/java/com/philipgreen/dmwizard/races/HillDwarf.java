@@ -1,6 +1,6 @@
 package com.philipgreen.dmwizard.races;
 
-import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
 
 import java.util.HashMap;
 

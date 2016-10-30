@@ -1,6 +1,6 @@
 package com.philipgreen.dmwizard;
 
-import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
 import com.philipgreen.dmwizard.player.utils.Skills;
 import com.philipgreen.dmwizard.player.PlayerCharacter;
 import com.philipgreen.dmwizard.player.utils.AbilityModifierManager;
