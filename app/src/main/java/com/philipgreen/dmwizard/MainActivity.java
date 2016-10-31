@@ -7,8 +7,8 @@ import android.widget.Button;
 
 
 
-public class BattleSimulator extends AppCompatActivity {
-    private static final String TAG = "BattleSimulator";
+public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     Button mBtnCreateCharacter;
 
     @Override
