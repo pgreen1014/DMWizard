@@ -10,7 +10,9 @@ import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.MeleeWeapon;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.Heavy;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Throwable;
+import com.philipgreen.dmwizard.weapons.propertyInterfaces.TwoHanded;
 import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
 
 /**
@@ -24,6 +26,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
  * .setAttacker(PlayerCharacter arg)
  * .setDefender(PlayerCharacter arg)
  * .setAttackingWeapon(BaseWeapon arg)
+ * .setPlayerDistance(int distance)
  * and one of the following .setMeleeAttack(), . setRangedAttack(), or setThrownAttack();
  *
  * Any additional build methods must follow the rules of DnD, for example using a Great Axe as an off-hand weapon attack
@@ -39,6 +42,7 @@ import com.philipgreen.dmwizard.weapons.propertyInterfaces.Versatile;
  *          .setDefender(defendingPlayerCharacter)
  *          .setAttackingWeapon(dagger)
  *          .setThrownAttack()
+ *          .setPlayerDistance(5)
  *          .build()
  */
 
@@ -54,15 +58,26 @@ public class AttackBuilder {
     private boolean mOffHandWeaponAttack = false;
     private AttackType mAttackType;
     private DamageRollBehavior mDamageRollBehavior;
-    private boolean mAdvantage = false;
-    private boolean mDisadvantage = false;
+    private AdvantageState mAdvantageState;
 
-    protected enum AttackType {
+    private enum AdvantageState {
+        NONE, ADVANTAGE, DISADVANTAGE
+    }
+
+    enum AttackType {
         MELEE, RANGED, THROWN
     }
 
-    public AttackBuilder() {
+    public static AttackType getAttackTypeMelee() {
+        return AttackType.MELEE;
+    }
 
+    public static AttackType getAttackTypeRanged() {
+        return AttackType.RANGED;
+    }
+
+    public static AttackType getAttackTypeThrown() {
+        return AttackType.THROWN;
     }
 
     public String toString() {
@@ -91,13 +106,13 @@ public class AttackBuilder {
         return this;
     }
 
-    // Only necessary for weapons with WeaponProperties.Finesse
-    public AttackBuilder setAttackModifierStat(BaseStats attackModifier) throws IllegalArgumentException {
-        if (attackModifier == BaseStats.STRENGTH || attackModifier == BaseStats.DEXTERITY) {
-            this.mAttackModifierStat = attackModifier;
-        } else {
-            throw new IllegalArgumentException("Attack Modifier can only be of the type BaseStats.Strength or BaseStats.Dexterity");
-        }
+    public AttackBuilder setAttackModifierStrength() {
+        this.mAttackModifierStat = BaseStats.STRENGTH;
+        return this;
+    }
+
+    public AttackBuilder setAttackModifierDexterity() {
+        this.mAttackModifierStat = BaseStats.DEXTERITY;
         return this;
     }
 
@@ -108,6 +123,11 @@ public class AttackBuilder {
 
     public AttackBuilder setTwoHandedAttack() {
         mTwoHandedAttack = true;
+        return this;
+    }
+
+    public AttackBuilder setTwoHandedAttack(boolean bool) {
+        mTwoHandedAttack = false;
         return this;
     }
 
@@ -132,12 +152,17 @@ public class AttackBuilder {
     }
 
     public AttackBuilder setAdvantage() {
-        mAdvantage = true;
+        mAdvantageState = AdvantageState.ADVANTAGE;
         return this;
     }
 
     public AttackBuilder setDisadvantage() {
-        mDisadvantage = true;
+        mAdvantageState = AdvantageState.DISADVANTAGE;
+        return this;
+    }
+
+    public AttackBuilder clearAdvantageState() {
+        mAdvantageState = AdvantageState.NONE;
         return this;
     }
 
@@ -158,7 +183,7 @@ public class AttackBuilder {
         }
 
         setDamageRollBehavior();
-
+        validatePropertyBasedFieldsSet();
         return new Attack(this);
     }
 
@@ -167,48 +192,48 @@ public class AttackBuilder {
     ///////////////
 
 
-    public BaseWeapon getAttackingWeapon() {
+    BaseWeapon getAttackingWeapon() {
         return mAttackingWeapon;
     }
 
-    public PlayerCharacter getDefender() {
+    PlayerCharacter getDefender() {
         return mDefender;
     }
 
-    public PlayerCharacter getAttacker() {
+    PlayerCharacter getAttacker() {
         return mAttacker;
     }
 
-    public BaseStats getAttackModifierStat() {
+    BaseStats getAttackModifierStat() {
         return mAttackModifierStat;
     }
 
-    public int getPlayerDistance() {
+    int getPlayerDistance() {
         return mPlayerDistance;
     }
 
-    public boolean isTwoHandedAttack() {
+    boolean isTwoHandedAttack() {
         return mTwoHandedAttack;
     }
 
-    public boolean isOffHandWeaponAttack() {
+    boolean isOffHandWeaponAttack() {
         return mOffHandWeaponAttack;
     }
 
-    public AttackType getAttackType() {
+    AttackType getAttackType() {
         return mAttackType;
     }
 
-    public DamageRollBehavior getDamageRollBehavior() {
+    DamageRollBehavior getDamageRollBehavior() {
         return mDamageRollBehavior;
     }
 
-    public boolean isAdvantage() {
-        return mAdvantage;
+    boolean isAdvantage() {
+        return mAdvantageState == AdvantageState.ADVANTAGE;
     }
 
     public boolean isDisadvantage() {
-        return mDisadvantage;
+        return mAdvantageState == AdvantageState.DISADVANTAGE;
     }
 
     ///////////////////////////////
@@ -275,11 +300,21 @@ public class AttackBuilder {
         if (mAttackModifierStat != BaseStats.DEXTERITY && !mAttackingWeapon.hasWeaponProperty(WeaponProperties.FINESSE)) {
             throw new IllegalArgumentException("Cannot use Strength modifier with weapon " + mAttackingWeapon.toString());
         }
+
+        //TODO consider how to handled two handed since ranged weapons require two hands
     }
 
-    private void validateThrownAttack() throws IllegalArgumentException {
+    private void validateThrownAttack() throws IllegalArgumentException, NullPointerException {
         if (!mAttackingWeapon.hasWeaponProperty(WeaponProperties.THROWN)) {
             throw new IllegalArgumentException("Cannot make thrown weapon attack with: " + mAttackingWeapon.toString());
+        }
+
+        if (mPlayerDistance == 0) {
+            throw new NullPointerException("Thrown attack require player distance to be set");
+        }
+
+        if (isTwoHandedAttack()) {
+            throw new IllegalArgumentException("Cannot make two handed attack with weapon being thrown");
         }
 
         // validate weapon is in range
@@ -288,7 +323,20 @@ public class AttackBuilder {
     }
 
     private boolean validateMeleeRange(int range) {
-        return mPlayerDistance <= range;
+        if (mPlayerDistance == 0) {
+            return false;
+        }
+        else {
+            return mPlayerDistance <= range;
+        }
+
+    }
+
+    private void validatePropertyBasedFieldsSet() {
+        // Make sure TwoHanded weapon is set to two handed
+        if (mAttackingWeapon instanceof TwoHanded) {
+            mTwoHandedAttack = true;
+        }
     }
 
     /**
@@ -305,7 +353,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("weapon out of range");
         // set disadvantage if outside normal range or within melee range
         } else if (mPlayerDistance > weapon.normalThrownRange() || mPlayerDistance == 5) {
-            mDisadvantage = true;
+            setDisadvantage();
         }
     }
 
@@ -323,7 +371,7 @@ public class AttackBuilder {
             throw new IllegalArgumentException("weapon out of range");
         // set disadvantage if outside normal range or within melee range
         } else if (mPlayerDistance > weapon.getNormalRange() || mPlayerDistance == 5) {
-            mDisadvantage = true;
+            setDisadvantage();
         }
     }
 
