@@ -51,7 +51,7 @@ public class Attack {
         return mAttacker;
     }
 
-    BaseStats getAttackModifierStat() {
+    public BaseStats getAttackModifierStat() {
         return mAttackModifierStat;
     }
 
@@ -67,16 +67,20 @@ public class Attack {
         return mOffHandWeaponAttack;
     }
 
-    AttackBuilder.AttackType getAttackType() {
+    public AttackBuilder.AttackType getAttackType() {
         return mAttackType;
     }
 
-    boolean isAdvantage() {
+    public boolean isAdvantage() {
         return mAdvantage;
     }
 
-    boolean isDisadvantage() {
+    public boolean isDisadvantage() {
         return mDisadvantage;
+    }
+
+    public DamageRollBehavior getDamageRollBehavior() {
+        return mDamageRollBehavior;
     }
 
     public String toString() {

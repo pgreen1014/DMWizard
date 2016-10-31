@@ -2,6 +2,7 @@ package com.philipgreen.dmwizard.weapons;
 
 import com.philipgreen.dmwizard.data.WeaponDamageType;
 import com.philipgreen.dmwizard.data.WeaponProperties;
+import com.philipgreen.dmwizard.utils.Dice;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.RangedWeapon;
 
 /**
@@ -16,7 +17,7 @@ public class ShortBow extends RangedWeapon {
 
     @Override
     public int damageRoll() {
-        return 0;
+        return Dice.rollDie(6);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ShortBow extends RangedWeapon {
 
     @Override
     public int initCost() {
-        return 0;
+        return 25;
     }
 
     @Override
