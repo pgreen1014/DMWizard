@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_battle_simulator);
+        setContentView(R.layout.activity_main);
 
         mBtnCreateCharacter = (Button) findViewById(R.id.character_create_button);
 
