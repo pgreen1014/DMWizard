@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.ui;
+package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
