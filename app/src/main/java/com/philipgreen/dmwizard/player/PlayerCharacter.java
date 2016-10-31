@@ -2,18 +2,17 @@ package com.philipgreen.dmwizard.player;
 
 import android.util.Log;
 
-import com.philipgreen.dmwizard.data.Alignment;
-import com.philipgreen.dmwizard.data.BaseStats;
-import com.philipgreen.dmwizard.data.Languages;
-import com.philipgreen.dmwizard.data.Skills;
+import com.philipgreen.dmwizard.player.utils.Alignment;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
+import com.philipgreen.dmwizard.player.utils.Languages;
+import com.philipgreen.dmwizard.player.utils.Skills;
 import com.philipgreen.dmwizard.data.Weapons;
+import com.philipgreen.dmwizard.player.utils.AbilityModifierManager;
 import com.philipgreen.dmwizard.utils.Dice;
 import com.philipgreen.dmwizard.playerClasses.BasePlayerClass;
 import com.philipgreen.dmwizard.races.BaseRaceClass;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -101,33 +100,6 @@ public class PlayerCharacter {
     // Character States
     private boolean mDead = false;
     private boolean mUnconscious = false;
-
-    // statically create and put values into ABILITY_MODIFIER_MAP
-    public static final Map<Integer, Integer> ABILITY_MODIFIER_MAP;
-    static {
-        Map<Integer, Integer>tempMap = new HashMap<Integer, Integer>();
-        tempMap.put(1, -5);
-        tempMap.put(2, -4);
-        tempMap.put(3, -4);
-        tempMap.put(4, -3);
-        tempMap.put(5, -3);
-        tempMap.put(6, -2);
-        tempMap.put(7, -2);
-        tempMap.put(8, -1);
-        tempMap.put(9, -1);
-        tempMap.put(10, 0);
-        tempMap.put(11, 0);
-        tempMap.put(12, 1);
-        tempMap.put(13, 1);
-        tempMap.put(14, 2);
-        tempMap.put(15, 2);
-        tempMap.put(16, 3);
-        tempMap.put(17, 3);
-        tempMap.put(18, 4);
-        tempMap.put(19, 4);
-        tempMap.put(20, 5);
-        ABILITY_MODIFIER_MAP = Collections.unmodifiableMap(tempMap);
-    }
 
     // Constructor for creating a level 1 character
     public PlayerCharacter(BasePlayerClass playerClass, BaseRaceClass playerRace, int str, int dex, int con, int intel, int wis, int cha) {
@@ -475,27 +447,27 @@ public class PlayerCharacter {
     /////////////////////////
 
     public int getStrengthModifier() {
-        return ABILITY_MODIFIER_MAP.get(mStrength);
+        return AbilityModifierManager.getModifier(mStrength);
     }
 
     public int getDexterityModifier() {
-        return ABILITY_MODIFIER_MAP.get(mDexterity);
+        return AbilityModifierManager.getModifier(mDexterity);
     }
 
     public int getConstitutionModifier() {
-        return ABILITY_MODIFIER_MAP.get(mConstitution);
+        return AbilityModifierManager.getModifier(mConstitution);
     }
 
     public int getIntelligenceModifier() {
-        return ABILITY_MODIFIER_MAP.get(mIntelligence);
+        return AbilityModifierManager.getModifier(mIntelligence);
     }
 
     public int getWisdomModifier() {
-        return ABILITY_MODIFIER_MAP.get(mWisdom);
+        return AbilityModifierManager.getModifier(mWisdom);
     }
 
     public int getCharismaModifier() {
-        return ABILITY_MODIFIER_MAP.get(mCharisma);
+        return AbilityModifierManager.getModifier(mCharisma);
     }
 
     public int getAbilityModifier(BaseStats ability) {

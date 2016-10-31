@@ -1,7 +1,7 @@
 package com.philipgreen.dmwizard.races;
 
-import com.philipgreen.dmwizard.data.BaseStats;
-import com.philipgreen.dmwizard.data.Languages;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
+import com.philipgreen.dmwizard.player.utils.Languages;
 import com.philipgreen.dmwizard.data.Weapons;
 
 import java.util.HashMap;

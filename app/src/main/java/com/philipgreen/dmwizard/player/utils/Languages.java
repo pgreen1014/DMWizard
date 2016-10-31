@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.data;
+package com.philipgreen.dmwizard.player.utils;
 
 /**
  * Created by pgreen on 8/10/16.

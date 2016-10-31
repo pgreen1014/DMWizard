@@ -2,7 +2,7 @@ package com.philipgreen.dmwizard.battle;
 
 import com.philipgreen.dmwizard.player.PlayerCharacter;
 import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
-import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
 
 /**

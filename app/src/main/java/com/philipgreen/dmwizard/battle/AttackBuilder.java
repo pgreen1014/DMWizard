@@ -4,7 +4,7 @@ import com.philipgreen.dmwizard.player.PlayerCharacter;
 import com.philipgreen.dmwizard.battle.damageRolls.DamageRollBehavior;
 import com.philipgreen.dmwizard.battle.damageRolls.DamageRollRegular;
 import com.philipgreen.dmwizard.battle.damageRolls.DamageRollVersatile;
-import com.philipgreen.dmwizard.data.BaseStats;
+import com.philipgreen.dmwizard.player.utils.BaseStats;
 import com.philipgreen.dmwizard.data.WeaponProperties;
 import com.philipgreen.dmwizard.utils.SafeWeaponCaster;
 import com.philipgreen.dmwizard.weapons.abstractWeapons.BaseWeapon;
