@@ -16,6 +16,7 @@ import com.philipgreen.dmwizard.R;
 import com.philipgreen.dmwizard.playerClasses.utils.PlayerClassEnum;
 import com.philipgreen.dmwizard.races.utils.RaceListEnum;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -25,10 +26,10 @@ import java.util.ArrayList;
  */
 
 public class PageOneFragment extends Fragment {
-    CardView mRacePickerCardView;
-    ListView mRacePickerListView;
-    TextView mChosenRaceTextView;
-    ArrayAdapter<String> mRacePickerAdapter;
+    CardView mRacePickerCardView, mLevelPickerCardView, mClassPickerCardView;
+    ListView mRacePickerListView, mLevelPickerListView, mClassPickerListView;
+    TextView mChosenRaceTextView, mChosenLevelTextView, mChosenClassTextView;
+    ArrayAdapter<String> mRacePickerAdapter, mClassPickerAdapter, mLevelPickerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,19 @@ public class PageOneFragment extends Fragment {
             raceList.add(configureString(value.toString()));
         }
 
+        ArrayList<String> levelList = new ArrayList<>();
+        for (int i = 1; i < 21; i++) {
+            levelList.add(Integer.toString(i));
+        }
+
+        ArrayList<String> classList = new ArrayList<>();
+        for(PlayerClassEnum playerClass: PlayerClassEnum.values()) {
+            classList.add(configureString(configureString(playerClass.toString())));
+        }
+
         mRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, raceList);
+        mLevelPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, levelList);
+        mClassPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classList);
     }
 
     @Override
@@ -57,7 +70,27 @@ public class PageOneFragment extends Fragment {
                 }
             }
         });
+        mLevelPickerCardView = (CardView) v.findViewById(R.id.cardView_levelPicker);
+        mLevelPickerCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLevelPickerListView.setVisibility(View.VISIBLE);
+                mChosenLevelTextView.setVisibility(View.GONE);
+                TransitionManager.beginDelayedTransition(mLevelPickerCardView);
+            }
+        });
+        mClassPickerCardView = (CardView) v.findViewById(R.id.cardView_classPicker);
+        mClassPickerCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mClassPickerListView.setVisibility(View.VISIBLE);
+                mChosenClassTextView.setVisibility(View.GONE);
+                TransitionManager.beginDelayedTransition(mClassPickerCardView);
+            }
+        });
         mChosenRaceTextView = (TextView) v.findViewById(R.id.textView_chosenRace);
+        mChosenClassTextView = (TextView) v.findViewById(R.id.textView_chosenClass);
+        mChosenLevelTextView = (TextView) v.findViewById(R.id.textView_chosenLevel);
         mRacePickerListView = (ListView) v.findViewById(R.id.listView_racePicker);
         mRacePickerListView.setAdapter(mRacePickerAdapter);
         mRacePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,6 +102,32 @@ public class PageOneFragment extends Fragment {
                 mRacePickerListView.setVisibility(View.GONE);
                 mChosenRaceTextView.setVisibility(View.VISIBLE);
                 TransitionManager.beginDelayedTransition(mRacePickerCardView);
+            }
+        });
+        mLevelPickerListView = (ListView) v.findViewById(R.id.listView_levelPicker);
+        mLevelPickerListView.setAdapter(mLevelPickerAdapter);
+        mLevelPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView levelSelected = (TextView) view;
+                String levelString = String.valueOf(levelSelected.getText());
+                mChosenLevelTextView.setText(levelString);
+                mLevelPickerListView.setVisibility(View.GONE);
+                mChosenLevelTextView.setVisibility(View.VISIBLE);
+                TransitionManager.beginDelayedTransition(mLevelPickerCardView);
+            }
+        });
+        mClassPickerListView = (ListView) v .findViewById(R.id.listView_classPicker);
+        mClassPickerListView.setAdapter(mClassPickerAdapter);
+        mClassPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                TextView classSelected = (TextView) view;
+                String classString = String.valueOf(classSelected.getText());
+                mChosenClassTextView.setText(classString);
+                mClassPickerListView.setVisibility(View.GONE);
+                mChosenClassTextView.setVisibility(View.VISIBLE);
+                TransitionManager.beginDelayedTransition(mClassPickerCardView);
             }
         });
 
