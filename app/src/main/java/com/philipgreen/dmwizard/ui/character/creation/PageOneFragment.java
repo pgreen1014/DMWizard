@@ -66,7 +66,8 @@ public class PageOneFragment extends Fragment {
                 if(mRacePickerListView.getVisibility() == View.GONE) {
                     mRacePickerListView.setVisibility(View.VISIBLE);
                     mChosenRaceTextView.setVisibility(View.GONE);
-                    TransitionManager.beginDelayedTransition(mRacePickerCardView);
+                    mRacePickerListView.getLayoutParams().height = 800;
+                    TransitionManager.beginDelayedTransition((ViewGroup) mRacePickerCardView.getParent());
                 }
             }
         });
@@ -101,7 +102,7 @@ public class PageOneFragment extends Fragment {
                 mChosenRaceTextView.setText(raceString);
                 mRacePickerListView.setVisibility(View.GONE);
                 mChosenRaceTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition(mRacePickerCardView);
+                TransitionManager.beginDelayedTransition((ViewGroup) mRacePickerCardView.getParent());
             }
         });
         mLevelPickerListView = (ListView) v.findViewById(R.id.listView_levelPicker);
