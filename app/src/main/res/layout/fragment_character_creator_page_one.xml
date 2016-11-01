@@ -49,6 +49,7 @@
             app:cardUseCompatPadding="true">
 
             <TextView
+                android:id="@+id/textView_chosenLevel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -69,6 +70,7 @@
             app:cardUseCompatPadding="true">
 
             <TextView
+                android:id="@+id/textView_chosenClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
