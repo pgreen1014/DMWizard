@@ -52,9 +52,7 @@ public class PageOneFragment extends Fragment {
             public void onClick(View view) {
                 if(mRacePickerListView.getVisibility() == View.GONE) {
                     mRacePickerListView.setVisibility(View.VISIBLE);
-                    TransitionManager.beginDelayedTransition(mRacePickerCardView);
-                } else {
-                    mRacePickerListView.setVisibility(View.GONE);
+                    mChosenRaceTextView.setVisibility(View.GONE);
                     TransitionManager.beginDelayedTransition(mRacePickerCardView);
                 }
             }
@@ -69,6 +67,7 @@ public class PageOneFragment extends Fragment {
                 String raceString = String.valueOf(raceSelected.getText());
                 mChosenRaceTextView.setText(raceString);
                 mRacePickerListView.setVisibility(View.GONE);
+                mChosenRaceTextView.setVisibility(View.VISIBLE);
                 TransitionManager.beginDelayedTransition(mRacePickerCardView);
             }
         });
@@ -86,7 +85,7 @@ public class PageOneFragment extends Fragment {
             }
             result += makeFirstCharUppercase(strings[i]);
         }
-        
+
         return result;
     }
 
