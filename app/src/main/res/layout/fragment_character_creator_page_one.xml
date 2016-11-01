@@ -59,6 +59,12 @@
                 android:layout_gravity="center_horizontal"
                 android:text="1"/>
 
+            <ListView
+                android:id="@+id/listView_levelPicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -79,6 +85,12 @@
                 android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
                 android:hint="@string/choose.class.hint"/>
+
+            <ListView
+                android:id="@+id/listView_classPicker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
 
         </android.support.v7.widget.CardView>
 
