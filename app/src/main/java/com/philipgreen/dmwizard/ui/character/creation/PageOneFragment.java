@@ -7,9 +7,12 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.philipgreen.dmwizard.R;
@@ -56,7 +59,7 @@ public class PageOneFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_creator_page_one, container, false);
 
         mRacePickerCardView = (CardView) v.findViewById(R.id.cardView_racePicker);
@@ -67,7 +70,7 @@ public class PageOneFragment extends Fragment {
                     mRacePickerListView.setVisibility(View.VISIBLE);
                     mChosenRaceTextView.setVisibility(View.GONE);
                     mRacePickerListView.getLayoutParams().height = 800;
-                    TransitionManager.beginDelayedTransition((ViewGroup) mRacePickerCardView.getParent());
+                    TransitionManager.beginDelayedTransition(container);
                 }
             }
         });
@@ -115,7 +118,7 @@ public class PageOneFragment extends Fragment {
                 mChosenLevelTextView.setText(levelString);
                 mLevelPickerListView.setVisibility(View.GONE);
                 mChosenLevelTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition(mLevelPickerCardView);
+                TransitionManager.beginDelayedTransition(container);
             }
         });
         mClassPickerListView = (ListView) v .findViewById(R.id.listView_classPicker);
@@ -126,9 +129,10 @@ public class PageOneFragment extends Fragment {
                 TextView classSelected = (TextView) view;
                 String classString = String.valueOf(classSelected.getText());
                 mChosenClassTextView.setText(classString);
+                LinearLayout parent = (LinearLayout) mClassPickerCardView.getParent();
                 mClassPickerListView.setVisibility(View.GONE);
                 mChosenClassTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition(mClassPickerCardView);
+                TransitionManager.beginDelayedTransition(container);
             }
         });
 
