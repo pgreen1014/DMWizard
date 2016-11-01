@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DMWizard</string>
+    <string name="choose.race.hint">Choose Race...</string>
 </resources>
