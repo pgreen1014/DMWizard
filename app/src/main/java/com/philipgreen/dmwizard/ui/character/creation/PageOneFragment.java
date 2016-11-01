@@ -36,7 +36,7 @@ public class PageOneFragment extends Fragment {
 
         ArrayList<String> raceList = new ArrayList<>();
         for(RaceListEnum value: RaceListEnum.values()) {
-            raceList.add(value.toString());
+            raceList.add(configureString(value.toString()));
         }
 
         mRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, raceList);
@@ -74,5 +74,25 @@ public class PageOneFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private String configureString(String string) {
+        String[] strings = string.split("_");
+        String result = "";
+
+        for (int i = 0; i < strings.length; i++) {
+            if (i > 0) {
+                result += " ";
+            }
+            result += makeFirstCharUppercase(strings[i]);
+        }
+        
+        return result;
+    }
+
+    private String makeFirstCharUppercase(String string) {
+        String firstLetter = String.valueOf(string.charAt(0));
+        String remainingString = string.substring(1);
+        return firstLetter.toUpperCase() + remainingString.toLowerCase();
     }
 }
