@@ -68,7 +68,6 @@ public class PageOneFragment extends Fragment {
                 if(mRacePickerListView.getVisibility() == View.GONE) {
                     mRacePickerListView.setVisibility(View.VISIBLE);
                     mChosenRaceTextView.setVisibility(View.GONE);
-                    mRacePickerListView.getLayoutParams().height = 800;
                     TransitionManager.beginDelayedTransition(container);
                 }
             }
@@ -79,7 +78,7 @@ public class PageOneFragment extends Fragment {
             public void onClick(View view) {
                 mLevelPickerListView.setVisibility(View.VISIBLE);
                 mChosenLevelTextView.setVisibility(View.GONE);
-                TransitionManager.beginDelayedTransition(mLevelPickerCardView);
+                TransitionManager.beginDelayedTransition(container);
             }
         });
         mClassPickerCardView = (CardView) v.findViewById(R.id.cardView_classPicker);
@@ -88,7 +87,7 @@ public class PageOneFragment extends Fragment {
             public void onClick(View view) {
                 mClassPickerListView.setVisibility(View.VISIBLE);
                 mChosenClassTextView.setVisibility(View.GONE);
-                TransitionManager.beginDelayedTransition(mClassPickerCardView);
+                TransitionManager.beginDelayedTransition(container);
             }
         });
         mSubracePickerCardView = (CardView) v.findViewById(R.id.cardView_subRacePicker);
@@ -190,12 +189,14 @@ public class PageOneFragment extends Fragment {
         SubRaceListEnum[] subraceList = RaceListManager.getSubraceList(raceValue);
 
         if (subraceList == null) {
-            mSubracePickerCardView.setCardElevation(0f);
-            mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
+            mSubracePickerCardView.setVisibility(View.GONE);
+            TransitionManager.beginDelayedTransition((ViewGroup) mSubracePickerCardView.getParent());
             return;
         }
 
         mSubracePickerCardView.setCardElevation(mRacePickerCardView.getCardElevation());
+        mSubracePickerCardView.setVisibility(View.VISIBLE);
+        mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
 
         ArrayList<String> listForAdapter = new ArrayList<>();
         for(SubRaceListEnum value: subraceList) {
