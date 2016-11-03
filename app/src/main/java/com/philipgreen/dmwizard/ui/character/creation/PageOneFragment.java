@@ -32,6 +32,7 @@ public class PageOneFragment extends Fragment {
     ListView mRacePickerListView, mLevelPickerListView, mClassPickerListView, mSubracePickerListView;
     TextView mChosenRaceTextView, mChosenLevelTextView, mChosenClassTextView, mChosenSubraceTextView;
     ArrayAdapter<String> mRacePickerAdapter, mClassPickerAdapter, mLevelPickerAdapter, mSubRacePickerAdapter;
+    ViewGroup mContainer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class PageOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_creator_page_one, container, false);
 
+        mContainer = container;
         mChosenRaceTextView = (TextView) v.findViewById(R.id.textView_chosenRace);
         mChosenClassTextView = (TextView) v.findViewById(R.id.textView_chosenClass);
         mChosenLevelTextView = (TextView) v.findViewById(R.id.textView_chosenLevel);
@@ -131,30 +133,27 @@ public class PageOneFragment extends Fragment {
                 mChosenRaceTextView.setVisibility(View.VISIBLE);
                 TransitionManager.beginDelayedTransition((ViewGroup) mRacePickerCardView.getParent());
                 generateSubRaceListView(raceString);
+                /*
+                onItemListViewClick(view, mChosenRaceTextView, mRacePickerListView);
+
+                TextView raceSelected = (TextView) view;
+                String raceString = String.valueOf(raceSelected.getText());
+                generateSubRaceListView(raceString);
+                */
             }
         });
 
         mLevelPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView levelSelected = (TextView) view;
-                String levelString = String.valueOf(levelSelected.getText());
-                mChosenLevelTextView.setText(levelString);
-                mLevelPickerListView.setVisibility(View.GONE);
-                mChosenLevelTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition(container);
+                onItemListViewClick(view, mChosenLevelTextView, mLevelPickerListView);
             }
         });
 
         mClassPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView classSelected = (TextView) view;
-                String classString = String.valueOf(classSelected.getText());
-                mChosenClassTextView.setText(classString);
-                mClassPickerListView.setVisibility(View.GONE);
-                mChosenClassTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition(container);
+                onItemListViewClick(view, mChosenClassTextView, mClassPickerListView);
             }
         });
 
@@ -208,16 +207,17 @@ public class PageOneFragment extends Fragment {
     }
 
     private void generateSubRaceListView(String raceText) {
+        // Grab enum value from TextView
         RaceListEnum raceValue = getRaceEnumFromTextView(raceText);
 
+        // Grab sub races of selected race
         SubRaceListEnum[] subraceList = RaceListManager.getSubraceList(raceValue);
 
         if (subraceList == null) {
-            mSubracePickerCardView.setVisibility(View.GONE);
-            TransitionManager.beginDelayedTransition((ViewGroup) mSubracePickerCardView.getParent());
+            hideSubRacePicker();
             return;
         }
-
+        
         mSubracePickerCardView.setCardElevation(mRacePickerCardView.getCardElevation());
         mSubracePickerCardView.setVisibility(View.VISIBLE);
         mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
@@ -236,13 +236,24 @@ public class PageOneFragment extends Fragment {
         mSubracePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView subRaceSelected = (TextView) view;
-                String subRaceString = String.valueOf(subRaceSelected.getText());
-                mChosenSubraceTextView.setText(subRaceString);
-                mSubracePickerListView.setVisibility(View.GONE);
-                mChosenSubraceTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition((ViewGroup) mSubracePickerCardView.getParent());
+                onItemListViewClick(view, mChosenSubraceTextView, mSubracePickerListView);
             }
         });
+    }
+
+    private void onItemListViewClick(View view, TextView textViewChosen, ListView listViewToClose) {
+        TextView textViewSelected = (TextView) view;
+        String textViewString = String.valueOf(textViewSelected.getText());
+
+        textViewChosen.setText(textViewString);
+        textViewChosen.setVisibility(View.VISIBLE);
+        listViewToClose.setVisibility(View.GONE);
+        TransitionManager.beginDelayedTransition(mContainer);
+
+    }
+
+    private void hideSubRacePicker() {
+        mSubracePickerCardView.setVisibility(View.GONE);
+        TransitionManager.beginDelayedTransition((ViewGroup) mSubracePickerCardView.getParent());
     }
 }
