@@ -199,8 +199,11 @@ public class PageOneFragment extends Fragment {
         mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
 
         ArrayList<String> listForAdapter = new ArrayList<>();
-        for(SubRaceListEnum value: subraceList) {
-            listForAdapter.add(configureString(value.toString()));
+        for (int i = 0; i < subraceList.length; i++) {
+            if (i == 0) {
+                listForAdapter.add("None");
+            }
+            listForAdapter.add(configureString(subraceList[i].toString()));
         }
 
         mSubRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listForAdapter);
