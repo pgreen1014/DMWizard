@@ -61,7 +61,17 @@ public class PageOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_creator_page_one, container, false);
 
+        mChosenRaceTextView = (TextView) v.findViewById(R.id.textView_chosenRace);
+        mChosenClassTextView = (TextView) v.findViewById(R.id.textView_chosenClass);
+        mChosenLevelTextView = (TextView) v.findViewById(R.id.textView_chosenLevel);
+        mChosenSubraceTextView = (TextView) v.findViewById(R.id.textView_chosenSubRace);
+
+        // SET UP CARD VIEWS
         mRacePickerCardView = (CardView) v.findViewById(R.id.cardView_racePicker);
+        mLevelPickerCardView = (CardView) v.findViewById(R.id.cardView_levelPicker);
+        mClassPickerCardView = (CardView) v.findViewById(R.id.cardView_classPicker);
+        mSubracePickerCardView = (CardView) v.findViewById(R.id.cardView_subRacePicker);
+
         mRacePickerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +82,7 @@ public class PageOneFragment extends Fragment {
                 }
             }
         });
-        mLevelPickerCardView = (CardView) v.findViewById(R.id.cardView_levelPicker);
+
         mLevelPickerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +91,7 @@ public class PageOneFragment extends Fragment {
                 TransitionManager.beginDelayedTransition(container);
             }
         });
-        mClassPickerCardView = (CardView) v.findViewById(R.id.cardView_classPicker);
+
         mClassPickerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +100,7 @@ public class PageOneFragment extends Fragment {
                 TransitionManager.beginDelayedTransition(container);
             }
         });
-        mSubracePickerCardView = (CardView) v.findViewById(R.id.cardView_subRacePicker);
+
         mSubracePickerCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,13 +112,15 @@ public class PageOneFragment extends Fragment {
             }
         });
 
-        mChosenRaceTextView = (TextView) v.findViewById(R.id.textView_chosenRace);
-        mChosenClassTextView = (TextView) v.findViewById(R.id.textView_chosenClass);
-        mChosenLevelTextView = (TextView) v.findViewById(R.id.textView_chosenLevel);
-        mChosenSubraceTextView = (TextView) v.findViewById(R.id.textView_chosenSubRace);
-
+        // SET UP LIST VIEWS
         mRacePickerListView = (ListView) v.findViewById(R.id.listView_racePicker);
         mRacePickerListView.setAdapter(mRacePickerAdapter);
+        mLevelPickerListView = (ListView) v.findViewById(R.id.listView_levelPicker);
+        mLevelPickerListView.setAdapter(mLevelPickerAdapter);
+        mClassPickerListView = (ListView) v.findViewById(R.id.listView_classPicker);
+        mClassPickerListView.setAdapter(mClassPickerAdapter);
+        mSubracePickerListView = (ListView) v.findViewById(R.id.listView_subRacePicker);
+
         mRacePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -121,8 +133,7 @@ public class PageOneFragment extends Fragment {
                 generateSubRaceListView(raceString);
             }
         });
-        mLevelPickerListView = (ListView) v.findViewById(R.id.listView_levelPicker);
-        mLevelPickerListView.setAdapter(mLevelPickerAdapter);
+
         mLevelPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -134,8 +145,7 @@ public class PageOneFragment extends Fragment {
                 TransitionManager.beginDelayedTransition(container);
             }
         });
-        mClassPickerListView = (ListView) v.findViewById(R.id.listView_classPicker);
-        mClassPickerListView.setAdapter(mClassPickerAdapter);
+
         mClassPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -147,10 +157,17 @@ public class PageOneFragment extends Fragment {
                 TransitionManager.beginDelayedTransition(container);
             }
         });
-        mSubracePickerListView = (ListView) v.findViewById(R.id.listView_subRacePicker);
+
         return v;
     }
 
+    /**
+     * Take and converts an enum.toString() and converts it into a readable string.
+     * Enum should only contain capital letters and underscores. Example: HILL_DWARF will
+     * be converted to Hill Dwarf
+     * @param string enum.toString()
+     * @return a human readable string
+     */
     private String configureString(String string) {
         String[] strings = string.split("_");
         String result = "";
@@ -165,12 +182,19 @@ public class PageOneFragment extends Fragment {
         return result;
     }
 
+    // Makes the first letter of a string upper case
     private String makeFirstCharUppercase(String string) {
         String firstLetter = String.valueOf(string.charAt(0));
         String remainingString = string.substring(1);
         return firstLetter.toUpperCase() + remainingString.toLowerCase();
     }
 
+    /**
+     * Converts a string generated from configureString(string) back into
+     * it enum type
+     * @param raceText enum.toString() to convert back to string
+     * @return return enum type, return null if enum is not found
+     */
     private RaceListEnum getRaceEnumFromTextView(String raceText) {
         RaceListEnum raceValue = null;
 
