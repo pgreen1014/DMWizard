@@ -217,7 +217,7 @@ public class PageOneFragment extends Fragment {
             hideSubRacePicker();
             return;
         }
-
+        
         mSubracePickerCardView.setCardElevation(mRacePickerCardView.getCardElevation());
         mSubracePickerCardView.setVisibility(View.VISIBLE);
         mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
