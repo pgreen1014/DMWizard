@@ -33,6 +33,7 @@ public class PageOneFragment extends Fragment {
     TextView mChosenRaceTextView, mChosenLevelTextView, mChosenClassTextView, mChosenSubraceTextView;
     ArrayAdapter<String> mRacePickerAdapter, mClassPickerAdapter, mLevelPickerAdapter, mSubRacePickerAdapter;
     ViewGroup mContainer;
+    ArrayList<ListView> mPickerListViews = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class PageOneFragment extends Fragment {
                 if(mRacePickerListView.getVisibility() == View.GONE) {
                     mRacePickerListView.setVisibility(View.VISIBLE);
                     mChosenRaceTextView.setVisibility(View.GONE);
+                    closeOtherListViews(mRacePickerListView);
                     TransitionManager.beginDelayedTransition(container);
                 }
             }
@@ -90,6 +92,7 @@ public class PageOneFragment extends Fragment {
             public void onClick(View view) {
                 mLevelPickerListView.setVisibility(View.VISIBLE);
                 mChosenLevelTextView.setVisibility(View.GONE);
+                closeOtherListViews(mLevelPickerListView);
                 TransitionManager.beginDelayedTransition(container);
             }
         });
@@ -99,6 +102,7 @@ public class PageOneFragment extends Fragment {
             public void onClick(View view) {
                 mClassPickerListView.setVisibility(View.VISIBLE);
                 mChosenClassTextView.setVisibility(View.GONE);
+                closeOtherListViews(mClassPickerListView);
                 TransitionManager.beginDelayedTransition(container);
             }
         });
@@ -109,6 +113,7 @@ public class PageOneFragment extends Fragment {
                 if (mSubracePickerCardView.getCardElevation() == mRacePickerCardView.getCardElevation()) {
                     mSubracePickerListView.setVisibility(View.VISIBLE);
                     mChosenSubraceTextView.setVisibility(View.GONE);
+                    closeOtherListViews(mSubracePickerListView);
                     TransitionManager.beginDelayedTransition(container);
                 }
             }
@@ -122,6 +127,7 @@ public class PageOneFragment extends Fragment {
         mClassPickerListView = (ListView) v.findViewById(R.id.listView_classPicker);
         mClassPickerListView.setAdapter(mClassPickerAdapter);
         mSubracePickerListView = (ListView) v.findViewById(R.id.listView_subRacePicker);
+        initPickerListViews();
 
         mRacePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -241,6 +247,13 @@ public class PageOneFragment extends Fragment {
         });
     }
 
+    private void initPickerListViews() {
+        mPickerListViews.add(mRacePickerListView);
+        mPickerListViews.add(mSubracePickerListView);
+        mPickerListViews.add(mLevelPickerListView);
+        mPickerListViews.add(mClassPickerListView);
+    }
+
     private void onItemListViewClick(View view, TextView textViewChosen, ListView listViewToClose) {
         TextView textViewSelected = (TextView) view;
         String textViewString = String.valueOf(textViewSelected.getText());
@@ -250,6 +263,17 @@ public class PageOneFragment extends Fragment {
         listViewToClose.setVisibility(View.GONE);
         TransitionManager.beginDelayedTransition(mContainer);
 
+    }
+
+    private void closeOtherListViews(ListView openingListView) {
+        for (ListView view : mPickerListViews) {
+            // if there is a list view open that is not the list view being open then make it gone
+            if (view != openingListView && view.getVisibility() == View.VISIBLE) {
+                view.setVisibility(View.GONE);
+                CardView parentCardView = (CardView) view.getParent();
+                parentCardView.findViewWithTag("chosenItem").setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void hideSubRacePicker() {
