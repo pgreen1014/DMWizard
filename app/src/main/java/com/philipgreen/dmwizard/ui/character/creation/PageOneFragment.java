@@ -37,7 +37,7 @@ public class PageOneFragment extends Fragment {
     ListView mRacePickerListView, mLevelPickerListView, mClassPickerListView, mSubracePickerListView;
     TextView mChosenRaceTextView, mChosenLevelTextView, mChosenClassTextView, mChosenSubraceTextView;
     ArrayAdapter<String> mRacePickerAdapter, mClassPickerAdapter, mLevelPickerAdapter, mSubRacePickerAdapter;
-    RelativeLayout mRootView;
+    LinearLayout mContent;
     FloatingActionButton mFAB;
     ViewGroup mContainer;
     ArrayList<ListView> mPickerListViews = new ArrayList<>();
@@ -52,7 +52,7 @@ public class PageOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_creator_page_one, container, false);
 
-        mRootView = (RelativeLayout) v.findViewById(R.id.relativeLayout_characterCreatorPageOneRoot);
+        mContent = (LinearLayout) v.findViewById(R.id.content);
         // capture parent view as global variable
         mContainer = container;
 
@@ -163,12 +163,12 @@ public class PageOneFragment extends Fragment {
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.addRule(RelativeLayout.BELOW, R.id.linearLayout_classAndRacePicker);
 
                 LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext());
-                mRootView.addView(levelAndClassPickerView, params);
+                mContent.addView(levelAndClassPickerView, params);
             }
         });
 
