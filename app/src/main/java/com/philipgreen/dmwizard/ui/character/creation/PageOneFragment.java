@@ -1,6 +1,7 @@
 package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionManager;
@@ -9,15 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.philipgreen.dmwizard.R;
 import com.philipgreen.dmwizard.playerClasses.utils.PlayerClassEnum;
 import com.philipgreen.dmwizard.races.utils.RaceListEnum;
 import com.philipgreen.dmwizard.races.utils.RaceListManager;
 import com.philipgreen.dmwizard.races.utils.SubRaceListEnum;
+import com.philipgreen.dmwizard.ui.views.LevelAndClassPickerView;
 
 import java.util.ArrayList;
 
@@ -32,6 +37,8 @@ public class PageOneFragment extends Fragment {
     ListView mRacePickerListView, mLevelPickerListView, mClassPickerListView, mSubracePickerListView;
     TextView mChosenRaceTextView, mChosenLevelTextView, mChosenClassTextView, mChosenSubraceTextView;
     ArrayAdapter<String> mRacePickerAdapter, mClassPickerAdapter, mLevelPickerAdapter, mSubRacePickerAdapter;
+    RelativeLayout mRootView;
+    FloatingActionButton mFAB;
     ViewGroup mContainer;
     ArrayList<ListView> mPickerListViews = new ArrayList<>();
 
@@ -45,6 +52,7 @@ public class PageOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_creator_page_one, container, false);
 
+        mRootView = (RelativeLayout) v.findViewById(R.id.relativeLayout_characterCreatorPageOneRoot);
         // capture parent view as global variable
         mContainer = container;
 
@@ -148,6 +156,19 @@ public class PageOneFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onItemListViewClick(view, mChosenClassTextView, mClassPickerListView);
+            }
+        });
+
+        mFAB = (FloatingActionButton) v.findViewById(R.id.floatingActionButton_addClassPicker);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.BELOW, R.id.linearLayout_classAndRacePicker);
+
+                LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext());
+                mRootView.addView(levelAndClassPickerView, params);
             }
         });
 
