@@ -265,9 +265,13 @@ public class PageOneFragment extends Fragment {
 
     }
 
+    /**
+     * Closes a previously opened list view if a new list view is opened
+     * @param openingListView the ListView that is currently being opened.
+     */
     private void closeOtherListViews(ListView openingListView) {
         for (ListView view : mPickerListViews) {
-            // if there is a list view open that is not the list view being open then make it gone
+            // if there is a list view open that is not the list view being opened then make it gone
             if (view != openingListView && view.getVisibility() == View.VISIBLE) {
                 view.setVisibility(View.GONE);
                 CardView parentCardView = (CardView) view.getParent();
