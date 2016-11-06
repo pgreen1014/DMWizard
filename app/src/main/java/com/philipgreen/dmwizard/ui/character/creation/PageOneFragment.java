@@ -207,25 +207,28 @@ public class PageOneFragment extends Fragment {
         // Grab sub races of selected race
         SubRaceListEnum[] subraceList = RaceListManager.getSubraceList(raceValue);
 
+        // hide subrace CardView if there are no subraces
         if (subraceList == null) {
             hideSubRacePicker();
             return;
         }
-        
+
+        // set layout parameters for CardView
         mSubracePickerCardView.setCardElevation(mRacePickerCardView.getCardElevation());
         mSubracePickerCardView.setVisibility(View.VISIBLE);
         mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
 
         ArrayList<String> listForAdapter = new ArrayList<>();
         for (int i = 0; i < subraceList.length; i++) {
-            if (i == 0) {
+            // add "None" to top of list if it isn't a dragonborn
+            if (i == 0 && raceValue != RaceListEnum.DRAGONBORN) {
                 listForAdapter.add("None");
             }
             listForAdapter.add(configureString(subraceList[i].toString()));
         }
 
+        // Set up initialize SubRace ListView
         mSubRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, listForAdapter);
-
         mSubracePickerListView.setAdapter(mSubRacePickerAdapter);
         mSubracePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
