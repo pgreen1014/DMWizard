@@ -38,38 +38,23 @@ public class PageOneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ArrayList<String> raceList = new ArrayList<>();
-        for(RaceListEnum value: RaceListEnum.values()) {
-            raceList.add(configureString(value.toString()));
-        }
-
-        ArrayList<String> levelList = new ArrayList<>();
-        for (int i = 1; i < 21; i++) {
-            levelList.add(Integer.toString(i));
-        }
-
-        ArrayList<String> classList = new ArrayList<>();
-        for(PlayerClassEnum playerClass: PlayerClassEnum.values()) {
-            classList.add(configureString(configureString(playerClass.toString())));
-        }
-
-        mRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, raceList);
-        mLevelPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, levelList);
-        mClassPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classList);
+        initListViewAdapters();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_character_creator_page_one, container, false);
 
+        // capture parent view as global variable
         mContainer = container;
+
+        // initialize TextViews
         mChosenRaceTextView = (TextView) v.findViewById(R.id.textView_chosenRace);
         mChosenClassTextView = (TextView) v.findViewById(R.id.textView_chosenClass);
         mChosenLevelTextView = (TextView) v.findViewById(R.id.textView_chosenLevel);
         mChosenSubraceTextView = (TextView) v.findViewById(R.id.textView_chosenSubRace);
 
-        // SET UP CARD VIEWS
+        // Set up CardViews
         mRacePickerCardView = (CardView) v.findViewById(R.id.cardView_racePicker);
         mLevelPickerCardView = (CardView) v.findViewById(R.id.cardView_levelPicker);
         mClassPickerCardView = (CardView) v.findViewById(R.id.cardView_classPicker);
@@ -119,13 +104,16 @@ public class PageOneFragment extends Fragment {
             }
         });
 
-        // SET UP LIST VIEWS
+        // Set up ListViews
         mRacePickerListView = (ListView) v.findViewById(R.id.listView_racePicker);
         mRacePickerListView.setAdapter(mRacePickerAdapter);
+
         mLevelPickerListView = (ListView) v.findViewById(R.id.listView_levelPicker);
         mLevelPickerListView.setAdapter(mLevelPickerAdapter);
+
         mClassPickerListView = (ListView) v.findViewById(R.id.listView_classPicker);
         mClassPickerListView.setAdapter(mClassPickerAdapter);
+
         mSubracePickerListView = (ListView) v.findViewById(R.id.listView_subRacePicker);
         initPickerListViews();
 
@@ -247,11 +235,33 @@ public class PageOneFragment extends Fragment {
         });
     }
 
+    // Puts ListViews in a global ArrayList for iteration
     private void initPickerListViews() {
         mPickerListViews.add(mRacePickerListView);
         mPickerListViews.add(mSubracePickerListView);
         mPickerListViews.add(mLevelPickerListView);
         mPickerListViews.add(mClassPickerListView);
+    }
+
+    private void initListViewAdapters() {
+        ArrayList<String> raceList = new ArrayList<>();
+        for(RaceListEnum value: RaceListEnum.values()) {
+            raceList.add(configureString(value.toString()));
+        }
+
+        ArrayList<String> levelList = new ArrayList<>();
+        for (int i = 1; i < 21; i++) {
+            levelList.add(Integer.toString(i));
+        }
+
+        ArrayList<String> classList = new ArrayList<>();
+        for(PlayerClassEnum playerClass: PlayerClassEnum.values()) {
+            classList.add(configureString(configureString(playerClass.toString())));
+        }
+
+        mRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, raceList);
+        mLevelPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, levelList);
+        mClassPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classList);
     }
 
     private void onItemListViewClick(View view, TextView textViewChosen, ListView listViewToClose) {
