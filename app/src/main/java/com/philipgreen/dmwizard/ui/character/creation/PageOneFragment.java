@@ -178,12 +178,6 @@ public class PageOneFragment extends Fragment {
         return v;
     }
 
-    private int convertPixelsToDP(int dp) {
-        float scale = getResources().getDisplayMetrics().density;
-        int pixels = (int) (dp * scale + 0.5f);
-        return pixels;
-    }
-
     /**
      * Take and converts an enum.toString() and converts it into a readable string.
      * Enum should only contain capital letters and underscores. Example: HILL_DWARF will
