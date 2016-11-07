@@ -35,11 +35,6 @@ public class LevelAndClassPickerView extends LinearLayout {
     private void setAttributes() {
         this.setOrientation(HORIZONTAL);
         this.setId(View.generateViewId());
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(16, 0, 16, 16);
-        this.setLayoutParams(params);
     }
 
     /**

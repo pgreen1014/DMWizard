@@ -23,6 +23,7 @@ import com.philipgreen.dmwizard.races.utils.RaceListEnum;
 import com.philipgreen.dmwizard.races.utils.RaceListManager;
 import com.philipgreen.dmwizard.races.utils.SubRaceListEnum;
 import com.philipgreen.dmwizard.ui.views.LevelAndClassPickerView;
+import com.philipgreen.dmwizard.utils.UnitConverter;
 
 import java.util.ArrayList;
 
@@ -166,6 +167,8 @@ public class PageOneFragment extends Fragment {
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
+                int margin = UnitConverter.convertPixelsToDP(PageOneFragment.this, 16);
+                params.setMargins(margin, 0, margin, margin);
 
                 LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext());
                 mContent.addView(levelAndClassPickerView, params);
@@ -173,6 +176,12 @@ public class PageOneFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private int convertPixelsToDP(int dp) {
+        float scale = getResources().getDisplayMetrics().density;
+        int pixels = (int) (dp * scale + 0.5f);
+        return pixels;
     }
 
     /**
