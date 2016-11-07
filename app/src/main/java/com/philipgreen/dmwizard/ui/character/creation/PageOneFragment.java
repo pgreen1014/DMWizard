@@ -170,7 +170,7 @@ public class PageOneFragment extends Fragment {
                 int margin = UnitConverter.convertPixelsToDP(PageOneFragment.this, 16);
                 params.setMargins(margin, 0, margin, margin);
 
-                LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext());
+                LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext(), PageOneFragment.this);
                 mContent.addView(levelAndClassPickerView, params);
             }
         });
