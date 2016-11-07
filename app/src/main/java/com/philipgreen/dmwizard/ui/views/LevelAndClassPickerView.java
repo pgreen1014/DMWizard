@@ -27,14 +27,14 @@ public class LevelAndClassPickerView extends LinearLayout {
         super(context);
         setAttributes();
 
-        LevelPicker levelPicker = new LevelPicker(context);
+        LevelPicker levelPicker = new LevelPicker(context, fragment);
         this.addView(levelPicker, 0);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
         int margin = UnitConverter.convertPixelsToDP(fragment, 16);
         params.setMarginStart(margin);
-        ClassPicker classPicker = new ClassPicker(context);
+        ClassPicker classPicker = new ClassPicker(context, fragment);
         this.addView(classPicker, 1, params);
     }
 
@@ -48,10 +48,10 @@ public class LevelAndClassPickerView extends LinearLayout {
      */
     private class LevelPicker extends CardView {
 
-        public LevelPicker(Context context) {
+        public LevelPicker(Context context, Fragment fragment) {
             super(context);
             setLevelPickerAttributes();
-            this.addView(createChosenTextView(context), 0);
+            this.addView(createChosenTextView(context, fragment), 0);
             this.addView(createListViewChoser(context), 1);
         }
 
@@ -64,7 +64,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             this.setLayoutParams(params);
         }
 
-        private TextView createChosenTextView(Context context) {
+        private TextView createChosenTextView(Context context, Fragment fragment) {
             TextView chosenTextView = new TextView(context);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -73,7 +73,8 @@ public class LevelAndClassPickerView extends LinearLayout {
             chosenTextView.setLayoutParams(params);
 
             chosenTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-            chosenTextView.setPadding(0, 10, 0, 10);
+            int padding = UnitConverter.convertPixelsToDP(fragment, 10);
+            chosenTextView.setPadding(0, padding, 0, padding);
             chosenTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             chosenTextView.setTag("chosenItem");
             chosenTextView.setText("1");
@@ -99,10 +100,10 @@ public class LevelAndClassPickerView extends LinearLayout {
      */
     private class ClassPicker extends CardView {
 
-        public ClassPicker(Context context) {
+        public ClassPicker(Context context, Fragment fragment) {
             super(context);
             setClassPickerAttributes();
-            this.addView(createChosenTextView(context), 0);
+            this.addView(createChosenTextView(context, fragment), 0);
             this.addView(createListViewChoser(context), 1);
         }
 
@@ -112,7 +113,7 @@ public class LevelAndClassPickerView extends LinearLayout {
 
         }
 
-        private TextView createChosenTextView(Context context) {
+        private TextView createChosenTextView(Context context, Fragment fragment) {
             TextView chosenTextView = new TextView(context);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -121,7 +122,8 @@ public class LevelAndClassPickerView extends LinearLayout {
             chosenTextView.setLayoutParams(params);
 
             chosenTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-            chosenTextView.setPadding(0, 10, 0, 10);
+            int padding = UnitConverter.convertPixelsToDP(fragment, 10);
+            chosenTextView.setPadding(0, padding, 0, padding);
             chosenTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             chosenTextView.setTag("chosenItem");
             chosenTextView.setHint(R.string.choose_class_hint);
