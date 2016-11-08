@@ -55,7 +55,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             params.gravity = Gravity.CENTER;
-            
+
             this.addView(createChosenTextView(context, fragment), 0, params);
             this.addView(createListViewChoser(context), 1);
         }
