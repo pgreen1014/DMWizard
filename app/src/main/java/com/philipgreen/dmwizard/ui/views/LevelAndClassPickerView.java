@@ -51,7 +51,12 @@ public class LevelAndClassPickerView extends LinearLayout {
         public LevelPicker(Context context, Fragment fragment) {
             super(context);
             setLevelPickerAttributes();
-            this.addView(createChosenTextView(context, fragment), 0);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+            
+            this.addView(createChosenTextView(context, fragment), 0, params);
             this.addView(createListViewChoser(context), 1);
         }
 
@@ -69,7 +74,7 @@ public class LevelAndClassPickerView extends LinearLayout {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.CENTER_HORIZONTAL;
+            params.gravity = Gravity.CENTER;
             chosenTextView.setLayoutParams(params);
 
             chosenTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
@@ -103,7 +108,12 @@ public class LevelAndClassPickerView extends LinearLayout {
         public ClassPicker(Context context, Fragment fragment) {
             super(context);
             setClassPickerAttributes();
-            this.addView(createChosenTextView(context, fragment), 0);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+
+            this.addView(createChosenTextView(context, fragment), 0, params);
             this.addView(createListViewChoser(context), 1);
         }
 
@@ -118,7 +128,7 @@ public class LevelAndClassPickerView extends LinearLayout {
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.gravity = Gravity.CENTER_HORIZONTAL;
+            params.gravity = Gravity.CENTER;
             chosenTextView.setLayoutParams(params);
 
             chosenTextView.setTextAlignment(TEXT_ALIGNMENT_CENTER);
