@@ -176,7 +176,7 @@ public class PageOneFragment extends Fragment {
      * @param string enum.toString()
      * @return a human readable string
      */
-    private String configureString(String string) {
+    private String configureEnumToString(String string) {
         String[] strings = string.split("_");
         String result = "";
 
@@ -198,7 +198,7 @@ public class PageOneFragment extends Fragment {
     }
 
     /**
-     * Converts a string generated from configureString(string) back into
+     * Converts a string generated from configureEnumToString(string) back into
      * it enum type
      * @param raceText enum.toString() to convert back to string
      * @return return enum type, return null if enum is not found
@@ -207,7 +207,7 @@ public class PageOneFragment extends Fragment {
         RaceListEnum raceValue = null;
 
         for(RaceListEnum value: RaceListEnum.values()) {
-            if (configureString(value.toString()).equals(raceText)) {
+            if (configureEnumToString(value.toString()).equals(raceText)) {
                 raceValue = value;
             }
         }
@@ -245,7 +245,7 @@ public class PageOneFragment extends Fragment {
             if (i == 0 && raceValue != RaceListEnum.DRAGONBORN) {
                 listForAdapter.add("None");
             }
-            listForAdapter.add(configureString(subraceList[i].toString()));
+            listForAdapter.add(configureEnumToString(subraceList[i].toString()));
         }
 
         // Set up initialize SubRace ListView
@@ -273,7 +273,7 @@ public class PageOneFragment extends Fragment {
     private void initListViewAdapters() {
         ArrayList<String> raceList = new ArrayList<>();
         for(RaceListEnum value: RaceListEnum.values()) {
-            raceList.add(configureString(value.toString()));
+            raceList.add(configureEnumToString(value.toString()));
         }
 
         ArrayList<String> levelList = new ArrayList<>();
@@ -283,7 +283,7 @@ public class PageOneFragment extends Fragment {
 
         ArrayList<String> classList = new ArrayList<>();
         for(PlayerClassEnum playerClass: PlayerClassEnum.values()) {
-            classList.add(configureString(configureString(playerClass.toString())));
+            classList.add(configureEnumToString(configureEnumToString(playerClass.toString())));
         }
 
         mRacePickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, raceList);
