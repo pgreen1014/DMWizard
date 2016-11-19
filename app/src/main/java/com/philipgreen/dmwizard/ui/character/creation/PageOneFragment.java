@@ -215,6 +215,11 @@ public class PageOneFragment extends Fragment {
         return raceValue;
     }
 
+    /**
+     * generates the sub-race corresponding to the race selected. If selected race does not have a corresponding list of sub-races,
+     * then the sub-race CardView is hidden.
+     * @param raceText String of the race selected.
+     */
     private void generateSubRaceListView(String raceText) {
         // Grab enum value from TextView
         RaceListEnum raceValue = getRaceEnumFromTextView(raceText);
@@ -233,6 +238,7 @@ public class PageOneFragment extends Fragment {
         mSubracePickerCardView.setVisibility(View.VISIBLE);
         mChosenSubraceTextView.setText(R.string.choose_subrace_hint);
 
+        // Create the sub-race list adapter
         ArrayList<String> listForAdapter = new ArrayList<>();
         for (int i = 0; i < subraceList.length; i++) {
             // add "None" to top of list if it isn't a dragonborn
