@@ -78,7 +78,13 @@ public class PageOneFragment extends Fragment {
 
                 LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext(), PageOneFragment.this,
                         mLevelPickerAdapter, mClassPickerAdapter);
+
+                // Slide the levelAndClassPickerView from the left
+                levelAndClassPickerView.setTranslationX(-1000f);
                 mContent.addView(levelAndClassPickerView, params);
+                levelAndClassPickerView.animate().translationXBy(1000f).setDuration(500);
+                // Provide gradual transition of the other views
+                TransitionManager.beginDelayedTransition(mContainer);
             }
         });
 
