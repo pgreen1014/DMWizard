@@ -160,6 +160,7 @@ public class PageOneFragment extends Fragment {
             }
         });
 
+        // Floating Action Button
         mFAB = (FloatingActionButton) v.findViewById(R.id.floatingActionButton_addClassPicker);
         mFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,12 +297,17 @@ public class PageOneFragment extends Fragment {
     }
 
     private void onItemListViewClick(View view, TextView textViewChosen, ListView listViewToClose) {
+        // grab text of the selected item and save as a string
         TextView textViewSelected = (TextView) view;
         String textViewString = String.valueOf(textViewSelected.getText());
 
+        // set the CardView's selected text to the selected item
         textViewChosen.setText(textViewString);
+
+        // Make selected TextView visible and and the ListView gone
         textViewChosen.setVisibility(View.VISIBLE);
         listViewToClose.setVisibility(View.GONE);
+        
         TransitionManager.beginDelayedTransition(mContainer);
 
     }
