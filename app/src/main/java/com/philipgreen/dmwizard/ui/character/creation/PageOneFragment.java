@@ -1,6 +1,7 @@
 package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -10,12 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.philipgreen.dmwizard.R;
 import com.philipgreen.dmwizard.playerClasses.utils.PlayerClassEnum;
@@ -129,34 +127,25 @@ public class PageOneFragment extends Fragment {
         mRacePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView raceSelected = (TextView) view;
-                String raceString = String.valueOf(raceSelected.getText());
-                mChosenRaceTextView.setText(raceString);
-                mRacePickerListView.setVisibility(View.GONE);
-                mChosenRaceTextView.setVisibility(View.VISIBLE);
-                TransitionManager.beginDelayedTransition((ViewGroup) mRacePickerCardView.getParent());
-                generateSubRaceListView(raceString);
-                /*
-                onItemListViewClick(view, mChosenRaceTextView, mRacePickerListView);
+                String selectedRace =
+                        onListItemSelected(view, mChosenRaceTextView, mRacePickerListView, (ViewGroup) mRacePickerCardView.getParent());
 
-                TextView raceSelected = (TextView) view;
-                String raceString = String.valueOf(raceSelected.getText());
-                generateSubRaceListView(raceString);
-                */
+                generateSubRaceListView(selectedRace);
+
             }
         });
 
         mLevelPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onItemListViewClick(view, mChosenLevelTextView, mLevelPickerListView);
+                onListItemSelected(view, mChosenLevelTextView, mLevelPickerListView, mContainer);
             }
         });
 
         mClassPickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onItemListViewClick(view, mChosenClassTextView, mClassPickerListView);
+                onListItemSelected(view, mChosenClassTextView, mClassPickerListView, mContainer);
             }
         });
 
@@ -259,7 +248,7 @@ public class PageOneFragment extends Fragment {
         mSubracePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                onItemListViewClick(view, mChosenSubraceTextView, mSubracePickerListView);
+                onListItemSelected(view, mChosenSubraceTextView, mSubracePickerListView, mContainer);
             }
         });
     }
@@ -301,8 +290,10 @@ public class PageOneFragment extends Fragment {
      * @param view the view of the selected item in a ListView
      * @param textViewChosen TextView that will display the selected item's text
      * @param listViewToClose The ListView that will be made Visibility.Gone
+     * @param viewForTransition the view to use the TranstionManager on, if this is null then no TransitionManager will be used
+     * @return returns the text of the selected item
      */
-    private void onItemListViewClick(View view, TextView textViewChosen, ListView listViewToClose) {
+    private String onListItemSelected(View view, TextView textViewChosen, ListView listViewToClose, @Nullable ViewGroup viewForTransition) {
         // grab text of the selected item and save as a string
         TextView textViewSelected = (TextView) view;
         String textViewString = String.valueOf(textViewSelected.getText());
@@ -314,8 +305,11 @@ public class PageOneFragment extends Fragment {
         textViewChosen.setVisibility(View.VISIBLE);
         listViewToClose.setVisibility(View.GONE);
 
-        TransitionManager.beginDelayedTransition(mContainer);
+        if (viewForTransition != null) {
+            TransitionManager.beginDelayedTransition(viewForTransition);
+        }
 
+        return textViewString;
     }
 
     /**
