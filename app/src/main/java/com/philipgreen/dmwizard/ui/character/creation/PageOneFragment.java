@@ -296,6 +296,12 @@ public class PageOneFragment extends Fragment {
         mClassPickerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, classList);
     }
 
+    /**
+     * sets a CardView's TextView to the text of the selected item of a ListView
+     * @param view the view of the selected item in a ListView
+     * @param textViewChosen TextView that will display the selected item's text
+     * @param listViewToClose The ListView that will be made Visibility.Gone
+     */
     private void onItemListViewClick(View view, TextView textViewChosen, ListView listViewToClose) {
         // grab text of the selected item and save as a string
         TextView textViewSelected = (TextView) view;
@@ -307,7 +313,7 @@ public class PageOneFragment extends Fragment {
         // Make selected TextView visible and and the ListView gone
         textViewChosen.setVisibility(View.VISIBLE);
         listViewToClose.setVisibility(View.GONE);
-        
+
         TransitionManager.beginDelayedTransition(mContainer);
 
     }
