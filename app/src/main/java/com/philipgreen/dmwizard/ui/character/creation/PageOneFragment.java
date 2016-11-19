@@ -271,6 +271,9 @@ public class PageOneFragment extends Fragment {
         mPickerListViews.add(mClassPickerListView);
     }
 
+    /**
+     * function initializes the ArrayAdapters used for constructing list views.
+     */
     private void initListViewAdapters() {
         ArrayList<String> raceList = new ArrayList<>();
         for(RaceListEnum value: RaceListEnum.values()) {
