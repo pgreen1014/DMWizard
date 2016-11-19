@@ -69,7 +69,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             levelText = createChosenTextView(context, fragment);
 
             this.addView(levelText, 0, params);
-            this.addView(createListViewChoser(context), 1);
+            this.addView(createListViewChooser(context), 1);
 
             this.setOnClickListener(new OnClickListener() {
                 @Override
@@ -108,7 +108,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             return chosenTextView;
         }
 
-        private ListView createListViewChoser(Context context) {
+        private ListView createListViewChooser(Context context) {
             final ListView listView = new ListView(context);
             listView.setAdapter(mLevelAdapter);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -153,7 +153,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             classSelectedText = createChosenTextView(context, fragment);
 
             this.addView(classSelectedText, 0, params);
-            this.addView(createListViewChoser(context), 1);
+            this.addView(createListViewChooser(context), 1);
 
             this.setOnClickListener(new OnClickListener() {
                 @Override
@@ -189,7 +189,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             return chosenTextView;
         }
 
-        private ListView createListViewChoser (Context context) {
+        private ListView createListViewChooser(Context context) {
             final ListView listView = new ListView(context);
 
             listView.setAdapter(mClassAdapter);
