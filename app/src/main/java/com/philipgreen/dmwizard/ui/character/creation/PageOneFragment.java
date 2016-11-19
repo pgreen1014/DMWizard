@@ -61,7 +61,32 @@ public class PageOneFragment extends Fragment {
         mChosenLevelTextView = (TextView) v.findViewById(R.id.textView_chosenLevel);
         mChosenSubraceTextView = (TextView) v.findViewById(R.id.textView_chosenSubRace);
 
-        // Set up CardViews
+        // Set up CardViews and ListViews
+        initCardViews(v, container);
+        initListViews(v);
+
+        // Floating Action Button
+        mFAB = (FloatingActionButton) v.findViewById(R.id.floatingActionButton_addClassPicker);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                int margin = UnitConverter.convertPixelsToDP(PageOneFragment.this, 16);
+                params.setMargins(margin, 0, margin, margin);
+
+                LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext(), PageOneFragment.this,
+                        mLevelPickerAdapter, mClassPickerAdapter);
+                mContent.addView(levelAndClassPickerView, params);
+            }
+        });
+
+        return v;
+    }
+
+    // Initialize CardViews and their listeners
+    private void initCardViews(View v, final ViewGroup container) {
         mRacePickerCardView = (CardView) v.findViewById(R.id.cardView_racePicker);
         mLevelPickerCardView = (CardView) v.findViewById(R.id.cardView_levelPicker);
         mClassPickerCardView = (CardView) v.findViewById(R.id.cardView_classPicker);
@@ -110,8 +135,10 @@ public class PageOneFragment extends Fragment {
                 }
             }
         });
+    }
 
-        // Set up ListViews
+    // Initialize ListViews and their listeners
+    private void initListViews(View v) {
         mRacePickerListView = (ListView) v.findViewById(R.id.listView_racePicker);
         mRacePickerListView.setAdapter(mRacePickerAdapter);
 
@@ -122,6 +149,7 @@ public class PageOneFragment extends Fragment {
         mClassPickerListView.setAdapter(mClassPickerAdapter);
 
         mSubracePickerListView = (ListView) v.findViewById(R.id.listView_subRacePicker);
+        // initialize mPickerListViews ArrayList with the initialize ListViews
         initPickerListViews();
 
         mRacePickerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,25 +176,6 @@ public class PageOneFragment extends Fragment {
                 onListItemSelected(view, mChosenClassTextView, mClassPickerListView, mContainer);
             }
         });
-
-        // Floating Action Button
-        mFAB = (FloatingActionButton) v.findViewById(R.id.floatingActionButton_addClassPicker);
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT);
-                int margin = UnitConverter.convertPixelsToDP(PageOneFragment.this, 16);
-                params.setMargins(margin, 0, margin, margin);
-
-                LevelAndClassPickerView levelAndClassPickerView = new LevelAndClassPickerView(getContext(), PageOneFragment.this,
-                        mLevelPickerAdapter, mClassPickerAdapter);
-                mContent.addView(levelAndClassPickerView, params);
-            }
-        });
-
-        return v;
     }
 
     /**
