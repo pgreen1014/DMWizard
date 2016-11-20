@@ -114,6 +114,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             listView.setLayoutParams(params);
+            listView.setNestedScrollingEnabled(true);
 
             listView.setVisibility(GONE);
 
@@ -197,6 +198,7 @@ public class LevelAndClassPickerView extends LinearLayout {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             listView.setLayoutParams(params);
+            listView.setNestedScrollingEnabled(true);
 
             listView.setVisibility(GONE);
 

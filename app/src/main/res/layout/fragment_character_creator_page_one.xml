@@ -6,140 +6,152 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/content"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_centerInParent="true">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_racePicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp">
-
-            <TextView
-                android:id="@+id/textView_chosenRace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag="chosenItem"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:textAlignment="center"
-                android:layout_gravity="center_horizontal"
-                android:textSize="20sp"
-                android:hint="@string/choose.race.hint"/>
-
-            <ListView
-                android:id="@+id/listView_racePicker"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardView_subRacePicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_centerVertical="true"
-            app:cardElevation="0dp">
-
-            <TextView
-                android:id="@+id/textView_chosenSubRace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag="chosenItem"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:textAlignment="center"
-                android:layout_gravity="center_horizontal"
-                android:textSize="20sp"
-                android:hint="@string/choose.subrace.hint"/>
-
-            <ListView
-                android:id="@+id/listView_subRacePicker"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"/>
-
-        </android.support.v7.widget.CardView>
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true">
 
         <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
+            android:orientation="vertical"
             android:layout_marginBottom="16dp"
-            android:id="@+id/linearLayout_classAndRacePicker">
+            android:layout_marginTop="16dp"
+            android:layout_centerInParent="true">
 
             <android.support.v7.widget.CardView
-                android:id="@+id/cardView_levelPicker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                app:cardUseCompatPadding="true">
-
-                <TextView
-                    android:id="@+id/textView_chosenLevel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:tag="chosenItem"
-                    android:textSize="20sp"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
-                    android:textAlignment="center"
-                    android:layout_gravity="center_horizontal"
-                    android:text="1"/>
-
-                <ListView
-                    android:id="@+id/listView_levelPicker"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"/>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardView_classPicker"
+                android:id="@+id/cardView_racePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                app:cardUseCompatPadding="true">
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp">
 
                 <TextView
-                    android:id="@+id/textView_chosenClass"
+                    android:id="@+id/textView_chosenRace"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tag="chosenItem"
-                    android:textSize="20sp"
-                    android:paddingBottom="10dp"
                     android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
-                    android:hint="@string/choose.class.hint"/>
+                    android:textSize="20sp"
+                    android:hint="@string/choose.race.hint"/>
 
                 <ListView
-                    android:id="@+id/listView_classPicker"
+                    android:id="@+id/listView_racePicker"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"/>
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="true"/>
 
             </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView_subRacePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_centerVertical="true"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/textView_chosenSubRace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="chosenItem"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textAlignment="center"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:hint="@string/choose.subrace.hint"/>
+
+                <ListView
+                    android:id="@+id/listView_subRacePicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:nestedScrollingEnabled="true"/>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/linearLayout_classAndRacePicker">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView_levelPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/textView_chosenLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="chosenItem"
+                        android:textSize="20sp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center_horizontal"
+                        android:text="1"/>
+
+                    <ListView
+                        android:id="@+id/listView_levelPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:nestedScrollingEnabled="true"/>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView_classPicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    app:cardUseCompatPadding="true">
+
+                    <TextView
+                        android:id="@+id/textView_chosenClass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tag="chosenItem"
+                        android:textSize="20sp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:textAlignment="center"
+                        android:layout_gravity="center_horizontal"
+                        android:hint="@string/choose.class.hint"/>
+
+                    <ListView
+                        android:id="@+id/listView_classPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        android:nestedScrollingEnabled="true"/>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
+
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
