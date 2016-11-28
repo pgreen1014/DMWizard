@@ -1,4 +1,4 @@
-package com.philipgreen.dmwizard.ui;
+package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
