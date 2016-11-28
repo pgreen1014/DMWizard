@@ -14,14 +14,6 @@ public class CharacterCreatorActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_creator);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.fragmentContainer_characterCreator);
-
-        if (fragment == null) {
-            fragment = new PageOneFragment();
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragmentContainer_characterCreator, fragment)
-                    .commit();
-        }
+        
     }
 }
