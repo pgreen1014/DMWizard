@@ -1,19 +1,13 @@
 package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 
-import com.philipgreen.dmwizard.R;
-
-public class CharacterCreatorActivity extends FragmentActivity {
+public class CharacterCreatorActivity extends CharacterCreationFragmentActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_character_creator);
-
-
+    protected Fragment createFragment() {
+        return new RacePickerFragment();
     }
+
+
 }
