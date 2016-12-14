@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.philipgreen.dmwizard.R;
 import com.philipgreen.dmwizard.races.Dwarf;
 import com.philipgreen.dmwizard.races.utils.RaceListEnum;
+import com.philipgreen.dmwizard.races.utils.RaceListManager;
 import com.philipgreen.dmwizard.utils.UnitConverter;
 
 import java.util.ArrayList;
@@ -41,67 +42,9 @@ public class RacePickerFragment extends Fragment {
     }
 
     private void createRaceList() {
-        for (String race : getHumanReadableRaceListEnum()) {
+        for (String race : RaceListManager.getRaceListForUIPresentation()) {
             mRaces.add(race);
         }
-    }
-
-    private ArrayList<String> getHumanReadableRaceListEnum() {
-        // convert underscores to spaces
-        // and only capitalize the first letter of each word
-
-        ArrayList<String> readableRaceList = new ArrayList<>();
-
-        for (RaceListEnum race : RaceListEnum.values()) {
-            String raceToMakeReadable = race.toString();
-            raceToMakeReadable = replaceUnderscoresWithSpaces(raceToMakeReadable);
-            raceToMakeReadable = capitalizeFirstLetters(raceToMakeReadable);
-
-            readableRaceList.add(raceToMakeReadable);
-        }
-
-        return readableRaceList;
-    }
-
-    private String replaceUnderscoresWithSpaces(String item) {
-        String[] splitString = item.split("_");
-
-        String stringWithSpaces = "";
-        for (int i=0; i < splitString.length; i++) {
-
-            // The first item in the array should not have a space before it
-            if (i == 0) {
-                stringWithSpaces += splitString[i];
-            } else {
-                stringWithSpaces += " " + splitString[i];
-            }
-        }
-
-        return stringWithSpaces;
-    }
-
-    // words in string must be separated by spaces to work correctly
-    private String capitalizeFirstLetters(String item) {
-        String[] wordsToCapitalize = item.split(" ");
-
-        String capitalizedWords = "";
-        for (int i=0; i < wordsToCapitalize.length; i++) {
-            String lowercaseWord = wordsToCapitalize[i].toLowerCase();
-
-            String firstLetter = lowercaseWord.substring(0,1);
-            String remainingLetters = lowercaseWord.substring(1);
-
-            String capitalizedWord = firstLetter.toUpperCase() + remainingLetters;
-
-            // The first item in the array should not have a space before it
-            if (i == 0) {
-                capitalizedWords += capitalizedWord;
-            } else {
-                capitalizedWords += " " + capitalizedWord;
-            }
-        }
-
-        return capitalizedWords;
     }
 
     private void updateUI() {

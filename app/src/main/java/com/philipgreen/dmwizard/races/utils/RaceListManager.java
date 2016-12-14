@@ -1,5 +1,6 @@
 package com.philipgreen.dmwizard.races.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -38,6 +39,66 @@ public class RaceListManager {
 
     public static SubRaceListEnum[] getSubraceList(RaceListEnum race) {
         return RACE_LIST_MAP.get(race);
+    }
+
+    public static ArrayList<String> getRaceListForUIPresentation() {
+        ArrayList<String> raceList = new ArrayList<>();
+
+        for (RaceListEnum race : RaceListEnum.values()) {
+            String raceItem = convertEnumToReadableString(race);
+            raceList.add(raceItem);
+        }
+
+        return raceList;
+    }
+
+    private static String replaceUnderscoresWithSpaces(String item) {
+        String[] splitString = item.split("_");
+
+        String stringWithSpaces = "";
+        for (int i=0; i < splitString.length; i++) {
+
+            // The first item in the array should not have a space before it
+            if (i == 0) {
+                stringWithSpaces += splitString[i];
+            } else {
+                stringWithSpaces += " " + splitString[i];
+            }
+        }
+
+        return stringWithSpaces;
+    }
+
+    private static String capitalizeFirstLetters(String item) {
+        String[] wordsToCapitalize = item.split(" ");
+
+        String capitalizedWords = "";
+        for (int i=0; i < wordsToCapitalize.length; i++) {
+            String lowercaseWord = wordsToCapitalize[i].toLowerCase();
+
+            String firstLetter = lowercaseWord.substring(0,1);
+            String remainingLetters = lowercaseWord.substring(1);
+
+            String capitalizedWord = firstLetter.toUpperCase() + remainingLetters;
+
+            // The first item in the array should not have a space before it
+            if (i == 0) {
+                capitalizedWords += capitalizedWord;
+            } else {
+                capitalizedWords += " " + capitalizedWord;
+            }
+        }
+
+        return capitalizedWords;
+    }
+
+    private static String convertEnumToReadableString(RaceListEnum race) {
+        String raceToConvert = race.toString();
+
+        raceToConvert = replaceUnderscoresWithSpaces(raceToConvert);
+        raceToConvert = capitalizeFirstLetters(raceToConvert);
+
+        return raceToConvert;
     }
 
 }
