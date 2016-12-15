@@ -37,8 +37,27 @@ public class RaceListManager {
                         SubRaceListEnum.SILVER_DRAGONBORN, SubRaceListEnum.WHITE_DRAGONBORN});
     }
 
-    public static SubRaceListEnum[] getSubraceList(RaceListEnum race) {
-        return RACE_LIST_MAP.get(race);
+    private static SubRaceListEnum[] getSubraceList(String race) {
+
+        RaceListEnum convertedRace = convertReadableStringtoEnum(race);
+
+        return RACE_LIST_MAP.get(convertedRace);
+    }
+
+    public static ArrayList<String> getSubRaceListAsString(String race) {
+        ArrayList<String> subRaceList = new ArrayList<>();
+
+        SubRaceListEnum[] subRaceListValues = getSubraceList(race);
+        if (subRaceListValues != null) {
+
+            for (SubRaceListEnum subRace : subRaceListValues) {
+                String subRaceItem = convertEnumToReadableString(subRace);
+                subRaceList.add(subRaceItem);
+            }
+
+        }
+
+        return subRaceList;
     }
 
     public static ArrayList<String> getRaceListForUIPresentation() {
@@ -99,6 +118,29 @@ public class RaceListManager {
         raceToConvert = capitalizeFirstLetters(raceToConvert);
 
         return raceToConvert;
+    }
+
+    private static String convertEnumToReadableString(SubRaceListEnum race) {
+        String raceToConvert = race.toString();
+
+        raceToConvert = replaceUnderscoresWithSpaces(raceToConvert);
+        raceToConvert = capitalizeFirstLetters(raceToConvert);
+
+        return raceToConvert;
+    }
+
+    private static RaceListEnum convertReadableStringtoEnum(String race) throws IllegalArgumentException {
+
+        for(RaceListEnum raceItem : RaceListEnum.values()) {
+
+            if (convertEnumToReadableString(raceItem).equals(race)) {
+                return raceItem;
+            }
+
+        }
+
+        throw new IllegalArgumentException(race + " does not correspond to a predefined RaceListEnum. " +
+                "Make sure string arg was generated using RaceListManager.convertEnumToReadableString");
     }
 
 }

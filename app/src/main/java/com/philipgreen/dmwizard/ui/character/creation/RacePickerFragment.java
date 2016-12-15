@@ -2,6 +2,7 @@ package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.philipgreen.dmwizard.R;
-import com.philipgreen.dmwizard.races.Dwarf;
-import com.philipgreen.dmwizard.races.utils.RaceListEnum;
 import com.philipgreen.dmwizard.races.utils.RaceListManager;
 import com.philipgreen.dmwizard.utils.UnitConverter;
 
@@ -60,6 +59,19 @@ public class RacePickerFragment extends Fragment {
             super(itemView);
             mItemView = itemView;
             mRaceItemTextView = (TextView) itemView.findViewById(R.id.list_item_race_text_view);
+
+            mItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String raceText = mRaceItemTextView.getText().toString();
+
+                    SubRacePickerDialogFragment subRacePicker = SubRacePickerDialogFragment.newInstance(raceText);
+
+
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    subRacePicker.show(fm, "dialog");
+                }
+            });
         }
 
         void setBottomMarginTo16() {
