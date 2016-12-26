@@ -5,14 +5,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.philipgreen.dmwizard.races.utils.RaceListEnum;
 import com.philipgreen.dmwizard.races.utils.RaceListManager;
-import com.philipgreen.dmwizard.races.utils.SubRaceListEnum;
 
 import java.util.ArrayList;
 
