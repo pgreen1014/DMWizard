@@ -25,6 +25,8 @@ public class CharacterCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_character_creator);
 
+        getSupportActionBar().setTitle("Character Creation");
+
         CharacterCreatorPagerAdapter pagerAdapter = new CharacterCreatorPagerAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager_character_creator);
         viewPager.setAdapter(pagerAdapter);
