@@ -2,16 +2,16 @@ package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.philipgreen.dmwizard.R;
 
 import java.util.ArrayList;
 
-public class CharacterCreatorActivity extends FragmentActivity {
+public class CharacterCreatorActivity extends AppCompatActivity {
 
     private final ArrayList<Fragment> characterCreationFragmentList = new ArrayList<Fragment>() {
         {
