@@ -3,4 +3,5 @@
     <string name="choose.race.hint">Choose Race&#8230;</string>
     <string name="choose.subrace.hint">Choose Sub Race&#8230;</string>
     <string name="choose.class.hint">Choose Class&#8230;</string>
+    <string name="character.creation.activity.title">Character Creation</string>
 </resources>
