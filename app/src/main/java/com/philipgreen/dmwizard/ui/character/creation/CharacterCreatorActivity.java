@@ -39,8 +39,12 @@ public class CharacterCreatorActivity extends AppCompatActivity {
 
     private void  setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new RacePickerFragment(), "Race");
-        adapter.addFrag(new ClassPickerFragment(), "Class");
+        adapter.addFragment(new RacePickerFragment(), "Race");
+        adapter.addFragment(new ClassPickerFragment(), "Class");
+        adapter.addFragment(new AbilityScoreCreationFragment(), "Abilities");
+        adapter.addFragment(new CharacterBackgroundSelectionFragment(), "Background");
+        adapter.addFragment(new CharacterDescriptionSelectionFragment(), "Description");
+        adapter.addFragment(new CharacterEquipmentSelectionFragment(), "Equipment");
         viewPager.setAdapter(adapter);
     }
 
@@ -62,7 +66,7 @@ public class CharacterCreatorActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFrag(Fragment fragment, String title) {
+        public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
