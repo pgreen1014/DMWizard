@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.character.creation.CharacterCreatorActivity" android:theme="@style/CharacterCreationTheme"
+        <activity
+            android:name=".ui.character.creation.CharacterCreatorActivity"
+            android:theme="@style/AppTabLayout"
             android:label="@string/character.creation.activity.title">
         </activity>
     </application>
