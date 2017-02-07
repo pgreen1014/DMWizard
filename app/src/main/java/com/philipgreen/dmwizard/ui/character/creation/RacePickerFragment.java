@@ -1,10 +1,13 @@
 package com.philipgreen.dmwizard.ui.character.creation;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +31,18 @@ public class RacePickerFragment extends Fragment {
     private Fragment mRacePicker = this;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        createRaceList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_race_picker, container, false);
 
         mRacePickerRecyclerView = (RecyclerView) view.findViewById(R.id.racePicker_recyclerView);
         mRacePickerRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        createRaceList();
         updateUI();
 
         return view;
