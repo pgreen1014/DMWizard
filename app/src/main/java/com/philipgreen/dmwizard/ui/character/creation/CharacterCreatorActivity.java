@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionManager;
 import android.widget.Toast;
 
 import com.philipgreen.dmwizard.R;
@@ -15,8 +16,7 @@ import com.philipgreen.dmwizard.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterCreatorActivity extends AppCompatActivity implements RacePickerFragment.OnRaceSelectedListener,
-        SubRacePickerDialogFragment.OnSubraceSelectedListener {
+public class CharacterCreatorActivity extends AppCompatActivity implements OnCharacterCreationTraitSelectedListener{
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -51,13 +51,8 @@ public class CharacterCreatorActivity extends AppCompatActivity implements RaceP
     }
 
     @Override
-    public void onRaceSelected(String race) {
-        mViewPager.setCurrentItem(1);
-    }
+    public void onCharacterTraitSelected(String trait) {
 
-    @Override
-    public void onSubraceSelected(String subrace) {
-        mViewPager.setCurrentItem(1);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

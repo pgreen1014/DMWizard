@@ -28,18 +28,14 @@ public class RacePickerFragment extends Fragment {
     private RaceListAdapter mAdapter;
     private List<String> mRaces = new ArrayList<>();
     private Fragment mRacePicker = this;
-    OnRaceSelectedListener mCallback;
-
-    public interface OnRaceSelectedListener {
-        void onRaceSelected(String race);
-    }
+    OnCharacterCreationTraitSelectedListener mCallback;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
         try {
-            mCallback = (OnRaceSelectedListener) context;
+            mCallback = (OnCharacterCreationTraitSelectedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnRaceSelectedListener");
         }
@@ -98,7 +94,7 @@ public class RacePickerFragment extends Fragment {
                         subRacePicker.show(fm, "dialog");
 
                     } else {
-                        mCallback.onRaceSelected(raceText);
+                        mCallback.onCharacterTraitSelected(raceText);
                     }
 
                 }

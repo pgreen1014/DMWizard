@@ -18,18 +18,15 @@ import java.util.ArrayList;
 
 public class SubRacePickerDialogFragment extends DialogFragment {
     public static final String RACE_KEY = "race";
-    private OnSubraceSelectedListener mCallback;
+    private OnCharacterCreationTraitSelectedListener mCallback;
 
-    public interface OnSubraceSelectedListener {
-        void onSubraceSelected(String subrace);
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
         try {
-            mCallback = (OnSubraceSelectedListener) context;
+            mCallback = (OnCharacterCreationTraitSelectedListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnSubraceSelectedListener");
         }
@@ -60,7 +57,7 @@ public class SubRacePickerDialogFragment extends DialogFragment {
         dialogBuilder.setAdapter(subRaceListAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mCallback.onSubraceSelected(subRaceListAdapter.getItem(i));
+                mCallback.onCharacterTraitSelected(subRaceListAdapter.getItem(i));
             }
         });
 
