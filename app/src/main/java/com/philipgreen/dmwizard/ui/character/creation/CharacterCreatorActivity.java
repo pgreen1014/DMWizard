@@ -52,7 +52,13 @@ public class CharacterCreatorActivity extends AppCompatActivity implements OnCha
 
     @Override
     public void onCharacterTraitSelected(String trait) {
+        int currentFragment = mViewPager.getCurrentItem();
 
+        if (currentFragment + 1 >= mViewPager.getChildCount()) {
+            return;
+        }
+
+        mViewPager.setCurrentItem(currentFragment + 1);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
