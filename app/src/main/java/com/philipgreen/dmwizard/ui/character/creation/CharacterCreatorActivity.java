@@ -8,13 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.philipgreen.dmwizard.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterCreatorActivity extends AppCompatActivity {
+public class CharacterCreatorActivity extends AppCompatActivity implements RacePickerFragment.OnRaceSelectedListener,
+        SubRacePickerDialogFragment.OnSubraceSelectedListener {
 
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
@@ -46,6 +48,16 @@ public class CharacterCreatorActivity extends AppCompatActivity {
         adapter.addFragment(new CharacterDescriptionSelectionFragment(), "Description");
         adapter.addFragment(new CharacterEquipmentSelectionFragment(), "Equipment");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onRaceSelected(String race) {
+        Toast.makeText(this, "you selected: " + race, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSubraceSelected(String subrace) {
+        Toast.makeText(this, "you selected: " + subrace, Toast.LENGTH_LONG).show();
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -2,11 +2,11 @@ package com.philipgreen.dmwizard.ui.character.creation;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.philipgreen.dmwizard.races.utils.RaceListManager;
 
@@ -18,7 +18,22 @@ import java.util.ArrayList;
 
 public class SubRacePickerDialogFragment extends DialogFragment {
     public static final String RACE_KEY = "race";
+    private OnSubraceSelectedListener mCallback;
 
+    public interface OnSubraceSelectedListener {
+        void onSubraceSelected(String subrace);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnSubraceSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnSubraceSelectedListener");
+        }
+    }
 
     static SubRacePickerDialogFragment newInstance(String race) {
         SubRacePickerDialogFragment subRacePickerFragment = new SubRacePickerDialogFragment();
@@ -39,13 +54,13 @@ public class SubRacePickerDialogFragment extends DialogFragment {
         if (subRaceListSelection.size() == 0) {
             this.dismiss();
         }
-        ArrayAdapter<String> subRaceListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, subRaceListSelection);
+        final ArrayAdapter<String> subRaceListAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, subRaceListSelection);
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         dialogBuilder.setAdapter(subRaceListAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getActivity(), "Clicked item " + i, Toast.LENGTH_SHORT).show();
+                mCallback.onSubraceSelected(subRaceListAdapter.getItem(i));
             }
         });
 

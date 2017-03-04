@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,23 @@ public class RacePickerFragment extends Fragment {
     private RaceListAdapter mAdapter;
     private List<String> mRaces = new ArrayList<>();
     private Fragment mRacePicker = this;
+    OnRaceSelectedListener mCallback;
+
+    public interface OnRaceSelectedListener {
+        void onRaceSelected(String race);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnRaceSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnRaceSelectedListener");
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,13 +87,20 @@ public class RacePickerFragment extends Fragment {
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     String raceText = mRaceItemTextView.getText().toString();
 
-                    SubRacePickerDialogFragment subRacePicker = SubRacePickerDialogFragment.newInstance(raceText);
+                    if (RaceListManager.getSubRaceListAsString(raceText).size() != 0) {
+                        SubRacePickerDialogFragment subRacePicker = SubRacePickerDialogFragment.newInstance(raceText);
 
 
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    subRacePicker.show(fm, "dialog");
+                        FragmentManager fm = getActivity().getSupportFragmentManager();
+                        subRacePicker.show(fm, "dialog");
+
+                    } else {
+                        mCallback.onRaceSelected(raceText);
+                    }
+
                 }
             });
         }
