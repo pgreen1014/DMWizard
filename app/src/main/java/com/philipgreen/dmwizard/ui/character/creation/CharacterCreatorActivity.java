@@ -52,12 +52,12 @@ public class CharacterCreatorActivity extends AppCompatActivity implements RaceP
 
     @Override
     public void onRaceSelected(String race) {
-        Toast.makeText(this, "you selected: " + race, Toast.LENGTH_LONG).show();
+        mViewPager.setCurrentItem(1);
     }
 
     @Override
     public void onSubraceSelected(String subrace) {
-        Toast.makeText(this, "you selected: " + subrace, Toast.LENGTH_LONG).show();
+        mViewPager.setCurrentItem(1);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
