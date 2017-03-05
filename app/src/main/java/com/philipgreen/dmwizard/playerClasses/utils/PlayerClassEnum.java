@@ -5,5 +5,31 @@ package com.philipgreen.dmwizard.playerClasses.utils;
  */
 
 public enum PlayerClassEnum {
-    BARBARIAN, BARD, CLERIC, DRUID, FIGHTER, MONk, PALADIN, RANGER, ROGUE, SORCERER, WARLOCK, WIZARD
+    BARBARIAN("Barbarian"),
+    BARD("Bard"),
+    CLERIC("Cleric"),
+    DRUID("Druid"),
+    FIGHTER("Fighter"),
+    MONK("Monk"),
+    PALADIN("Paladin"),
+    RANGER("Ranger"),
+    ROGUE("Rogue"),
+    SORCERER("Sorcerer"),
+    WARLOCK("Warlock"),
+    WIZARD("Wizard");
+
+    private String value;
+
+    PlayerClassEnum(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }
