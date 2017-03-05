@@ -1,6 +1,5 @@
 package com.philipgreen.dmwizard.ui.character.creation;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -119,8 +118,7 @@ public class RacePickerFragment extends Fragment {
         @Override
         public RaceListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater
-                    .inflate(R.layout.list_item_race, parent, false);
+            View view = layoutInflater.inflate(R.layout.list_item_race, parent, false);
             return new RaceListHolder(view);
         }
 
