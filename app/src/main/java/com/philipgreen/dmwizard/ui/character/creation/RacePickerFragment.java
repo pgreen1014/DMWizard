@@ -77,7 +77,7 @@ public class RacePickerFragment extends Fragment {
         RaceListHolder(View itemView) {
             super(itemView);
             mItemView = itemView;
-            mRaceItemTextView = (TextView) itemView.findViewById(R.id.list_item_race_text_view);
+            mRaceItemTextView = (TextView) itemView.findViewById(R.id.list_item_card_text_view);
 
             mItemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -118,7 +118,7 @@ public class RacePickerFragment extends Fragment {
         @Override
         public RaceListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.list_item_race, parent, false);
+            View view = layoutInflater.inflate(R.layout.list_item_card, parent, false);
             return new RaceListHolder(view);
         }
 

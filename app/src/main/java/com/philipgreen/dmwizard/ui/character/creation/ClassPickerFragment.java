@@ -70,7 +70,7 @@ public class ClassPickerFragment extends Fragment {
             super(itemView);
 
             mItemView = itemView;
-            mClassItemTextView = (TextView) itemView.findViewById(R.id.list_item_race_text_view);
+            mClassItemTextView = (TextView) itemView.findViewById(R.id.list_item_card_text_view);
 
         }
 
@@ -95,7 +95,7 @@ public class ClassPickerFragment extends Fragment {
         @Override
         public ClassListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.list_item_race, parent, false);
+            View view = layoutInflater.inflate(R.layout.list_item_card, parent, false);
             return new ClassListHolder(view);
         }
 
