@@ -1,5 +1,6 @@
 package com.philipgreen.dmwizard.ui.character.creation;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,19 @@ public class ClassPickerFragment extends Fragment {
     private ClassListAdapter mAdapter;
     private List<String> mClasses = new ArrayList<>();
     private Fragment mClassPicker = this;
+    private OnCharacterCreationTraitSelectedListener mCallback;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnCharacterCreationTraitSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnCharacterCreationTraitSelectedListener");
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +83,16 @@ public class ClassPickerFragment extends Fragment {
         public ClassListHolder(View itemView) {
             super(itemView);
 
-            mItemView = itemView;
             mClassItemTextView = (TextView) itemView.findViewById(R.id.list_item_card_text_view);
 
+            mItemView = itemView;
+            mItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String classText = mClassItemTextView.getText().toString();
+                    mCallback.onCharacterTraitSelected(classText);
+                }
+            });
         }
 
         void setBottomMarginTo16() {

@@ -36,7 +36,7 @@ public class RacePickerFragment extends Fragment {
         try {
             mCallback = (OnCharacterCreationTraitSelectedListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnRaceSelectedListener");
+            throw new ClassCastException(context.toString() + " must implement OnCharacterCreationTraitSelectedListener");
         }
 
     }
