@@ -4,4 +4,10 @@
     <string name="choose.subrace.hint">Choose Sub Race&#8230;</string>
     <string name="choose.class.hint">Choose Class&#8230;</string>
     <string name="character.creation.activity.title">Character Creation</string>
+    <string name="word.strength">Strength</string>
+    <string name="word.dexterity">Dexterity</string>
+    <string name="word.constitution">Constitution</string>
+    <string name="word.intelligence">Intelligence</string>
+    <string name="word.wisdom">Wisdom</string>
+    <string name="word.charisma">Charisma</string>
 </resources>
